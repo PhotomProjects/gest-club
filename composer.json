@@ -1,0 +1,31 @@
+{
+  "name": "photonprojects/gest-club",
+  "description": "Application web de gestion d'événements, de réservations et de billets pour un club sportif.",
+  "type": "project",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Florian Authelin"
+    }
+  ],
+  "require": {
+    "php": "^8.3",
+    "ext-fileinfo": "*",
+    "ext-mbstring": "*",
+    "ext-pdo": "*",
+    "ext-pdo_mysql": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

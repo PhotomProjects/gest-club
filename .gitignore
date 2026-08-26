@@ -1,0 +1,35 @@
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# PHP dependencies
+/vendor/
+/composer.phar
+/auth.json
+
+# Application-generated files
+/storage/cache/*
+!/storage/cache/.gitkeep
+/storage/logs/*
+!/storage/logs/.gitkeep
+
+# Tests and coverage
+/.phpunit.cache/
+.phpunit.result.cache
+/coverage/
+
+# IDE settings
+/.idea/
+/.vscode/
+*.code-workspace
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary editor files
+*.swp
+*.swo
+*~

@@ -1,0 +1,44 @@
+# Git metadata
+.git/
+.gitignore
+.gitattributes
+
+# Local development configuration
+.editorconfig
+.idea/
+.vscode/
+*.code-workspace
+
+# Environment files and secrets
+.env
+.env.*
+auth.json
+
+# Local PHP dependencies
+vendor/
+composer.phar
+
+# Runtime-generated files
+storage/cache/*
+!storage/cache/.gitkeep
+storage/logs/*
+!storage/logs/.gitkeep
+
+# Test artifacts
+.phpunit.cache/
+.phpunit.result.cache
+coverage/
+
+# Documentation not required by the image
+docs/
+README.md
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary editor files
+*.swp
+*.swo
+*~
