@@ -1,0 +1,124 @@
+CREATE TABLE UTILISATEUR(
+   id_utilisateur INT AUTO_INCREMENT,
+   prenom VARCHAR(100)  NOT NULL,
+   nom VARCHAR(100)  NOT NULL,
+   email VARCHAR(255)  NOT NULL,
+   mdp_hash VARCHAR(255)  NOT NULL,
+   role_utilisateur VARCHAR(10)  NOT NULL DEFAULT 'MEMBRE',
+   date_creation_compte DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   PRIMARY KEY(id_utilisateur)
+);
+
+CREATE TABLE PLACE(
+   id_place INT AUTO_INCREMENT,
+   numero_place VARCHAR(10)  NOT NULL,
+   rangee_place VARCHAR(10)  NOT NULL,
+   niveau_place VARCHAR(10)  NOT NULL,
+   tribune_place VARCHAR(10)  NOT NULL,
+   prix_place DECIMAL(10,2)   NOT NULL,
+   PRIMARY KEY(id_place)
+);
+
+CREATE TABLE EVENEMENT(
+   id_evenement INT AUTO_INCREMENT,
+   nom_evenement VARCHAR(150)  NOT NULL,
+   description_evenement TEXT NOT NULL,
+   image_evenement VARCHAR(255) ,
+   date_heure_debut_evenement DATETIME NOT NULL,
+   date_heure_fin_evenement DATETIME NOT NULL,
+   statut_evenement VARCHAR(10)  NOT NULL DEFAULT 'OUVERT',
+   date_creation_evenement DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   PRIMARY KEY(id_evenement)
+);
+
+CREATE TABLE INTERVENANT(
+   id_intervenant INT AUTO_INCREMENT,
+   nom_scene VARCHAR(100)  NOT NULL,
+   statut_intervenant VARCHAR(10)  NOT NULL DEFAULT 'ACTIF',
+   PRIMARY KEY(id_intervenant)
+);
+
+CREATE TABLE TYPE_MATCH(
+   id_type_match INT AUTO_INCREMENT,
+   libelle_type_match VARCHAR(100)  NOT NULL,
+   description_type_match TEXT NOT NULL,
+   nombre_catcheurs_min TINYINT NOT NULL UNSIGNED,
+   nombre_catcheurs_max TINYINT NOT NULL UNSIGNED,
+   nombre_camps TINYINT NOT NULL UNSIGNED,
+   PRIMARY KEY(id_type_match),
+   UNIQUE(libelle_type_match)
+);
+
+CREATE TABLE RESERVATION(
+   id_reservation INT AUTO_INCREMENT,
+   reference_reservation CHAR(32)  NOT NULL,
+   date_reservation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   statut_reservation VARCHAR(10)  NOT NULL DEFAULT 'CONFIRMEE',
+   id_utilisateur INT NOT NULL,
+   id_evenement INT NOT NULL,
+   PRIMARY KEY(id_reservation),
+   FOREIGN KEY(id_utilisateur) REFERENCES UTILISATEUR(id_utilisateur),
+   FOREIGN KEY(id_evenement) REFERENCES EVENEMENT(id_evenement)
+);
+
+CREATE TABLE PLACE_EVENEMENT(
+   id_place_evenement INT AUTO_INCREMENT,
+   statut_place VARCHAR(10)  NOT NULL DEFAULT 'DISPONIBLE',
+   id_evenement INT NOT NULL,
+   id_place INT NOT NULL,
+   PRIMARY KEY(id_place_evenement),
+   FOREIGN KEY(id_evenement) REFERENCES EVENEMENT(id_evenement),
+   FOREIGN KEY(id_place) REFERENCES PLACE(id_place)
+);
+
+CREATE TABLE MATCH_EVENEMENT(
+   id_match INT AUTO_INCREMENT,
+   nom_match VARCHAR(150)  NOT NULL,
+   ordre_match TINYINT NOT NULL UNSIGNED,
+   id_evenement INT NOT NULL,
+   id_type_match INT NOT NULL,
+   PRIMARY KEY(id_match),
+   FOREIGN KEY(id_evenement) REFERENCES EVENEMENT(id_evenement),
+   FOREIGN KEY(id_type_match) REFERENCES TYPE_MATCH(id_type_match)
+);
+
+CREATE TABLE PARTICIPATION_MATCH(
+   id_participation_match INT AUTO_INCREMENT,
+   role_participation VARCHAR(10)  NOT NULL,
+   camp_participation TINYINT UNSIGNED,
+   ordre_participation TINYINT NOT NULL UNSIGNED,
+   id_match INT NOT NULL,
+   id_intervenant INT NOT NULL,
+   PRIMARY KEY(id_participation_match),
+   FOREIGN KEY(id_match) REFERENCES MATCH_EVENEMENT(id_match),
+   FOREIGN KEY(id_intervenant) REFERENCES INTERVENANT(id_intervenant)
+);
+
+CREATE TABLE BILLET(
+   id_billet INT AUTO_INCREMENT,
+   code_billet CHAR(64)  NOT NULL,
+   id_reservation INT NOT NULL,
+   PRIMARY KEY(id_billet),
+   UNIQUE(id_reservation),
+   FOREIGN KEY(id_reservation) REFERENCES RESERVATION(id_reservation)
+);
+
+CREATE TABLE PRESENCE(
+   id_presence INT AUTO_INCREMENT,
+   date_heure_controle DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   id_billet INT NOT NULL,
+   PRIMARY KEY(id_presence),
+   UNIQUE(id_billet),
+   FOREIGN KEY(id_billet) REFERENCES BILLET(id_billet)
+);
+
+CREATE TABLE RESERVATION_PLACE(
+   id_reservation_place INT AUTO_INCREMENT,
+   prix_applique DECIMAL(10,2)   NOT NULL,
+   position_place TINYINT NOT NULL UNSIGNED,
+   id_place_evenement INT NOT NULL,
+   id_reservation INT NOT NULL,
+   PRIMARY KEY(id_reservation_place),
+   FOREIGN KEY(id_place_evenement) REFERENCES PLACE_EVENEMENT(id_place_evenement),
+   FOREIGN KEY(id_reservation) REFERENCES RESERVATION(id_reservation)
+);
