@@ -1,0 +1,171 @@
+/* GEST CLUB — Fondations partagées */
+
+/* Polices */
+
+@font-face {
+  font-family: "Bebas Neue";
+  src: url("../fonts/Bebas_Neue/BebasNeue-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Oswald";
+  src: url("../fonts/Oswald/Oswald-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/Inter/Inter_18pt-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Variables */
+
+:root {
+  color-scheme: dark;
+
+  /* Couleurs */
+  --c-bg: #0b1220;
+  --c-bg-alt: #111827;
+  --c-surface: #1f2937;
+  --c-text: #f9fafb;
+  --c-text-muted: #d1d5db;
+  --c-border: #374151;
+  --c-accent: #1ca24c;
+  --c-accent-light: #4ade80;
+  --c-accent-2: #1042af;
+  --c-warning: #fbe484;
+  --c-danger: #f9867d;
+
+  /* Variantes */
+  --c-accent-dark: #17853f;
+  --c-accent-2-dark: #0d368f;
+  --c-accent-soft: rgba(28, 162, 76, 0.14);
+  --c-danger-soft: rgba(249, 134, 125, 0.14);
+  --c-warning-soft: rgba(251, 228, 132, 0.14);
+  --c-surface-soft: rgba(249, 250, 251, 0.04);
+
+  /* Polices */
+  --f-title: "Bebas Neue", "Oswald", Impact, sans-serif;
+  --f-alt: "Oswald", "Bebas Neue", sans-serif;
+  --f-body: "Inter", Arial, sans-serif;
+}
+
+/* Base */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--f-body);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 3px;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Liens */
+
+.link {
+  color: var(--c-text-muted);
+  text-decoration: underline;
+}
+
+.link:hover {
+  color: var(--c-text);
+}
+
+/* Accessibilité */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
