@@ -1,10 +1,9 @@
 <main class="admin-content">
     <div class="admin-header">
         <div class="admin-header__text">
-            <h1>Créer un évènement</h1>
+            <h1>Modifier l'évènement</h1>
             <p class="admin-header__description">
-                Renseignez les informations, composez le programme puis vérifiez le récapitulatif avant
-                l'enregistrement.
+                Modifiez les informations existantes et le programme, puis enregistrez vos changements.
             </p>
         </div>
     </div>
@@ -22,23 +21,24 @@
                         <div class="form">
                             <div class="field">
                                 <label class="field__label" for="ev-nom">Nom de l'évènement</label>
-                                <input class="input" id="ev-nom" name="nom" placeholder="Ex. RAW is WAR: 1000th Ep."
-                                    required type="text">
+                                <input class="input" id="ev-nom" name="nom" required type="text"
+                                    value="RAW is WAR: 1000th Ep.">
                             </div>
                             <div class="field-pair">
                                 <div class="field">
                                     <label class="field__label" for="ev-date">Date</label>
-                                    <input class="input" id="ev-date" name="date" required type="date">
+                                    <input class="input" id="ev-date" name="date" required type="date"
+                                        value="2026-07-26">
                                 </div>
                                 <div class="field">
                                     <label class="field__label" for="ev-heure">Heure</label>
-                                    <input class="input" id="ev-heure" name="heure" required type="time">
+                                    <input class="input" id="ev-heure" name="heure" required type="time" value="20:00">
                                 </div>
                             </div>
                             <div class="field">
                                 <label class="field__label" for="ev-lieu">Lieu</label>
-                                <input class="input" id="ev-lieu" name="lieu" placeholder="Lucha Pit Arena, Paris"
-                                    required type="text">
+                                <input class="input" id="ev-lieu" name="lieu" required type="text"
+                                    value="Lucha Pit Arena, Paris">
                             </div>
                         </div>
                     </div>
@@ -52,12 +52,15 @@
                         </h2>
                     </div>
                     <div class="panel__body">
-                        <div class="field">
-                            <label class="field__label" for="ev-image">Image de couverture
+                        <div class="upload__preview">Image actuelle</div>
+                        <div class="field event-image-field">
+                            <label class="field__label" for="ev-image">Remplacer l'image
                                 <span class="optional">(facultatif)</span>
                             </label>
                             <input accept="image/jpeg,image/png" class="input" id="ev-image" name="image" type="file">
-                            <p class="field__hint">JPG ou PNG · 5 Mo maximum.</p>
+                            <p class="field__hint">
+                                JPG ou PNG · 5 Mo maximum. Sans nouveau fichier, l'image actuelle est conservée.
+                            </p>
                         </div>
                     </div>
                 </section>
@@ -74,8 +77,8 @@
                     </div>
                     <div class="panel__body">
                         <label class="visually-hidden" for="ev-desc">Description de l'évènement</label>
-                        <textarea class="textarea" id="ev-desc" name="description"
-                            placeholder="Décrivez l'évènement, ses enjeux et les informations utiles aux visiteurs."></textarea>
+                        <textarea class="textarea" id="ev-desc"
+                            name="description">Dans cette édition spéciale de RAW, les invités ayant marqué l'histoire du show se retrouvent pour une soirée exceptionnelle à la Lucha Pit Arena.</textarea>
                     </div>
                 </section>
 
@@ -152,8 +155,8 @@
             </div>
         </div>
         <div class="admin-form-actions">
-            <a class="btn btn--ghost" href="/admin/evenements.php">Retour</a>
-            <a class="btn btn--primary" href="/admin/evenement-recapitulatif.php">Continuer vers le récapitulatif</a>
+            <a class="btn btn--ghost" href="/admin/evenement.php">Annuler</a>
+            <button class="btn btn--primary" type="submit">Enregistrer les modifications</button>
         </div>
     </form>
 </main>
