@@ -10,8 +10,14 @@
                 <h2 class="panel__title">Scanner un QR code</h2>
             </div>
             <div class="panel__body">
-                <div class="scan-preview" aria-hidden="true">Aperçu caméra</div>
-                <button class="btn btn--primary scan-action" type="button">Activer la caméra</button>
+                <div class="scan-preview" id="camera-preview">
+                    <span id="camera-placeholder">Aperçu caméra</span>
+                    <video id="camera-video" autoplay playsinline hidden></video>
+                </div>
+                <p class="field__error" id="camera-error" hidden></p>
+                <button class="btn btn--primary scan-action" id="camera-button" type="button">
+                    Activer la caméra
+                </button>
             </div>
         </section>
 

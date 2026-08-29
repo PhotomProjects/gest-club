@@ -187,3 +187,83 @@ if (managerList && managerAdd && managerTemplate) {
         managerList.appendChild(newManager);
     });
 }
+
+// == Scan QR Code ==
+
+const cameraButton = document.getElementById("camera-button");
+const cameraVideo = document.getElementById("camera-video");
+const cameraPlaceholder = document.getElementById("camera-placeholder");
+const cameraError = document.getElementById("camera-error");
+const ticketCode = document.getElementById("code");
+
+// Arrêter la caméra.
+function stopCamera() {
+    const stream = cameraVideo.srcObject;
+    if (stream) {
+        stream.getTracks().forEach(function(track) {
+            track.stop();
+        });
+        cameraVideo.srcObject = null;
+    }
+}
+
+if (
+    cameraButton &&
+    cameraVideo &&
+    cameraPlaceholder &&
+    cameraError &&
+    ticketCode
+) {
+    cameraButton.addEventListener("click", async function() {
+        // Vérifier que le navigateur peut lire les QR Codes.
+        if (!("BarcodeDetector" in window)) {
+            cameraError.textContent = "La lecture des QR Codes n'est pas disponible sur ce navigateur.";
+            cameraError.hidden = false;
+            return;
+        }
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: true,
+                caudio: false
+            });
+            cameraVideo.srcObject = stream;
+            cameraVideo.hidden = false;
+            cameraPlaceholder.hidden = true;
+            cameraError.hidden = true;
+            cameraButton.textContent = "Caméra activée";
+            cameraButton.disabled = true;
+            const detector = new BarcodeDetector({
+                formats: ["qr_code"]
+            });
+            scanQRCode(detector);
+        } catch (error) {
+            cameraError.textContent = "Impossible d'accéder à la caméra.";
+            cameraError.hidden = false;
+        }
+    });
+}
+
+// Lire un QR Code.
+async function scanQRCode(detector) {
+    try {
+        const codes = await detector.detect(cameraVideo);
+        if (codes.length > 0) {
+            ticketCode.value = codes[0].rawValue;
+            stopCamera();
+            cameraVideo.hidden = true;
+            cameraPlaceholder.hidden = false;
+            cameraPlaceholder.textContent = "QR Code détecté";
+            cameraButton.textContent = "Activer la caméra";
+            cameraButton.disabled = false;
+            return;
+        }
+        // Recommencer la lecture après un court délai.
+        setTimeout(function() {
+            scanQRCode(detector);
+        }, 500);
+    } catch (error) {
+        cameraError.textContent = "Impossible de lire le QR Code.";
+        cameraError.hidden = false;
+        stopCamera();
+    }
+}
