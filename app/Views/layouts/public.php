@@ -23,11 +23,11 @@ $robots = $robots ?? null;
     </title>
 
     <link rel="icon" href="/assets/images/favicon/favicon.ico">
-
     <link rel="stylesheet" href="/assets/css/base.css">
     <link rel="stylesheet" href="/assets/css/components.css">
     <link rel="stylesheet" href="/assets/css/site.css">
     <link rel="stylesheet" href="/assets/css/pages.css">
+    <script src="/assets/js/site.js" defer></script>
 </head>
 
 <body>

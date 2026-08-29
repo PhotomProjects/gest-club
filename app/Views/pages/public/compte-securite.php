@@ -5,26 +5,53 @@
             <form class="form" action="#" method="post">
                 <div class="field">
                     <label class="field__label" for="actuel">Mot de passe actuel</label>
-                    <input class="input" type="password" id="actuel" name="mot_de_passe_actuel"
-                        autocomplete="current-password" required>
+                    <div class="password-field">
+                        <input class="input" type="password" id="actuel" name="mot_de_passe_actuel"
+                            autocomplete="current-password" required>
+                        <button id="current-password-toggle" class="password-toggle" type="button" aria-pressed="false">
+                            Afficher
+                        </button>
+                    </div>
                 </div>
                 <div class="field">
                     <label class="field__label" for="nouveau">Nouveau mot de passe</label>
-                    <input class="input" type="password" id="nouveau" name="nouveau_mot_de_passe"
-                        autocomplete="new-password" minlength="8" aria-describedby="new-password-rules" required>
+                    <div class="password-field">
+                        <input class="input" type="password" id="nouveau" name="nouveau_mot_de_passe"
+                            autocomplete="new-password" minlength="8" aria-describedby="new-password-rules" required>
+                        <button id="new-password-toggle" class="password-toggle" type="button" aria-pressed="false">
+                            Afficher
+                        </button>
+                    </div>
                 </div>
                 <div class="field">
                     <label class="field__label" for="nouveau2">Confirmer le nouveau mot de passe</label>
-                    <input class="input" type="password" id="nouveau2" name="nouveau_mot_de_passe_confirmation"
-                        autocomplete="new-password" minlength="8" required>
+                    <div class="password-field">
+                        <input class="input" type="password" id="nouveau2" name="nouveau_mot_de_passe_confirmation"
+                            autocomplete="new-password" minlength="8" aria-describedby="new-password-confirmation-error"
+                            required>
+                        <button id="new-password2-toggle" class="password-toggle" type="button" aria-pressed="false">
+                            Afficher
+                        </button>
+                    </div>
+                    <p class="field__error" id="new-password-confirmation-error" hidden>
+                        Les mots de passe ne correspondent pas.
+                    </p>
                 </div>
                 <div class="rules" id="new-password-rules">
                     <p>Le nouveau mot de passe doit contenir :</p>
                     <ul>
-                        <li>8 caractères minimum ;</li>
-                        <li>une majuscule et une minuscule ;</li>
-                        <li>un chiffre ;</li>
-                        <li>un caractère spécial.</li>
+                        <li data-password-rule="length">
+                            8 caractères minimum ;
+                        </li>
+                        <li data-password-rule="letter-case">
+                            une majuscule et une minuscule ;
+                        </li>
+                        <li data-password-rule="number">
+                            un chiffre ;
+                        </li>
+                        <li data-password-rule="special">
+                            un caractère spécial.
+                        </li>
                     </ul>
                 </div>
                 <div class="form-actions">
