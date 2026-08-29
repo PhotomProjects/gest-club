@@ -237,3 +237,33 @@ if (newPassword && newPasswordRules) {
 if (newPassword && newPassword2 && newPasswordError) {
     checkConfirmation(newPassword, newPassword2, newPasswordError);
 }
+
+// == Réservation ==
+
+const placeInputs = document.querySelectorAll('input[name="nb_places"]');
+const levelInputs = document.querySelectorAll('input[name="niveau"]');
+const reservationTotal = document.getElementById("reservation-total");
+
+// Mettre à jour le prix total.
+function updateReservationTotal() {
+    const selectedPlace = document.querySelector('input[name="nb_places"]:checked');
+    const selectedLevel = document.querySelector('input[name="niveau"]:checked');
+    if (!selectedPlace || !selectedLevel || !reservationTotal) {
+        return;
+    }
+    const numberOfPlaces = Number(selectedPlace.value);
+    const price = Number(selectedLevel.dataset.price);
+    reservationTotal.textContent = numberOfPlaces * price + " €";
+}
+
+if (reservationTotal) {
+    placeInputs.forEach(function(input) {
+        input.addEventListener("change", updateReservationTotal);
+    });
+    levelInputs.forEach(function(input) {
+        input.addEventListener("change", updateReservationTotal);
+    });
+
+    // Afficher le total dès le chargement.
+    updateReservationTotal();
+}
