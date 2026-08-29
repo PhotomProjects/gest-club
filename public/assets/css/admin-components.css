@@ -182,6 +182,10 @@
     auto;
 }
 
+.participant[hidden] {
+  display: none;
+}
+
 .participant-add {
   margin-top: 1rem;
 }

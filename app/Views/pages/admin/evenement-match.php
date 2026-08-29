@@ -22,10 +22,11 @@
                             <div class="field">
                                 <label class="field__label" for="m-type">Type de match</label>
                                 <select class="select" id="m-type" name="type_match" required>
-                                    <option>No Holds Barred Match</option>
-                                    <option>Fatal 4 Way</option>
-                                    <option>Steel Cage Match</option>
-                                    <option>Iron Man Match</option>
+                                    <option value="">Sélectionner un type de match</option>
+                                    <option value="no-holds-barred">No Holds Barred Match</option>
+                                    <option value="fatal-4-way">Fatal 4 Way</option>
+                                    <option value="steel-cage">Steel Cage Match</option>
+                                    <option value="iron-man">Iron Man Match</option>
                                 </select>
                             </div>
                             <div class="field">
@@ -36,40 +37,48 @@
                     </div>
                     <div class="form-section">
                         <h3 class="form-section__title">Catcheurs</h3>
-                        <div class="participant-list">
+                        <div class="participant-list" id="participant-list">
                             <div class="participant">
                                 <span aria-hidden="true" class="participant__index">1</span>
-                                <select aria-label="Catcheur 1" class="select" name="catcheur[]" required>
-                                    <option>Triple H</option>
-                                    <option>Randy Orton</option>
+                                <select class="select" name="catcheur[]" required>
+                                    <option value="">Sélectionner un catcheur</option>
+                                    <option value="triple-h">Triple H</option>
+                                    <option value="randy-orton">Randy Orton</option>
                                 </select>
-                                <select aria-label="Camp du catcheur 1" class="select" name="camp[]" required>
-                                    <option>Camp A</option>
-                                    <option>Camp B</option>
+                                <select class="select" name="camp[]" required>
+                                    <option value="">Sélectionner un camp</option>
+                                    <option value="A">Camp A</option>
+                                    <option value="B">Camp B</option>
                                 </select>
-                                <button class="btn btn--ghost btn--sm" type="button">Retirer</button>
+                                <button class="btn btn--ghost btn--sm participant-remove" type="button">
+                                    Retirer
+                                </button>
                             </div>
                             <div class="participant">
                                 <span aria-hidden="true" class="participant__index">2</span>
-                                <select aria-label="Catcheur 2" class="select" name="catcheur[]" required>
-                                    <option>Randy Orton</option>
-                                    <option>Triple H</option>
+                                <select class="select" name="catcheur[]" required>
+                                    <option value="">Sélectionner un catcheur</option>
+                                    <option value="triple-h">Triple H</option>
+                                    <option value="randy-orton">Randy Orton</option>
                                 </select>
-                                <select aria-label="Camp du catcheur 2" class="select" name="camp[]" required>
-                                    <option>Camp B</option>
-                                    <option>Camp A</option>
+                                <select class="select" name="camp[]" required>
+                                    <option value="">Sélectionner un camp</option>
+                                    <option value="A">Camp A</option>
+                                    <option value="B">Camp B</option>
                                 </select>
-                                <button class="btn btn--ghost btn--sm" type="button">Retirer</button>
+                                <button class="btn btn--ghost btn--sm participant-remove" type="button">
+                                    Retirer
+                                </button>
                             </div>
                         </div>
-                        <button class="btn btn--primary btn--sm participant-add" type="button">
+                        <button class="btn btn--primary btn--sm participant-add" id="participant-add" type="button">
                             <span aria-hidden="true" class="btn__plus">+</span>
                             Ajouter un participant
                         </button>
                     </div>
                     <div class="form-section">
                         <h3 class="form-section__title">Arbitre</h3>
-                        <select aria-label="Arbitre" class="select" name="arbitre">
+                        <select aria-label="Arbitre" class="select" name="arbitre" required>
                             <option value="">Sélectionner un arbitre</option>
                             <option>Charles Robinson</option>
                             <option>Mike Chioda</option>
@@ -79,19 +88,25 @@
                         <h3 class="form-section__title">Managers
                             <span class="optional">(facultatif)</span>
                         </h3>
-                        <div class="participant participant--manager">
-                            <select aria-label="Manager" class="select" name="manager[]">
+                        <div class="participant-list" id="manager-list"></div>
+
+                        <!-- modèle caché pour créer de nouvelles lignes -->
+                        <div class="participant participant--manager" id="manager-template" hidden>
+                            <select class="select" name="manager[]" disabled>
                                 <option value="">Sélectionner un manager</option>
                                 <option>Paul Heyman</option>
                             </select>
-                            <select aria-label="Camp associé" class="select" name="manager_camp[]">
+                            <select class="select" name="manager_camp[]" disabled>
                                 <option value="">Camp associé</option>
                                 <option>Camp A</option>
                                 <option>Camp B</option>
                             </select>
-                            <button class="btn btn--ghost btn--sm" type="button">Retirer</button>
+                            <button class="btn btn--ghost btn--sm manager-remove" type="button">
+                                Retirer
+                            </button>
                         </div>
-                        <button class="btn btn--primary btn--sm participant-add" type="button">
+
+                        <button class="btn btn--primary btn--sm participant-add" id="manager-add" type="button">
                             <span aria-hidden="true" class="btn__plus">+</span>
                             Ajouter un manager
                         </button>

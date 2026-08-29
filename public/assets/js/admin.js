@@ -80,3 +80,110 @@ if (eventImage && eventImageError) {
         }
     });
 }
+
+// == Participants d'un match ==
+
+const participantList = document.getElementById("participant-list");
+const participantAdd = document.getElementById("participant-add");
+
+// Mettre à jour les numéros des participants.
+function updateParticipantNumbers() {
+    const participants = participantList.querySelectorAll(".participant");
+    participants.forEach(function(participant, index) {
+        const participantNumber = participant.querySelector(".participant__index");
+        if (participantNumber) {
+            participantNumber.textContent = index + 1;
+        }
+    });
+}
+
+// Retirer un participant.
+function removeParticipant(button) {
+    const participants = participantList.querySelectorAll(".participant");
+    // Au minimum deux participants.
+    if (participants.length <= 2) {
+        return;
+    }
+    const participant = button.closest(".participant");
+    if (participant) {
+        participant.remove();
+        updateParticipantNumbers();
+    }
+}
+
+// Activer les boutons Retirer déjà présents.
+if (participantList) {
+    const participantRemoveButtons = participantList.querySelectorAll(".participant-remove");
+    participantRemoveButtons.forEach(function(button) {
+        button.addEventListener("click", function() {
+            removeParticipant(button);
+        });
+    });
+}
+
+// Ajouter un participant.
+if (participantList && participantAdd) {
+    participantAdd.addEventListener("click", function() {
+        const firstParticipant = participantList.querySelector(".participant");
+        if (!firstParticipant) {
+            return;
+        }
+        // Copier un participant existant.
+        const newParticipant = firstParticipant.cloneNode(true);
+        // Réinitialiser les listes déroulantes.
+        const selects = newParticipant.querySelectorAll("select");
+        selects.forEach(function(select) {
+            select.selectedIndex = 0;
+        });
+        // Activer le bouton Retirer de la nouvelle ligne.
+        const removeButton = newParticipant.querySelector(".participant-remove");
+        if (removeButton) {
+            removeButton.addEventListener("click", function() {
+                removeParticipant(removeButton);
+            });
+        }
+        // Ajouter la nouvelle ligne.
+        participantList.appendChild(newParticipant);
+        // Mettre à jour les numéros.
+        updateParticipantNumbers();
+    });
+}
+
+// == Managers d'un match ==
+
+const managerList = document.getElementById("manager-list");
+const managerAdd = document.getElementById("manager-add");
+const managerTemplate = document.getElementById("manager-template");
+
+// Retirer un manager.
+function removeManager(button) {
+    const manager = button.closest(".participant--manager");
+    if (manager) {
+        manager.remove();
+    }
+}
+
+// Ajouter un manager.
+if (managerList && managerAdd && managerTemplate) {
+    managerAdd.addEventListener("click", function() {
+        // Copier le modèle caché.
+        const newManager = managerTemplate.cloneNode(true);
+        // Retirer l'id et afficher la copie.
+        newManager.removeAttribute("id");
+        newManager.hidden = false;
+        // Réactiver les listes déroulantes.
+        const selects = newManager.querySelectorAll("select");
+        selects.forEach(function(select) {
+            select.disabled = false;
+        });
+        // Activer le bouton Retirer.
+        const removeButton = newManager.querySelector(".manager-remove");
+        if (removeButton) {
+            removeButton.addEventListener("click", function() {
+                removeManager(removeButton);
+            });
+        }
+        // Ajouter la ligne.
+        managerList.appendChild(newManager);
+    });
+}
