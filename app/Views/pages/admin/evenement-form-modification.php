@@ -52,7 +52,7 @@
                         </h2>
                     </div>
                     <div class="panel__body">
-                        <div class="upload__preview">Image actuelle</div>
+                        <div class="upload__preview" id="ev-image-preview" data-image-mode="edit">Image actuelle</div>
                         <div class="field event-image-field">
                             <label class="field__label" for="ev-image">Remplacer l'image
                                 <span class="optional">(facultatif)</span>
@@ -61,6 +61,7 @@
                             <p class="field__hint">
                                 JPG ou PNG · 5 Mo maximum. Sans nouveau fichier, l'image actuelle est conservée.
                             </p>
+                            <p class="field__error" id="ev-image-error" hidden></p>
                         </div>
                     </div>
                 </section>

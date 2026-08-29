@@ -21,11 +21,11 @@ $adminSection = $adminSection ?? null;
     </title>
 
     <link rel="icon" href="/assets/images/favicon/favicon.ico">
-
     <link rel="stylesheet" href="/assets/css/base.css">
     <link rel="stylesheet" href="/assets/css/components.css">
     <link rel="stylesheet" href="/assets/css/admin.css">
     <link rel="stylesheet" href="/assets/css/admin-components.css">
+    <script src="/assets/js/admin.js" defer></script>
 </head>
 
 <body>

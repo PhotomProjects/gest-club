@@ -58,6 +58,8 @@
                             </label>
                             <input accept="image/jpeg,image/png" class="input" id="ev-image" name="image" type="file">
                             <p class="field__hint">JPG ou PNG · 5 Mo maximum.</p>
+                            <p class="field__error" id="ev-image-error" hidden></p>
+                            <div class="upload__preview" id="ev-image-preview" data-image-mode="create" hidden></div>
                         </div>
                     </div>
                 </section>
