@@ -10,8 +10,8 @@
                 <div class="form">
                     <div class="field">
                         <label class="field__label" for="scene">Nom de scène</label>
-                        <input class="input" type="text" id="scene" name="nom_scene" placeholder="Ex. Triple H"
-                            required>
+                        <input class="input" type="text" id="scene" name="nom_scene" placeholder="Ex. Triple H" required
+                            maxlength="100">
                     </div>
                     <fieldset class="field">
                         <legend class="field__label">Statut</legend>

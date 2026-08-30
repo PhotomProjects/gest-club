@@ -86,17 +86,6 @@ if (eventImage && eventImageError) {
 const participantList = document.getElementById("participant-list");
 const participantAdd = document.getElementById("participant-add");
 
-// Mettre à jour les numéros des participants.
-function updateParticipantNumbers() {
-    const participants = participantList.querySelectorAll(".participant");
-    participants.forEach(function(participant, index) {
-        const participantNumber = participant.querySelector(".participant__index");
-        if (participantNumber) {
-            participantNumber.textContent = index + 1;
-        }
-    });
-}
-
 // Retirer un participant.
 function removeParticipant(button) {
     const participants = participantList.querySelectorAll(".participant");
@@ -109,16 +98,6 @@ function removeParticipant(button) {
         participant.remove();
         updateParticipantNumbers();
     }
-}
-
-// Activer les boutons Retirer déjà présents.
-if (participantList) {
-    const participantRemoveButtons = participantList.querySelectorAll(".participant-remove");
-    participantRemoveButtons.forEach(function(button) {
-        button.addEventListener("click", function() {
-            removeParticipant(button);
-        });
-    });
 }
 
 // Ajouter un participant.
@@ -146,6 +125,27 @@ if (participantList && participantAdd) {
         participantList.appendChild(newParticipant);
         // Mettre à jour les numéros.
         updateParticipantNumbers();
+    });
+}
+
+// Mettre à jour les numéros des participants.
+function updateParticipantNumbers() {
+    const participants = participantList.querySelectorAll(".participant");
+    participants.forEach(function(participant, index) {
+        const participantNumber = participant.querySelector(".participant__index");
+        if (participantNumber) {
+            participantNumber.textContent = index + 1;
+        }
+    });
+}
+
+// Activer les boutons Retirer déjà présents.
+if (participantList) {
+    const participantRemoveButtons = participantList.querySelectorAll(".participant-remove");
+    participantRemoveButtons.forEach(function(button) {
+        button.addEventListener("click", function() {
+            removeParticipant(button);
+        });
     });
 }
 
@@ -266,4 +266,38 @@ async function scanQRCode(detector) {
         cameraError.hidden = false;
         stopCamera();
     }
+}
+
+// == Programme des matchs ==
+
+const programList = document.getElementById("program-list");
+
+// Mettre à jour les numéros des matchs.
+function updateProgramNumbers() {
+    const matches = programList.querySelectorAll(".program__item");
+    matches.forEach(function(match, index) {
+        const matchNumber = match.querySelector(".program__index");
+        if (matchNumber) {
+            matchNumber.textContent = index + 1;
+        }
+    });
+}
+
+// Retirer un match du programme.
+function removeProgramMatch(button) {
+    const match = button.closest(".program__item");
+    if (match) {
+        match.remove();
+        updateProgramNumbers();
+    }
+}
+
+// Activer les boutons Retirer.
+if (programList) {
+    const removeButtons = programList.querySelectorAll(".program-remove");
+    removeButtons.forEach(function(button) {
+        button.addEventListener("click", function() {
+            removeProgramMatch(button);
+        });
+    });
 }

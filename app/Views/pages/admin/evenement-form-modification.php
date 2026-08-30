@@ -92,7 +92,7 @@
                     </div>
                     <div class="panel__body">
                         <p class="program-help">Les matchs sont ajoutés dans l'ordre d'affichage.</p>
-                        <ol class="program">
+                        <ol class="program" id="program-list">
                             <li class="program__item">
                                 <span aria-hidden="true" class="program__index">1</span>
                                 <div class="program__body">
@@ -105,7 +105,7 @@
                                         Modifier
                                     </a>
                                     <button aria-label="Retirer le match Triple H contre Randy Orton du programme"
-                                        class="btn btn--ghost btn--sm" type="button">
+                                        class="btn btn--ghost btn--sm program-remove" type="button">
                                         Retirer
                                     </button>
                                 </div>
@@ -123,7 +123,7 @@
                                     </a>
                                     <button
                                         aria-label="Retirer le match John Cena contre The Miz contre CM Punk du programme"
-                                        class="btn btn--ghost btn--sm" type="button">
+                                        class="btn btn--ghost btn--sm program-remove" type="button">
                                         Retirer
                                     </button>
                                 </div>
@@ -140,7 +140,7 @@
                                         Modifier
                                     </a>
                                     <button aria-label="Retirer le match Sheamus contre Drew McIntyre du programme"
-                                        class="btn btn--ghost btn--sm" type="button">
+                                        class="btn btn--ghost btn--sm program-remove" type="button">
                                         Retirer
                                     </button>
                                 </div>
