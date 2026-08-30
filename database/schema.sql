@@ -295,13 +295,13 @@ CREATE TABLE participation_match (
     CONSTRAINT chk_participation_match_camp
         CHECK (
             (
-                role_participation = 'CATCHEUR'
+                role_participation IN ('CATCHEUR', 'MANAGER')
                 AND camp_participation IS NOT NULL
                 AND camp_participation >= 1
             )
             OR
             (
-                role_participation IN ('ARBITRE', 'MANAGER')
+                role_participation = 'ARBITRE'
                 AND camp_participation IS NULL
             )
         ),

@@ -280,7 +280,7 @@ INSERT INTO participation_match (
     (16, 'CATCHEUR', 1,    1, 5, 7),
     (17, 'CATCHEUR', 2,    2, 5, 8),
     (18, 'ARBITRE',  NULL, 3, 5, 9),
-    (19, 'MANAGER',  NULL, 4, 5, 10),
+    (19, 'MANAGER',  1, 4, 5, 10),
 
     -- Match 6 : événement annulé
     (20, 'CATCHEUR', 1,    1, 6, 5),

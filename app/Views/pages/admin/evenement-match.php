@@ -63,8 +63,8 @@
                                 </select>
                                 <select class="select" name="camp[]" required>
                                     <option value="">Sélectionner un camp</option>
-                                    <option value="A">Camp A</option>
-                                    <option value="B">Camp B</option>
+                                    <option value="1">Camp A</option>
+                                    <option value="2">Camp B</option>
                                 </select>
                                 <button class="btn btn--ghost btn--sm participant-remove" type="button">
                                     Retirer
@@ -92,14 +92,14 @@
 
                         <!-- modèle caché pour créer de nouvelles lignes -->
                         <div class="participant participant--manager" id="manager-template" hidden>
-                            <select class="select" name="manager[]" disabled>
+                            <select class="select" name="manager[]" disabled required>
                                 <option value="">Sélectionner un manager</option>
                                 <option>Paul Heyman</option>
                             </select>
-                            <select class="select" name="manager_camp[]" disabled>
+                            <select class="select" name="manager_camp[]" disabled required>
                                 <option value="">Camp associé</option>
-                                <option>Camp A</option>
-                                <option>Camp B</option>
+                                <option value="1">Camp A</option>
+                                <option value="2">Camp B</option>
                             </select>
                             <button class="btn btn--ghost btn--sm manager-remove" type="button">
                                 Retirer

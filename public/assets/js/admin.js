@@ -154,18 +154,35 @@ if (participantList) {
 const managerList = document.getElementById("manager-list");
 const managerAdd = document.getElementById("manager-add");
 const managerTemplate = document.getElementById("manager-template");
+const maxManagers = 2;
+
+// Mettre à jour le bouton d'ajout.
+// Le bouton est désactivé lorsque deux managers sont déjà présents.
+function updateManagerButton() {
+    if (!managerList || !managerAdd) {
+        return;
+    }
+    const managers = managerList.querySelectorAll(".participant--manager");
+    managerAdd.disabled = managers.length >= maxManagers;
+}
 
 // Retirer un manager.
 function removeManager(button) {
     const manager = button.closest(".participant--manager");
     if (manager) {
         manager.remove();
+        updateManagerButton();
     }
 }
 
 // Ajouter un manager.
 if (managerList && managerAdd && managerTemplate) {
     managerAdd.addEventListener("click", function() {
+        const managers = managerList.querySelectorAll(".participant--manager");
+        // Ne jamais dépasser deux managers.
+        if (managers.length >= maxManagers) {
+            return;
+        }
         // Copier le modèle caché.
         const newManager = managerTemplate.cloneNode(true);
         // Retirer l'id et afficher la copie.
@@ -175,6 +192,7 @@ if (managerList && managerAdd && managerTemplate) {
         const selects = newManager.querySelectorAll("select");
         selects.forEach(function(select) {
             select.disabled = false;
+            select.selectedIndex = 0;
         });
         // Activer le bouton Retirer.
         const removeButton = newManager.querySelector(".manager-remove");
@@ -185,7 +203,9 @@ if (managerList && managerAdd && managerTemplate) {
         }
         // Ajouter la ligne.
         managerList.appendChild(newManager);
+        updateManagerButton();
     });
+    updateManagerButton();
 }
 
 // == Scan QR Code ==
