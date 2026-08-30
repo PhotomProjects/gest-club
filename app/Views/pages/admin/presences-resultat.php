@@ -21,7 +21,7 @@
             <dl class="kv">
                 <div class="kv__row">
                     <dt class="kv__key">Billet</dt>
-                    <dd class="kv__value">BIL-01170</dd>
+                    <dd class="kv__value">BIL-001170</dd>
                 </div>
                 <div class="kv__row">
                     <dt class="kv__key">Utilisateur</dt>

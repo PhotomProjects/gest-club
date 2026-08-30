@@ -1,7 +1,7 @@
 <main class="admin-content">
     <div class="admin-header">
         <div class="admin-header__text">
-            <h1>Réservation R-2026-001</h1>
+            <h1>Réservation R-2026-000001</h1>
             <div class="record-meta admin-header__meta">
                 <span class="badge badge--success">Confirmée</span>
                 <span>Créée le
@@ -69,7 +69,7 @@
                     <dl class="kv">
                         <div class="kv__row">
                             <dt class="kv__key">N° Billet</dt>
-                            <dd class="kv__value">BIL-01023</dd>
+                            <dd class="kv__value">BIL-001023</dd>
                         </div>
                         <div class="kv__row">
                             <dt class="kv__key">Statut</dt>

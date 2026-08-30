@@ -3,9 +3,15 @@
         <section class="card confirmation">
             <h1>Votre réservation est confirmée.</h1>
             <div class="confirmation__event">
-                <p class="ticket-ref">Réservation R-2026-001</p>
+                <p class="ticket-ref">Réservation R-2026-000001</p>
                 <p>RAW is WAR: 1000th Episode</p>
-                <time class="confirmation__meta" datetime="2026-07-26T20:00">Dimanche 26 juillet 2026 à 20 h</time>
+                <p class="confirmation__meta">
+                    <time datetime="2026-07-26T20:00">
+                        Dimanche 26 juillet 2026 à 20 h
+                    </time>
+                    -
+                    <time datetime="2026-07-26T23:00">23 h</time>
+                </p>
                 <p class="confirmation__meta">Lucha Pit Arena, Paris</p>
             </div>
             <div class="confirmation__summary">

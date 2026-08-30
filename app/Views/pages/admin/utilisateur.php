@@ -56,7 +56,7 @@
                         <tbody>
                             <tr>
                                 <td class="cell-num">
-                                    <a class="link" href="/admin/reservation.php">R-2026-100</a>
+                                    <a class="link" href="/admin/reservation.php">R-2026-000100</a>
                                 </td>
                                 <td>RAW -
                                     <time datetime="2026-10-01">01/10/2026</time>
@@ -67,7 +67,7 @@
                             </tr>
                             <tr>
                                 <td class="cell-num">
-                                    <a class="link" href="/admin/reservation.php">R-2026-088</a>
+                                    <a class="link" href="/admin/reservation.php">R-2026-000088</a>
                                 </td>
                                 <td>SummerSlam -
                                     <time datetime="2026-09-23">23/09/2026</time>

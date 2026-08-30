@@ -12,7 +12,11 @@
                 <h3 class="event-summary__title">RAW is WAR: 1000th Ep.</h3>
                 <div class="meta-list">
                     <time datetime="2026-07-26">Dim. 26 juillet 2026</time>
-                    <time datetime="20:00">20:00</time>
+                    <span>
+                        <time datetime="2026-07-26T20:00">20:00</time>
+                        -
+                        <time datetime="2026-07-26T23:00">23:00</time>
+                    </span>
                     <span>Lucha Pit Arena, Paris</span>
                 </div>
                 <p class="event-summary__description">

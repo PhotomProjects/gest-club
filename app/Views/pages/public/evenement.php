@@ -8,7 +8,11 @@
                 <h1 class="event-detail__title">RAW is WAR: 1000th Ep.</h1>
                 <div class="meta-list">
                     <time datetime="2026-07-26">Dim. 26 juillet 2026</time>
-                    <time datetime="20:00">20:00</time>
+                    <span>
+                        <time datetime="2026-07-26T20:00">20:00</time>
+                        -
+                        <time datetime="2026-07-26T23:00">23:00</time>
+                    </span>
                     <span>Lucha Pit Arena, Paris</span>
                 </div>
                 <p class="event-detail__description">
@@ -26,7 +30,7 @@
                         <p class="match__cast">Avec Paul Lesveque</p>
                     </li>
                     <li class="match">
-                        <p class="match__type">Fatal 4 Way</p>
+                        <p class="match__type">Tag Team 2v2</p>
                         <p class="match__cast">John Cena vs. Randy Orton vs. The Miz vs. CM Punk</p>
                     </li>
                     <li class="match">
