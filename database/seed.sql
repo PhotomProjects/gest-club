@@ -56,8 +56,9 @@ INSERT INTO utilisateur (
 
 
 -- PLACE --
--- Tarifs fixes par niveau pour ce jeu de données :
--- HAUT = 15 €, MILIEU = 20 €, BAS = 25 €
+-- Deux places de démonstration par combinaison tribune / niveau.
+-- Tarifs fixes par niveau :
+-- HAUT = 25 €, MILIEU = 35 €, BAS = 45 €
 
 INSERT INTO place (
     id_place,
@@ -67,14 +68,37 @@ INSERT INTO place (
     tribune_place,
     prix_place
 ) VALUES
-    (1, '1', 'A', 'HAUT',   'NORD', 25.00),
-    (2, '2', 'A', 'HAUT',   'NORD', 25.00),
-    (3, '1', 'B', 'MILIEU', 'NORD', 35.00),
-    (4, '2', 'B', 'MILIEU', 'NORD', 35.00),
-    (5, '1', 'C', 'BAS',    'SUD',  45.00),
-    (6, '2', 'C', 'BAS',    'SUD',  45.00),
-    (7, '1', 'D', 'MILIEU', 'SUD',  25.00),
-    (8, '2', 'D', 'MILIEU', 'SUD',  25.00);
+    -- Tribune Nord
+    (1,  '1', 'A', 'HAUT',   'NORD', 25.00),
+    (2,  '2', 'A', 'HAUT',   'NORD', 25.00),
+    (3,  '1', 'B', 'MILIEU', 'NORD', 35.00),
+    (4,  '2', 'B', 'MILIEU', 'NORD', 35.00),
+    (9,  '1', 'E', 'BAS',    'NORD', 45.00),
+    (10, '2', 'E', 'BAS',    'NORD', 45.00),
+
+    -- Tribune Sud
+    (11, '1', 'F', 'HAUT',   'SUD',  25.00),
+    (12, '2', 'F', 'HAUT',   'SUD',  25.00),
+    (7,  '1', 'D', 'MILIEU', 'SUD',  35.00),
+    (8,  '2', 'D', 'MILIEU', 'SUD',  35.00),
+    (5,  '1', 'C', 'BAS',    'SUD',  45.00),
+    (6,  '2', 'C', 'BAS',    'SUD',  45.00),
+
+    -- Tribune Est
+    (13, '1', 'G', 'HAUT',   'EST',  25.00),
+    (14, '2', 'G', 'HAUT',   'EST',  25.00),
+    (15, '1', 'H', 'MILIEU', 'EST',  35.00),
+    (16, '2', 'H', 'MILIEU', 'EST',  35.00),
+    (17, '1', 'I', 'BAS',    'EST',  45.00),
+    (18, '2', 'I', 'BAS',    'EST',  45.00),
+
+    -- Tribune Ouest
+    (19, '1', 'J', 'HAUT',   'OUEST', 25.00),
+    (20, '2', 'J', 'HAUT',   'OUEST', 25.00),
+    (21, '1', 'K', 'MILIEU', 'OUEST', 35.00),
+    (22, '2', 'K', 'MILIEU', 'OUEST', 35.00),
+    (23, '1', 'L', 'BAS',    'OUEST', 45.00),
+    (24, '2', 'L', 'BAS',    'OUEST', 45.00);
 
 
 -- EVENEMENT --
@@ -174,7 +198,8 @@ INSERT INTO type_match (
 
 
 -- PLACE_EVENEMENT --
--- Chaque événement met à disposition les huit mêmes places.
+-- L'événement 1 utilise les 24 places afin de couvrir toutes les combinaisons tribune / niveau.
+-- Les autres événements utilisent un sous-ensemble de huit places pour conserver les différents scénarios de test du seed.
 
 INSERT INTO place_evenement (
     id_place_evenement,
@@ -220,7 +245,26 @@ INSERT INTO place_evenement (
     (29, 'RESERVEE',   4, 5),
     (30, 'RESERVEE',   4, 6),
     (31, 'DISPONIBLE', 4, 7),
-    (32, 'DISPONIBLE', 4, 8);
+    (32, 'DISPONIBLE', 4, 8),
+
+    -- Places supplémentaires de l'événement 1 :
+    -- toutes les combinaisons tribune / niveau sont disponibles.
+    (33, 'DISPONIBLE', 1, 9),
+    (34, 'DISPONIBLE', 1, 10),
+    (35, 'DISPONIBLE', 1, 11),
+    (36, 'DISPONIBLE', 1, 12),
+    (37, 'DISPONIBLE', 1, 13),
+    (38, 'DISPONIBLE', 1, 14),
+    (39, 'DISPONIBLE', 1, 15),
+    (40, 'DISPONIBLE', 1, 16),
+    (41, 'DISPONIBLE', 1, 17),
+    (42, 'DISPONIBLE', 1, 18),
+    (43, 'DISPONIBLE', 1, 19),
+    (44, 'DISPONIBLE', 1, 20),
+    (45, 'DISPONIBLE', 1, 21),
+    (46, 'DISPONIBLE', 1, 22),
+    (47, 'DISPONIBLE', 1, 23),
+    (48, 'DISPONIBLE', 1, 24);
 
 
 -- MATCH_EVENEMENT --
