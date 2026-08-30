@@ -85,6 +85,52 @@ if (eventImage && eventImageError) {
 
 const participantList = document.getElementById("participant-list");
 const participantAdd = document.getElementById("participant-add");
+const matchType = document.getElementById("m-type");
+
+// Récupérer le nombre de catcheurs attendu pour le type de match sélectionné.
+function getExpectedParticipantCount() {
+    if (!matchType) {
+        return 0;
+    }
+    const selectedOption = matchType.options[matchType.selectedIndex];
+    return Number(selectedOption.dataset.participants) || 0;
+}
+
+// Mettre à jour les numéros des participants.
+function updateParticipantNumbers() {
+    const participants = participantList.querySelectorAll(".participant");
+    participants.forEach(function(participant, index) {
+        const participantNumber = participant.querySelector(".participant__index");
+        if (participantNumber) {
+            participantNumber.textContent = index + 1;
+        }
+    });
+}
+
+// Mettre à jour les boutons et la validation.
+function updateParticipantState() {
+    if (!participantList || !participantAdd || !matchType) {
+        return;
+    }
+    const participants = participantList.querySelectorAll(".participant");
+    const expectedCount = getExpectedParticipantCount();
+    // Il faut d'abord sélectionner un type de match.
+    // Le bouton est aussi désactivé lorsque le maximum est atteint.
+    participantAdd.disabled = expectedCount === 0 || participants.length >= expectedCount;
+    // Toujours conserver au minimum deux catcheurs.
+    participants.forEach(function(participant) {
+        const removeButton = participant.querySelector(".participant-remove");
+        if (removeButton) {
+            removeButton.disabled = participants.length <= 2;
+        }
+    });
+    // Le champ type de match porte le message d'erreur.
+    if (expectedCount > 0 && participants.length !== expectedCount) {
+        matchType.setCustomValidity("Ce type de match nécessite exactement " + expectedCount + " catcheurs.");
+    } else {
+        matchType.setCustomValidity("");
+    }
+}
 
 // Retirer un participant.
 function removeParticipant(button) {
@@ -97,12 +143,19 @@ function removeParticipant(button) {
     if (participant) {
         participant.remove();
         updateParticipantNumbers();
+        updateParticipantState();
     }
 }
 
 // Ajouter un participant.
 if (participantList && participantAdd) {
     participantAdd.addEventListener("click", function() {
+        const participants = participantList.querySelectorAll(".participant");
+        const expectedCount = getExpectedParticipantCount();
+        // Aucun type sélectionné ou nombre maximum atteint.
+        if (expectedCount === 0 || participants.length >= expectedCount) {
+            return;
+        }
         const firstParticipant = participantList.querySelector(".participant");
         if (!firstParticipant) {
             return;
@@ -123,19 +176,8 @@ if (participantList && participantAdd) {
         }
         // Ajouter la nouvelle ligne.
         participantList.appendChild(newParticipant);
-        // Mettre à jour les numéros.
         updateParticipantNumbers();
-    });
-}
-
-// Mettre à jour les numéros des participants.
-function updateParticipantNumbers() {
-    const participants = participantList.querySelectorAll(".participant");
-    participants.forEach(function(participant, index) {
-        const participantNumber = participant.querySelector(".participant__index");
-        if (participantNumber) {
-            participantNumber.textContent = index + 1;
-        }
+        updateParticipantState();
     });
 }
 
@@ -148,6 +190,16 @@ if (participantList) {
         });
     });
 }
+
+// Réagir au changement de type de match.
+if (matchType) {
+    matchType.addEventListener("change", function() {
+        updateParticipantState();
+    });
+}
+
+// Initialiser l'état du formulaire.
+updateParticipantState();
 
 // == Managers d'un match ==
 

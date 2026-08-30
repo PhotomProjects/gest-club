@@ -166,10 +166,11 @@ INSERT INTO type_match (
     nombre_catcheurs_max,
     nombre_camps
 ) VALUES
-    (1, 'Simple',        'Match opposant exactement deux catcheurs répartis en deux camps.', 2, 2, 2),
-    (2, 'Triple Threat', 'Match opposant exactement trois catcheurs répartis en trois camps.', 3, 3, 3),
-    (3, 'Fatal 4-Way',   'Match opposant exactement quatre catcheurs répartis en quatre camps.', 4, 4, 4),
-    (4, 'Tag Team 2v2',  'Match par équipes avec quatre catcheurs répartis en deux camps.', 4, 4, 2);
+    (1, 'Simple', 'Match opposant exactement deux catcheurs répartis en deux camps.', 2, 2, 2),
+    (2, 'No Holds Barred', 'Match sans disqualification opposant exactement deux catcheurs.', 2, 2, 2),
+    (3, 'Steel Cage', 'Match en cage opposant exactement deux catcheurs.', 2, 2, 2),
+    (4, 'Tag Team 2v2', 'Match par équipes avec quatre catcheurs répartis en deux camps.', 4, 4, 2),
+    (5, 'Iron Man', 'Match Iron Man opposant exactement deux catcheurs.', 2, 2, 2);
 
 
 -- PLACE_EVENEMENT --
@@ -231,12 +232,12 @@ INSERT INTO match_evenement (
     id_evenement,
     id_type_match
 ) VALUES
-    (1, 'Black Viper vs Iron Wolf',                         1, 1, 1),
-    (2, 'Nova Kane vs Rex Steel vs Blaze Fox',             2, 1, 2),
-    (3, 'Titan Cross vs Jade Fury',                         1, 2, 1),
-    (4, 'Black Viper & Nova Kane vs Iron Wolf & Rex Steel',2, 2, 4),
-    (5, 'Maya Storm vs Jade Fury',                          1, 3, 1),
-    (6, 'Blaze Fox vs Titan Cross',                         1, 4, 1);
+    (1, 'Black Viper vs Iron Wolf', 1, 1, 1),
+    (2, 'Nova Kane vs Rex Steel', 2, 1, 2),
+    (3, 'Titan Cross vs Jade Fury', 1, 2, 1),
+    (4, 'Black Viper & Nova Kane vs Iron Wolf & Rex Steel', 2, 2, 4),
+    (5, 'Maya Storm vs Jade Fury', 1, 3, 1),
+    (6, 'Blaze Fox vs Titan Cross', 1, 4, 1);
 
 
 -- PARTICIPATION_MATCH --
@@ -258,11 +259,10 @@ INSERT INTO participation_match (
     (2,  'CATCHEUR', 2,    2, 1, 2),
     (3,  'ARBITRE',  NULL, 3, 1, 9),
 
-    -- Match 2 : Triple Threat
+    -- Match 2 : No Holds Barred
     (4,  'CATCHEUR', 1,    1, 2, 3),
     (5,  'CATCHEUR', 2,    2, 2, 4),
-    (6,  'CATCHEUR', 3,    3, 2, 5),
-    (7,  'ARBITRE',  NULL, 4, 2, 9),
+    (7,  'ARBITRE',  NULL, 3, 2, 9),
 
     -- Match 3 : Simple
     (8,  'CATCHEUR', 1,    1, 3, 6),

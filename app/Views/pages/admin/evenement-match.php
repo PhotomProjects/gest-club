@@ -23,10 +23,11 @@
                                 <label class="field__label" for="m-type">Type de match</label>
                                 <select class="select" id="m-type" name="type_match" required>
                                     <option value="">Sélectionner un type de match</option>
-                                    <option value="no-holds-barred">No Holds Barred Match</option>
-                                    <option value="fatal-4-way">Fatal 4 Way</option>
-                                    <option value="steel-cage">Steel Cage Match</option>
-                                    <option value="iron-man">Iron Man Match</option>
+                                    <option value="1" data-participants="2">Simple</option>
+                                    <option value="2" data-participants="2">No Holds Barred Match</option>
+                                    <option value="3" data-participants="2">Steel Cage Match</option>
+                                    <option value="4" data-participants="4">Tag Team 2v2</option>
+                                    <option value="5" data-participants="2">Iron Man Match</option>
                                 </select>
                             </div>
                             <div class="field">
@@ -47,8 +48,8 @@
                                 </select>
                                 <select class="select" name="camp[]" required>
                                     <option value="">Sélectionner un camp</option>
-                                    <option value="A">Camp A</option>
-                                    <option value="B">Camp B</option>
+                                    <option value="1">Camp A</option>
+                                    <option value="2">Camp B</option>
                                 </select>
                                 <button class="btn btn--ghost btn--sm participant-remove" type="button">
                                     Retirer
