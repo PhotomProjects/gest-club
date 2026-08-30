@@ -336,7 +336,6 @@ INSERT INTO participation_match (
 
 INSERT INTO reservation (
     id_reservation,
-    reference_reservation,
     date_reservation,
     statut_reservation,
     id_utilisateur,
@@ -344,27 +343,27 @@ INSERT INTO reservation (
 ) VALUES
     -- Événement 1 : futur ouvert
     -- Alice réserve deux places
-    (1, '1eafb7fe8428ccd1a27ab7994e844697', DATE_SUB(@seed_now, INTERVAL 6 DAY), 'CONFIRMEE', 2, 1),
+    (1, DATE_SUB(@seed_now, INTERVAL 6 DAY), 'CONFIRMEE', 2, 1),
 
     -- Bruno réserve une place puis annule
-    (2, '3d01c991652bc3260d5c5c914cd9110a', DATE_SUB(@seed_now, INTERVAL 5 DAY), 'ANNULEE', 3, 1),
+    (2, DATE_SUB(@seed_now, INTERVAL 5 DAY), 'ANNULEE', 3, 1),
 
     -- Bruno peut ensuite effectuer une nouvelle réservation
-    (3, '29e03cc522ddaa7ad5fb2554e7919025', DATE_SUB(@seed_now, INTERVAL 4 DAY), 'CONFIRMEE', 3, 1),
+    (3, DATE_SUB(@seed_now, INTERVAL 4 DAY), 'CONFIRMEE', 3, 1),
 
     -- Événement 2 : quatre réservations de deux places = complet
-    (4, 'b4951d52d0b159001d624fefb1154716', DATE_SUB(@seed_now, INTERVAL 3 DAY), 'CONFIRMEE', 2, 2),
-    (5, 'b976256587414b5290f8164ae8ceda1b', DATE_ADD(DATE_SUB(@seed_now, INTERVAL 3 DAY),INTERVAL 15 MINUTE), 'CONFIRMEE', 3, 2),
-    (6, '6c5c5754de06a90c90702f217d41ba5a', DATE_ADD(DATE_SUB(@seed_now, INTERVAL 3 DAY),INTERVAL 30 MINUTE), 'CONFIRMEE', 4, 2),
-    (7,'f2d36f69c3587c1f272cc96713f9ed0d', DATE_ADD(DATE_SUB(@seed_now, INTERVAL 3 DAY),INTERVAL 45 MINUTE), 'CONFIRMEE', 5, 2),
+    (4, DATE_SUB(@seed_now, INTERVAL 3 DAY), 'CONFIRMEE', 2, 2),
+    (5, DATE_ADD(DATE_SUB(@seed_now, INTERVAL 3 DAY),INTERVAL 15 MINUTE), 'CONFIRMEE', 3, 2),
+    (6, DATE_ADD(DATE_SUB(@seed_now, INTERVAL 3 DAY),INTERVAL 30 MINUTE), 'CONFIRMEE', 4, 2),
+    (7, DATE_ADD(DATE_SUB(@seed_now, INTERVAL 3 DAY),INTERVAL 45 MINUTE), 'CONFIRMEE', 5, 2),
 
     -- Événement 3 : passé
     -- Les réservations ont été réalisées avant l'événement
-    (8, '7c611f74d0ff412316e677e7510e3179', DATE_SUB(@event_3_start, INTERVAL 5 DAY), 'CONFIRMEE', 2, 3),
-    (9, 'a8a84bc0fb291dea1edcdb879c13ed85', DATE_SUB(@event_3_start, INTERVAL 4 DAY), 'CONFIRMEE', 3, 3),
+    (8, DATE_SUB(@event_3_start, INTERVAL 5 DAY), 'CONFIRMEE', 2, 3),
+    (9, DATE_SUB(@event_3_start, INTERVAL 4 DAY), 'CONFIRMEE', 3, 3),
 
     -- Événement 4 : réservation conservée malgré l'annulation
-    (10, '76402ef9e67556d4339f968772a54185', DATE_SUB(@seed_now, INTERVAL 2 DAY), 'CONFIRMEE', 4, 4);
+    (10, DATE_SUB(@seed_now, INTERVAL 2 DAY), 'CONFIRMEE', 4, 4);
 
 
 -- RESERVATION_PLACE --

@@ -32,8 +32,8 @@
                 <form class="form" action="#" method="post">
                     <div class="field">
                         <label class="field__label" for="code">N° du billet ou de la réservation</label>
-                        <input class="input" type="text" id="code" name="code" placeholder="Ex. BIL-01170 ou R-2026-108"
-                            aria-describedby="code-help" required>
+                        <input class="input" type="text" id="code" name="code"
+                            placeholder="Ex. BIL-000008 ou R-2026-000008" aria-describedby="code-help" required>
                     </div>
                     <button class="btn btn--primary" type="submit">Rechercher le billet</button>
                 </form>

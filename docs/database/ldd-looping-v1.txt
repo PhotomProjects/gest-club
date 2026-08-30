@@ -51,7 +51,6 @@ CREATE TABLE TYPE_MATCH(
 
 CREATE TABLE RESERVATION(
    id_reservation INT AUTO_INCREMENT,
-   reference_reservation CHAR(32)  NOT NULL,
    date_reservation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
    statut_reservation VARCHAR(10)  NOT NULL DEFAULT 'CONFIRMEE',
    id_utilisateur INT NOT NULL,

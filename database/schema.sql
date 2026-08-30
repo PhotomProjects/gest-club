@@ -329,12 +329,6 @@ CREATE TABLE participation_match (
 
 CREATE TABLE reservation (
     id_reservation INT NOT NULL AUTO_INCREMENT,
-
-    reference_reservation CHAR(32)
-        CHARACTER SET ascii
-        COLLATE ascii_bin
-        NOT NULL,
-
     date_reservation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     statut_reservation VARCHAR(10) NOT NULL DEFAULT 'CONFIRMEE',
     id_utilisateur INT NOT NULL,
@@ -342,14 +336,6 @@ CREATE TABLE reservation (
 
     CONSTRAINT pk_reservation
         PRIMARY KEY (id_reservation),
-
-    CONSTRAINT uq_reservation_reference
-        UNIQUE (reference_reservation),
-
-    CONSTRAINT chk_reservation_reference
-        CHECK (
-            reference_reservation REGEXP '^[0-9a-f]{32}$'
-        ),
 
     CONSTRAINT chk_reservation_statut
         CHECK (
