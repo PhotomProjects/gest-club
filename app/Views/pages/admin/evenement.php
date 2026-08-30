@@ -28,14 +28,16 @@
             <div class="panel__body">
                 <dl class="kv">
                     <div class="kv__row">
-                        <dt class="kv__key">Date et heure</dt>
+                        <dt class="kv__key">Début</dt>
                         <dd class="kv__value">
                             <time datetime="2026-07-26T20:00">26/07/2026 · 20:00</time>
                         </dd>
                     </div>
                     <div class="kv__row">
-                        <dt class="kv__key">Lieu</dt>
-                        <dd class="kv__value">Lucha Pit Arena, Paris</dd>
+                        <dt class="kv__key">Fin</dt>
+                        <dd class="kv__value">
+                            <time datetime="2026-07-27T00:00">27/07/2026 · 00:00</time>
+                        </dd>
                     </div>
                 </dl>
                 <p class="event-description__label">Description</p>

@@ -26,19 +26,27 @@
                             </div>
                             <div class="field-pair">
                                 <div class="field">
-                                    <label class="field__label" for="ev-date">Date</label>
-                                    <input class="input" id="ev-date" name="date" required type="date"
+                                    <label class="field__label" for="ev-date-debut">Date de début</label>
+                                    <input class="input" id="ev-date-debut" name="date_debut" required type="date"
                                         value="2026-07-26">
                                 </div>
                                 <div class="field">
-                                    <label class="field__label" for="ev-heure">Heure</label>
-                                    <input class="input" id="ev-heure" name="heure" required type="time" value="20:00">
+                                    <label class="field__label" for="ev-heure-debut">Heure de début</label>
+                                    <input class="input" id="ev-heure-debut" name="heure_debut" required type="time"
+                                        value="20:00">
                                 </div>
                             </div>
-                            <div class="field">
-                                <label class="field__label" for="ev-lieu">Lieu</label>
-                                <input class="input" id="ev-lieu" name="lieu" required type="text"
-                                    value="Lucha Pit Arena, Paris">
+                            <div class="field-pair">
+                                <div class="field">
+                                    <label class="field__label" for="ev-date-fin">Date de fin</label>
+                                    <input class="input" id="ev-date-fin" name="date_fin" required type="date"
+                                        value="2026-07-27">
+                                </div>
+                                <div class="field">
+                                    <label class="field__label" for="ev-heure-fin">Heure de fin</label>
+                                    <input class="input" id="ev-heure-fin" name="heure_fin" required type="time"
+                                        value="00:00">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -78,8 +86,8 @@
                     </div>
                     <div class="panel__body">
                         <label class="visually-hidden" for="ev-desc">Description de l'évènement</label>
-                        <textarea class="textarea" id="ev-desc"
-                            name="description">Dans cette édition spéciale de RAW, les invités ayant marqué l'histoire du show se retrouvent pour une soirée exceptionnelle à la Lucha Pit Arena.</textarea>
+                        <textarea class="textarea" id="ev-desc" name="description" maxlength="2000"
+                            required>Dans cette édition spéciale de RAW, les invités ayant marqué l'histoire du show se retrouvent pour une soirée exceptionnelle à la Lucha Pit Arena.</textarea>
                     </div>
                 </section>
 
