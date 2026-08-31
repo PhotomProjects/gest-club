@@ -1,67 +1,84 @@
+<?php
+$dateDebut = new DateTime($evenement['date_heure_debut_evenement']);
+$dateFin = new DateTime($evenement['date_heure_fin_evenement']);
+$estAnnule = $evenement['statut_evenement'] === 'ANNULE';
+$estComplet = (int) $evenement['places_disponibles'] === 0;
+$estTermine = $dateFin < new DateTime();
+?>
 <main class="page">
     <div class="container">
         <div class="event-detail">
+
             <article class="card">
-                <div class="media media--16x9 media--placeholder">
-                    <span>IMG</span>
-                </div>
-                <h1 class="event-detail__title">RAW is WAR: 1000th Ep.</h1>
+                <?php if ($evenement['image_evenement'] !== null): ?>
+                    <div class="media media--16x9">
+                        <img src="/assets/images/<?= htmlspecialchars($evenement['image_evenement']) ?>" alt="">
+                    </div>
+                <?php else: ?>
+                    <div class="media media--16x9 media--placeholder">
+                        <span>IMG</span>
+                    </div>
+                <?php endif; ?>
+                <h1 class="event-detail__title">
+                    <?= htmlspecialchars($evenement['nom_evenement']) ?>
+                </h1>
                 <div class="meta-list">
-                    <time datetime="2026-07-26">Dim. 26 juillet 2026</time>
+                    <time datetime="<?= $dateDebut->format('Y-m-d') ?>">
+                        <?= $dateDebut->format('d/m/Y') ?>
+                    </time>
                     <span>
-                        <time datetime="2026-07-26T20:00">20:00</time>
+                        <time datetime="<?= $dateDebut->format('Y-m-d\TH:i') ?>">
+                            <?= $dateDebut->format('H:i') ?>
+                        </time>
                         -
-                        <time datetime="2026-07-26T23:00">23:00</time>
+                        <time datetime="<?= $dateFin->format('Y-m-d\TH:i') ?>">
+                            <?= $dateFin->format('H:i') ?>
+                        </time>
                     </span>
-                    <span>Lucha Pit Arena, Paris</span>
                 </div>
                 <p class="event-detail__description">
-                    Dans cette édition spéciale de RAW, nous célébrons le 1000e épisode avec des invités
-                    ayant marqué l'histoire de RAW à travers les années. De l'Attitude Era, en passant à la
-                    Ruthless Era, nos légendes seront sans pitié.
+                    <?= htmlspecialchars($evenement['description_evenement']) ?>
                 </p>
             </article>
 
             <section class="card card--flat">
                 <h2 class="card__title">Programme de la carte</h2>
-                <ul class="match-list">
-                    <li class="match">
-                        <p class="match__type">Inauguration</p>
-                        <p class="match__cast">Avec Paul Lesveque</p>
-                    </li>
-                    <li class="match">
-                        <p class="match__type">Tag Team 2v2</p>
-                        <p class="match__cast">John Cena vs. Randy Orton vs. The Miz vs. CM Punk</p>
-                    </li>
-                    <li class="match">
-                        <p class="match__type">Steel Cage Match</p>
-                        <p class="match__cast">Dean Ambrose vs. Bron Breakker</p>
-                    </li>
-                    <li class="match">
-                        <p class="match__type">Iron Man Match</p>
-                        <p class="match__cast">Sheamus vs. Drew McIntyre</p>
-                    </li>
-                    <li class="match">
-                        <p class="match__type">Falls Count Anywhere</p>
-                        <p class="match__cast">Rhea Ripley (c.) vs. Paige</p>
-                    </li>
-                    <li class="match">
-                        <p class="match__type">WHC Match</p>
-                        <p class="match__cast">Roman Reigns (c.) vs. Seth Rollins</p>
-                    </li>
-                    <li class="match">
-                        <p class="match__type">IC Match</p>
-                        <p class="match__cast">Wade Barrett (c.) vs. Matt Cardona</p>
-                    </li>
-                </ul>
+                <?php if (empty($matchs)): ?>
+                    <p>Aucun match programmé pour cet évènement.</p>
+                <?php else: ?>
+                    <ul class="match-list">
+                        <?php foreach ($matchs as $match): ?>
+                            <li class="match">
+                                <p class="match__type">
+                                    <?= htmlspecialchars($match['libelle_type_match']) ?>
+                                </p>
+                                <p class="match__cast">
+                                    <?= htmlspecialchars($match['nom_match']) ?>
+                                </p>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
             </section>
+
         </div>
         <div class="cta-bar">
             <div>
-                <p class="cta-bar__title">Réservations ouvertes</p>
-                <p class="cta-bar__price">À partir de 25 €</p>
+                <?php if ($estAnnule): ?>
+                    <p class="cta-bar__title">Évènement annulé</p>
+                <?php elseif ($estTermine): ?>
+                    <p class="cta-bar__title">Évènement terminé</p>
+                <?php elseif ($estComplet): ?>
+                    <p class="cta-bar__title">Évènement complet</p>
+                <?php else: ?>
+                    <p class="cta-bar__title">Réservations ouvertes</p>
+                <?php endif; ?>
             </div>
-            <a class="btn btn--primary btn--lg" href="/reservation.php">Réserver</a>
+            <?php if (!$estAnnule && !$estTermine && !$estComplet): ?>
+                <a class="btn btn--primary btn--lg" href="/reservation.php?id=<?= $evenement['id_evenement'] ?>">
+                    Réserver
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 </main>

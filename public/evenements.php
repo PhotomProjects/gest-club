@@ -2,7 +2,13 @@
 
 declare(strict_types=1);
 
+use App\Repositories\EvenementRepository;
+
 require dirname(__DIR__) . '/config/bootstrap.php';
+
+// Récupération des événements depuis la base de données.
+$evenementRepository = new EvenementRepository($pdo);
+$evenements = $evenementRepository->findUpcoming();
 
 $pageTitle = 'Évènements';
 $currentSection = 'events';
