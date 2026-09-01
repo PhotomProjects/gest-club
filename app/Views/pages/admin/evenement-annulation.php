@@ -10,6 +10,7 @@
     </div>
     <div class="admin-centered">
         <form action="#" method="post">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
             <section class="panel">
                 <div class="panel__head">
                     <h2 class="panel__title">RAW is WAR: 1000th Ep.</h2>

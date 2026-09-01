@@ -5,7 +5,8 @@
         </div>
     </div>
     <div class="admin-centered">
-        <form class="panel" action="#" method="post">
+        <form class="panel" action="#" method="post" novalidate>
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
             <div class="panel__body">
                 <div class="form">
                     <div class="field">

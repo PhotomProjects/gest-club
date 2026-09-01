@@ -28,7 +28,7 @@
             <div class="reservation-side">
                 <section class="card">
                     <h2 class="card__title">Choisissez vos options de réservation</h2>
-                    <form class="reservation-form" action="/reservation-recapitulatif.php" method="post">
+                    <form class="reservation-form" action="/reservation-recapitulatif.php" method="post" novalidate>
                         <fieldset class="options">
                             <legend class="options__legend">Nombre de places</legend>
                             <div class="options__list">

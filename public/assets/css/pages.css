@@ -763,6 +763,10 @@
   align-items: start;
 }
 
+.auth-notice {
+  margin-bottom: 3rem;
+}
+
 .auth-col {
   padding: 2rem;
   background-color: var(--c-surface);

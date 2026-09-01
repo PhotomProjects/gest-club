@@ -6,7 +6,8 @@
         </div>
     </div>
     <div class="admin-centered admin-centered--wide">
-        <form action="#" method="post">
+        <form action="#" method="post" novalidate>
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
             <section class="panel">
                 <div class="panel__head">
                     <h2 class="panel__title">Informations du match</h2>

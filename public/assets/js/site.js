@@ -32,15 +32,16 @@ function checkPasswordRules(passwordInput, rulesContainer) {
             letterCaseRule.classList.remove("is-valid", "is-invalid");
             numberRule.classList.remove("is-valid", "is-invalid");
             specialRule.classList.remove("is-valid", "is-invalid");
-            passwordInput.setCustomValidity("");
             return;
         }
 
         // Vérification des quatre règles.
         const hasLength = password.length >= 8;
+        const hasNoWhitespace = !/\s/.test(password);
         const hasLetterCase = /[A-Z]/.test(password) && /[a-z]/.test(password);
         const hasNumber = /\d/.test(password);
-        const hasSpecialCharacter = /[^A-Za-z0-9\s]/.test(password);
+        const hasSpecialCharacter = /[^A-Za-z0-9\s]/.test(password) && hasNoWhitespace;
+        
 
         // Longueur
         if (hasLength) {
@@ -77,32 +78,17 @@ function checkPasswordRules(passwordInput, rulesContainer) {
             specialRule.classList.add("is-invalid");
             specialRule.classList.remove("is-valid");
         }
-
-        // Validation globale
-        if (
-            hasLength &&
-            hasLetterCase &&
-            hasNumber &&
-            hasSpecialCharacter
-        ) {
-            passwordInput.setCustomValidity("");
-        } else {
-            passwordInput.setCustomValidity(
-                "Le mot de passe ne respecte pas toutes les règles."
-            );
-        }
     });
 }
 
 // Vérifier qu'un champ de confirmation correspond au champ principal
 
-function checkConfirmation(mainInput, confirmationInput, errorElement) {
+function checkConfirmation(mainInput, confirmationInput, errorElement, mismatchMessage) {
     function compareValues() {
         // Champ de confirmation vide : état neutre.
         if (confirmationInput.value === "") {
             confirmationInput.classList.remove("is-valid", "is-invalid");
             confirmationInput.removeAttribute("aria-invalid");
-            confirmationInput.setCustomValidity("");
             errorElement.hidden = true;
             return;
         }
@@ -112,17 +98,13 @@ function checkConfirmation(mainInput, confirmationInput, errorElement) {
             confirmationInput.classList.add("is-valid");
             confirmationInput.classList.remove("is-invalid");
             confirmationInput.removeAttribute("aria-invalid");
-            confirmationInput.setCustomValidity("");
             errorElement.hidden = true;
         } else {
             // Les deux valeurs sont différentes.
             confirmationInput.classList.add("is-invalid");
             confirmationInput.classList.remove("is-valid");
             confirmationInput.setAttribute("aria-invalid", "true");
-            // Récupèration direct du message présent dans le HTML.
-            confirmationInput.setCustomValidity(
-                errorElement.textContent.trim()
-            );
+            errorElement.textContent = mismatchMessage;
             errorElement.hidden = false;
         }
     }
@@ -183,13 +165,13 @@ if (signupPassword && signupPasswordRules) {
 // Confirmation de l'adresse e-mail
 
 if (signupEmail && signupEmail2 && signupEmailError) {
-    checkConfirmation(signupEmail, signupEmail2, signupEmailError);
+    checkConfirmation(signupEmail, signupEmail2, signupEmailError, "Les adresses e-mail ne correspondent pas.");
 }
 
 // Confirmation du mot de passe
 
 if (signupPassword && signupPassword2 && signupPasswordError) {
-    checkConfirmation(signupPassword, signupPassword2, signupPasswordError);
+    checkConfirmation(signupPassword, signupPassword2, signupPasswordError, "Les mots de passe ne correspondent pas.");
 }
 
 // -- Sécurité du compte --
@@ -232,10 +214,10 @@ if (newPassword && newPasswordRules) {
     checkPasswordRules(newPassword, newPasswordRules);
 }
 
-// Vérifier la confirmation du nouveau mot de passe
+// Confirmation du nouveau mot de passe
 
 if (newPassword && newPassword2 && newPasswordError) {
-    checkConfirmation(newPassword, newPassword2, newPasswordError);
+    checkConfirmation(newPassword, newPassword2, newPasswordError, "Les mots de passe ne correspondent pas.");
 }
 
 // == Réservation ==

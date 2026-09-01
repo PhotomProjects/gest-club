@@ -29,7 +29,8 @@
                 <p class="scan-help" id="code-help">
                     Utilisez le numéro du billet ou de la réservation lorsque la caméra n'est pas disponible.
                 </p>
-                <form class="form" action="#" method="post">
+                <form class="form" action="#" method="post" novalidate>
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
                     <div class="field">
                         <label class="field__label" for="code">N° du billet ou de la réservation</label>
                         <input class="input" type="text" id="code" name="code"

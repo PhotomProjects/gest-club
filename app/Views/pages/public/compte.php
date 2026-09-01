@@ -2,10 +2,19 @@
     <div class="container">
         <div class="profile-header">
             <div class="profile-header__id">
-                <h1>Camille DUPONT</h1>
-                <p>prenom.nom@exemple.fr</p>
+                <h1>
+                    <?= htmlspecialchars(
+                        $utilisateurConnecte['prenom'] . ' ' . $utilisateurConnecte['nom']
+                    ) ?>
+                </h1>
+                <p>
+                    <?= htmlspecialchars($utilisateurConnecte['email']) ?>
+                </p>
             </div>
-            <button class="btn btn--ghost" type="button">Se déconnecter</button>
+            <form action="/deconnexion.php" method="post">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
+                <button type="submit" class="btn btn--ghost">Se déconnecter</button>
+            </form>
         </div>
 
         <section class="account-links">

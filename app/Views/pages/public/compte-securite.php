@@ -2,7 +2,13 @@
     <div class="container">
         <section class="form-panel">
             <h1>Sécurité du compte</h1>
-            <form class="form" action="#" method="post">
+            <?php if ($modificationReussie): ?>
+                <div class="notice">
+                    <p>Votre mot de passe a bien été mis à jour.</p>
+                </div>
+            <?php endif; ?>
+            <form class="form" action="#" method="post" novalidate>
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
                 <div class="field">
                     <label class="field__label" for="actuel">Mot de passe actuel</label>
                     <div class="password-field">
@@ -12,6 +18,11 @@
                             Afficher
                         </button>
                     </div>
+                    <?php if (isset($erreurs['mot_de_passe_actuel'])): ?>
+                        <p class="field__error">
+                            <?= htmlspecialchars($erreurs['mot_de_passe_actuel']) ?>
+                        </p>
+                    <?php endif; ?>
                 </div>
                 <div class="field">
                     <label class="field__label" for="nouveau">Nouveau mot de passe</label>
@@ -22,6 +33,11 @@
                             Afficher
                         </button>
                     </div>
+                    <?php if (isset($erreurs['nouveau_mot_de_passe'])): ?>
+                        <p class="field__error">
+                            <?= htmlspecialchars($erreurs['nouveau_mot_de_passe']) ?>
+                        </p>
+                    <?php endif; ?>
                 </div>
                 <div class="field">
                     <label class="field__label" for="nouveau2">Confirmer le nouveau mot de passe</label>
@@ -33,8 +49,9 @@
                             Afficher
                         </button>
                     </div>
-                    <p class="field__error" id="new-password-confirmation-error" hidden>
-                        Les mots de passe ne correspondent pas.
+                    <p class="field__error" id="new-password-confirmation-error"
+                        <?= isset($erreurs['nouveau_mot_de_passe_confirmation']) ? '' : 'hidden' ?>>
+                        <?= htmlspecialchars($erreurs['nouveau_mot_de_passe_confirmation'] ?? 'Les mots de passe ne correspondent pas.') ?>
                     </p>
                 </div>
                 <div class="rules" id="new-password-rules">
@@ -50,7 +67,7 @@
                             un chiffre ;
                         </li>
                         <li data-password-rule="special">
-                            un caractère spécial.
+                            un caractère spécial et aucun espace.
                         </li>
                     </ul>
                 </div>

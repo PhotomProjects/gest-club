@@ -12,7 +12,6 @@ $evenements = $evenementRepository->findUpcoming();
 
 $pageTitle = 'Évènements';
 $currentSection = 'events';
-$isAuthenticated = false;
 
 $view = dirname(__DIR__) . '/app/Views/pages/public/evenements.php';
 

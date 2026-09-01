@@ -26,7 +26,6 @@ $matchs = $matchRepository->findByEvenementId($id);
 
 $pageTitle = $evenement['nom_evenement'];
 $currentSection = 'events';
-$isAuthenticated = false;
 
 $view = dirname(__DIR__) . '/app/Views/pages/public/evenement.php';
 

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Core\Auth;
+use App\Core\Csrf;
 use App\Core\Database;
 
 // Chargement de l'autoload Composer.
@@ -31,6 +33,34 @@ if (session_status() === PHP_SESSION_NONE) {
     ]);
 
     session_start();
+}
+
+// État de l'utilisateur connecté.
+$sessionUtilisateur = $_SESSION['utilisateur'] ?? null;
+$utilisateurConnecte = is_array($sessionUtilisateur) ? $sessionUtilisateur : null;
+$auth = new Auth($utilisateurConnecte);
+$isAuthenticated = $auth->isAuthenticated();
+
+// Protection CSRF.
+$csrf = new Csrf();
+$csrfToken = $csrf->getToken();
+
+// Récupère un champ POST uniquement s'il contient une chaîne.
+function recupererChampPost(string $nomChamp): string
+{
+    $valeur = $_POST[$nomChamp] ?? '';
+    return is_string($valeur) ? $valeur : '';
+}
+
+// Vérifie les règles communes des mots de passe.
+function estMotDePasseValide(string $motDePasse): bool
+{
+    return strlen($motDePasse) >= 8
+        && preg_match('/[a-z]/', $motDePasse)
+        && preg_match('/[A-Z]/', $motDePasse)
+        && preg_match('/[0-9]/', $motDePasse)
+        && preg_match('/[^a-zA-Z0-9\s]/', $motDePasse)
+        && !preg_match('/\s/', $motDePasse);
 }
 
 // Connexion à la base de données.

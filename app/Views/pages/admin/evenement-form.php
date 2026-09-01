@@ -8,7 +8,8 @@
             </p>
         </div>
     </div>
-    <form action="#" enctype="multipart/form-data" method="post">
+    <form action="#" enctype="multipart/form-data" method="post" novalidate>
+        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
         <div class="event-form-layout">
             <div class="event-form-column">
                 <section class="panel">

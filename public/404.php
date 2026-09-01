@@ -8,7 +8,6 @@ $pageTitle = 'Page introuvable';
 $robots = 'noindex';
 
 $currentSection = null;
-$isAuthenticated = false;
 
 $view = dirname(__DIR__) . '/app/Views/pages/public/404.php';
 

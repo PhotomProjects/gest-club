@@ -37,7 +37,14 @@ $isAuthenticated = $isAuthenticated ?? false;
         <?php if ($isAuthenticated): ?>
             <li><a class="mobile-menu__item" href="/mes-reservations.php">Mes réservations</a></li>
             <li><a class="mobile-menu__item" href="/compte.php">Compte</a></li>
-            <li><button class="mobile-menu__item mobile-menu__logout" type="button">Se déconnecter</button></li>
+            <li>
+                <form action="/deconnexion.php" method="post">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
+                    <button class="mobile-menu__item mobile-menu__logout" type="submit">
+                        Se déconnecter
+                    </button>
+                </form>
+            </li>
         <?php else: ?>
             <li><a class="mobile-menu__item" href="/connexion.php">Se connecter</a></li>
         <?php endif; ?>

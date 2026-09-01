@@ -30,6 +30,9 @@
         </a>
     </nav>
     <div class="admin-sidebar__footer">
-        <button class="admin-nav__link admin-logout" type="button">Déconnexion</button>
+        <form action="/deconnexion.php" method="post">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
+            <button class="admin-nav__link admin-logout" type="submit">Déconnexion</button>
+        </form>
     </div>
 </aside>
