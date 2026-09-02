@@ -267,9 +267,20 @@ const cameraVideo = document.getElementById("camera-video");
 const cameraPlaceholder = document.getElementById("camera-placeholder");
 const cameraError = document.getElementById("camera-error");
 const ticketCode = document.getElementById("code");
+const ticketSearchForm = document.getElementById("ticket-search-form");
+let scanInProgress = false;
+let scanTimer = null;
 
-// Arrêter la caméra.
+// Arrêter complètement la caméra.
 function stopCamera() {
+    scanInProgress = false;
+    if (scanTimer !== null) {
+        clearTimeout(scanTimer);
+        scanTimer = null;
+    }
+    if (!cameraVideo) {
+        return;
+    }
     const stream = cameraVideo.srcObject;
     if (stream) {
         stream.getTracks().forEach(function(track) {
@@ -279,64 +290,130 @@ function stopCamera() {
     }
 }
 
+// Remettre l'interface caméra dans son état initial.
+function resetCameraInterface(message = "Aperçu caméra") {
+    cameraVideo.hidden = true;
+    cameraPlaceholder.hidden = false;
+    cameraPlaceholder.textContent = message;
+    cameraButton.textContent = "Activer la caméra";
+    cameraButton.disabled = false;
+}
+
 if (
-    cameraButton &&
-    cameraVideo &&
-    cameraPlaceholder &&
-    cameraError &&
-    ticketCode
+    cameraButton && cameraVideo && cameraPlaceholder && cameraError && ticketCode && ticketSearchForm
 ) {
     cameraButton.addEventListener("click", async function() {
-        // Vérifier que le navigateur peut lire les QR Codes.
-        if (!("BarcodeDetector" in window)) {
-            cameraError.textContent = "La lecture des QR Codes n'est pas disponible sur ce navigateur.";
+        // Le bouton permet aussi d'arrêter la caméra.
+        if (scanInProgress) {
+            stopCamera();
+            resetCameraInterface();
+            return;
+        }
+
+        cameraError.hidden = true;
+
+        if (!navigator.mediaDevices?.getUserMedia) {
+            cameraError.textContent = "La caméra nécessite HTTPS ou localhost.";
             cameraError.hidden = false;
             return;
         }
+
+        if (!("BarcodeDetector" in window)) {
+            cameraError.textContent = "La lecture des QR Codes n'est pas disponible sur ce navigateur. Utilisez la saisie manuelle.";
+            cameraError.hidden = false;
+            return;
+        }
+
+        cameraButton.disabled = true;
+
         try {
-            const stream = await navigator.mediaDevices.getUserMedia({
-                video: true,
-                caudio: false
-            });
+            const formats = await BarcodeDetector.getSupportedFormats();
+
+            if (!formats.includes("qr_code")) {
+                cameraError.textContent = "Ce navigateur ne prend pas en charge les QR Codes.";
+                cameraError.hidden = false;
+                cameraButton.disabled = false;
+                return;
+            }
+
+            const stream =
+                await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: {
+                            ideal: "environment"
+                        }
+                    },
+                    audio: false
+                });
+
             cameraVideo.srcObject = stream;
+
+            await cameraVideo.play();
+
             cameraVideo.hidden = false;
             cameraPlaceholder.hidden = true;
-            cameraError.hidden = true;
-            cameraButton.textContent = "Caméra activée";
-            cameraButton.disabled = true;
-            const detector = new BarcodeDetector({
-                formats: ["qr_code"]
-            });
+
+            cameraButton.textContent = "Arrêter la caméra";
+            cameraButton.disabled = false;
+
+            scanInProgress = true;
+
+            const detector = new BarcodeDetector({formats: ["qr_code"]});
+
             scanQRCode(detector);
         } catch (error) {
-            cameraError.textContent = "Impossible d'accéder à la caméra.";
+            stopCamera();
+            resetCameraInterface();
+
+            cameraError.textContent = "Impossible d'accéder à la caméra. Vérifiez les autorisations du navigateur.";
             cameraError.hidden = false;
         }
     });
+
+    // Arrêter la caméra lorsque la page est quittée.
+    window.addEventListener("pagehide", stopCamera);
 }
 
-// Lire un QR Code.
+// Rechercher continuellement un QR Code dans la vidéo.
 async function scanQRCode(detector) {
+    if (
+        !scanInProgress ||
+        !cameraVideo ||
+        !cameraVideo.srcObject
+    ) {
+        return;
+    }
+
     try {
         const codes = await detector.detect(cameraVideo);
-        if (codes.length > 0) {
-            ticketCode.value = codes[0].rawValue;
-            stopCamera();
-            cameraVideo.hidden = true;
-            cameraPlaceholder.hidden = false;
-            cameraPlaceholder.textContent = "QR Code détecté";
-            cameraButton.textContent = "Activer la caméra";
-            cameraButton.disabled = false;
-            return;
+
+        if (
+            codes.length > 0 &&
+            typeof codes[0].rawValue === "string"
+        ) {
+            const scannedCode = codes[0].rawValue.trim();
+
+            if (scannedCode !== "") {
+                ticketCode.value = scannedCode;
+
+                stopCamera();
+                resetCameraInterface("QR Code détecté");
+
+                // Envoie le formulaire avec le CSRF et l'action « rechercher ».
+                ticketSearchForm.requestSubmit();
+                return;
+            }
         }
-        // Recommencer la lecture après un court délai.
-        setTimeout(function() {
+
+        scanTimer = setTimeout(function() {
             scanQRCode(detector);
-        }, 500);
+        }, 300);
     } catch (error) {
+        stopCamera();
+        resetCameraInterface();
+
         cameraError.textContent = "Impossible de lire le QR Code.";
         cameraError.hidden = false;
-        stopCamera();
     }
 }
 

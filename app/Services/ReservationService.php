@@ -166,6 +166,12 @@ class ReservationService
                 );
             }
 
+            if ($reservation['id_presence'] !== null) {
+                throw new DomainException(
+                    "Cette réservation ne peut plus être annulée car le billet a déjà été utilisé."
+                );
+            }
+
             $dateDebut = new \DateTimeImmutable($reservation['date_heure_debut_evenement']);
 
             if ($dateDebut <= new \DateTimeImmutable()) {

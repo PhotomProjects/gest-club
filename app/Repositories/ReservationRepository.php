@@ -241,10 +241,15 @@ class ReservationRepository
             r.statut_reservation,
             e.id_evenement,
             e.date_heure_debut_evenement,
-            e.statut_evenement
+            e.statut_evenement,
+            pr.id_presence
         FROM reservation r
         INNER JOIN evenement e
             ON e.id_evenement = r.id_evenement
+        INNER JOIN billet b
+            ON b.id_reservation = r.id_reservation
+        LEFT JOIN presence pr
+            ON pr.id_billet = b.id_billet
         WHERE r.id_reservation = :id_reservation
         AND r.id_utilisateur = :id_utilisateur
         FOR UPDATE'
