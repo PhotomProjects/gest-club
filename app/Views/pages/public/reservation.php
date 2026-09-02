@@ -1,3 +1,13 @@
+<?php
+$dateDebut = new DateTimeImmutable($evenement['date_heure_debut_evenement']);
+$dateFin = new DateTimeImmutable($evenement['date_heure_fin_evenement']);
+
+$selectionReservation = $selectionReservation ?? [];
+$nbPlacesSelectionne = (int) ($selectionReservation['nb_places'] ?? 1);
+$tribuneSelectionnee = $selectionReservation['tribune'] ?? 'NORD';
+$niveauSelectionne = $selectionReservation['niveau'] ?? 'BAS';
+$erreurReservation = $erreurReservation ?? null;
+?>
 <main class="page">
     <div class="container">
         <div class="page-header">
@@ -6,40 +16,61 @@
         <div class="reservation-layout">
             <article class="card event-summary">
                 <h2 class="card__title">Récapitulatif de l'évènement</h2>
-                <div class="media media--16x9 media--placeholder">
-                    <span>IMG</span>
-                </div>
-                <h3 class="event-summary__title">RAW is WAR: 1000th Ep.</h3>
+                <?php if ($evenement['image_evenement'] !== null): ?>
+                    <div class="media media--16x9">
+                        <img src="/assets/images/<?= htmlspecialchars($evenement['image_evenement']) ?>" alt="">
+                    </div>
+                <?php else: ?>
+                    <div class="media media--16x9 media--placeholder">
+                        <span>IMG</span>
+                    </div>
+                <?php endif; ?>
+                <h3 class="event-summary__title">
+                    <?= htmlspecialchars($evenement['nom_evenement']) ?>
+                </h3>
                 <div class="meta-list">
-                    <time datetime="2026-07-26">Dim. 26 juillet 2026</time>
+                    <time datetime="<?= $dateDebut->format('Y-m-d') ?>">
+                        <?= $dateDebut->format('d/m/Y') ?>
+                    </time>
                     <span>
-                        <time datetime="2026-07-26T20:00">20:00</time>
+                        <time datetime="<?= $dateDebut->format('Y-m-d\TH:i') ?>">
+                            <?= $dateDebut->format('H:i') ?>
+                        </time>
                         -
-                        <time datetime="2026-07-26T23:00">23:00</time>
+                        <time datetime="<?= $dateFin->format('Y-m-d\TH:i') ?>">
+                            <?= $dateFin->format('H:i') ?>
+                        </time>
                     </span>
                     <span>Lucha Pit Arena, Paris</span>
                 </div>
                 <p class="event-summary__description">
-                    Dans cette édition spéciale de RAW, nous célébrons le 1000e épisode avec des invités
-                    ayant marqué l'histoire de RAW à travers les années. De l'Attitude Era, en passant à la
-                    Ruthless Era, nos légendes seront sans pitié.
+                    <?= htmlspecialchars($evenement['description_evenement']) ?>
                 </p>
             </article>
             <div class="reservation-side">
                 <section class="card">
                     <h2 class="card__title">Choisissez vos options de réservation</h2>
                     <form class="reservation-form" action="/reservation-recapitulatif.php" method="post" novalidate>
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
+                        <input type="hidden" name="id_evenement" value="<?= $evenement['id_evenement'] ?>">
+                        <?php if ($erreurReservation !== null): ?>
+                            <div class="notice notice--danger" role="alert">
+                                <p>
+                                    <?= htmlspecialchars($erreurReservation) ?>
+                                </p>
+                            </div>
+                        <?php endif; ?>
                         <fieldset class="options">
                             <legend class="options__legend">Nombre de places</legend>
                             <div class="options__list">
                                 <label class="option">
-                                    <input type="radio" name="nb_places" value="1" checked>
+                                    <input type="radio" name="nb_places" value="1" <?= $nbPlacesSelectionne === 1 ? 'checked' : '' ?>>
                                     <span class="option__box">
                                         <span class="option__label">1</span>
                                     </span>
                                 </label>
                                 <label class="option">
-                                    <input type="radio" name="nb_places" value="2">
+                                    <input type="radio" name="nb_places" value="2" <?= $nbPlacesSelectionne === 2 ? 'checked' : '' ?>>
                                     <span class="option__box">
                                         <span class="option__label">2</span>
                                     </span>
@@ -50,25 +81,25 @@
                             <legend class="options__legend">Tribune</legend>
                             <div class="options__list">
                                 <label class="option">
-                                    <input type="radio" name="tribune" value="nord" checked>
+                                    <input type="radio" name="tribune" value="NORD" <?= $tribuneSelectionnee === 'NORD' ? 'checked' : '' ?>>
                                     <span class="option__box">
                                         <span class="option__label">Nord</span>
                                     </span>
                                 </label>
                                 <label class="option">
-                                    <input type="radio" name="tribune" value="est">
+                                    <input type="radio" name="tribune" value="EST" <?= $tribuneSelectionnee === 'EST' ? 'checked' : '' ?>>
                                     <span class="option__box">
                                         <span class="option__label">Est</span>
                                     </span>
                                 </label>
                                 <label class="option">
-                                    <input type="radio" name="tribune" value="sud">
+                                    <input type="radio" name="tribune" value="SUD" <?= $tribuneSelectionnee === 'SUD' ? 'checked' : '' ?>>
                                     <span class="option__box">
                                         <span class="option__label">Sud</span>
                                     </span>
                                 </label>
                                 <label class="option">
-                                    <input type="radio" name="tribune" value="ouest">
+                                    <input type="radio" name="tribune" value="OUEST" <?= $tribuneSelectionnee === 'OUEST' ? 'checked' : '' ?>>
                                     <span class="option__box">
                                         <span class="option__label">Ouest</span>
                                     </span>
@@ -79,24 +110,33 @@
                             <legend class="options__legend">Niveau</legend>
                             <div class="options__list">
                                 <label class="option">
-                                    <input type="radio" name="niveau" value="bas" data-price="45" checked>
+                                    <input type="radio" name="niveau" value="BAS"
+                                        data-price="<?= $prixParNiveau['BAS'] ?>" <?= $niveauSelectionne === 'BAS' ? 'checked' : '' ?>>
                                     <span class="option__box">
                                         <span class="option__label">Bas</span>
-                                        <span class="option__meta">45 € / place</span>
+                                        <span class="option__meta">
+                                            <?= number_format($prixParNiveau['BAS'], 0, ',', ' ') ?> € / place
+                                        </span>
                                     </span>
                                 </label>
                                 <label class="option">
-                                    <input type="radio" name="niveau" value="milieu" data-price="35">
+                                    <input type="radio" name="niveau" value="MILIEU"
+                                        data-price="<?= $prixParNiveau['MILIEU'] ?>" <?= $niveauSelectionne === 'MILIEU' ? 'checked' : '' ?>>
                                     <span class="option__box">
                                         <span class="option__label">Milieu</span>
-                                        <span class="option__meta">35 € / place</span>
+                                        <span class="option__meta">
+                                            <?= number_format($prixParNiveau['MILIEU'], 0, ',', ' ') ?> € / place
+                                        </span>
                                     </span>
                                 </label>
                                 <label class="option">
-                                    <input type="radio" name="niveau" value="haut" data-price="25">
+                                    <input type="radio" name="niveau" value="HAUT"
+                                        data-price="<?= $prixParNiveau['HAUT'] ?>" <?= $niveauSelectionne === 'HAUT' ? 'checked' : '' ?>>
                                     <span class="option__box">
                                         <span class="option__label">Haut</span>
-                                        <span class="option__meta">25 € / place</span>
+                                        <span class="option__meta">
+                                            <?= number_format($prixParNiveau['HAUT'], 0, ',', ' ') ?> € / place
+                                        </span>
                                     </span>
                                 </label>
                             </div>

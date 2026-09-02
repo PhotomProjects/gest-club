@@ -21,7 +21,9 @@ class EvenementRepository
             'SELECT
             id_evenement,
             nom_evenement,
+            image_evenement,
             date_heure_debut_evenement,
+            date_heure_fin_evenement,
             statut_evenement,
             (
                 SELECT COUNT(*)
@@ -78,5 +80,27 @@ class EvenementRepository
         $evenement['places_disponibles'] = (int) $statement->fetchColumn();
 
         return $evenement;
+    }
+
+    public function findByIdForUpdate(int $id): ?array
+    {
+        $statement = $this->pdo->prepare(
+            'SELECT
+            id_evenement,
+            date_heure_debut_evenement,
+            date_heure_fin_evenement,
+            statut_evenement
+        FROM evenement
+        WHERE id_evenement = :id
+        FOR UPDATE'
+        );
+
+        $statement->execute([
+            'id' => $id,
+        ]);
+
+        $evenement = $statement->fetch();
+
+        return $evenement ?: null;
     }
 }

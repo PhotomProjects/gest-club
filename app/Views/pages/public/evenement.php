@@ -1,9 +1,12 @@
 <?php
-$dateDebut = new DateTime($evenement['date_heure_debut_evenement']);
-$dateFin = new DateTime($evenement['date_heure_fin_evenement']);
+$dateDebut = new DateTimeImmutable($evenement['date_heure_debut_evenement']);
+$dateFin = new DateTimeImmutable($evenement['date_heure_fin_evenement']);
+$maintenant = new DateTimeImmutable();
 $estAnnule = $evenement['statut_evenement'] === 'ANNULE';
 $estComplet = (int) $evenement['places_disponibles'] === 0;
-$estTermine = $dateFin < new DateTime();
+$estEnCours = !$estAnnule && $dateDebut <= $maintenant && $dateFin > $maintenant;
+$estTermine = !$estAnnule && $dateFin <= $maintenant;
+$estReservable = !$estAnnule && !$estComplet && $dateDebut > $maintenant;
 ?>
 <main class="page">
     <div class="container">
@@ -68,14 +71,17 @@ $estTermine = $dateFin < new DateTime();
                     <p class="cta-bar__title">Évènement annulé</p>
                 <?php elseif ($estTermine): ?>
                     <p class="cta-bar__title">Évènement terminé</p>
+                <?php elseif ($estEnCours): ?>
+                    <p class="cta-bar__title">Évènement en cours</p>
+                    <p>Les réservations sont désormais fermées.</p>
                 <?php elseif ($estComplet): ?>
                     <p class="cta-bar__title">Évènement complet</p>
                 <?php else: ?>
                     <p class="cta-bar__title">Réservations ouvertes</p>
                 <?php endif; ?>
             </div>
-            <?php if (!$estAnnule && !$estTermine && !$estComplet): ?>
-                <a class="btn btn--primary btn--lg" href="/reservation.php?id=<?= $evenement['id_evenement'] ?>">
+            <?php if ($estReservable): ?>
+                <a class="btn btn--primary btn--lg" href="/reservation.php?id=<?= (int) $evenement['id_evenement'] ?>">
                     Réserver
                 </a>
             <?php endif; ?>

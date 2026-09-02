@@ -440,6 +440,11 @@
   gap: 0.25rem;
 }
 
+.event-card__body .badge {
+  align-self: flex-start;
+  margin-top: 0.25rem;
+}
+
 .event-card__title {
   margin-bottom: 0.25rem;
   font-family: var(--f-alt);
@@ -642,14 +647,11 @@
   font-size: 1.125rem;
 }
 
-.reservation__meta {
+.reservation__meta,
+.reservation__seat {
   color: var(--c-text-muted);
   font-size: 0.875rem;
-}
-
-.reservation__seat {
-  font-size: 0.75rem;
-  color: var(--c-text-muted);
+  line-height: 1.5;
 }
 
 .reservation__side {
@@ -664,6 +666,38 @@
 
 .reservation__side .badge {
   align-self: center;
+}
+
+.reservation__price {
+  margin: 0;
+  font-family: var(--f-alt);
+  font-size: 1rem;
+  text-align: center;
+}
+
+.reservation__price strong {
+  color: var(--c-accent-light);
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.reservation-cancel-form,
+.reservation-cancel-form .btn {
+  width: 100%;
+}
+
+.reservation-cancel-form .btn {
+  border-color: var(--c-danger);
+  color: var(--c-danger);
+}
+
+.reservation-cancel-form .btn:hover {
+  background-color: var(--c-danger-soft);
+  color: var(--c-danger);
+}
+
+.reservation-message {
+  margin-bottom: 1.5rem;
 }
 
 /* Billet / QR Code */

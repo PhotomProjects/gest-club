@@ -58,8 +58,19 @@ if (
                 'role' => $utilisateur['role_utilisateur'],
             ];
 
+            $idEvenementApresConnexion = $_SESSION['id_evenement_apres_connexion'] ?? null;
+            unset($_SESSION['id_evenement_apres_connexion']);
+
             if ($utilisateur['role_utilisateur'] === 'ADMIN') {
                 header('Location: /admin/index.php');
+            } elseif (
+                is_int($idEvenementApresConnexion)
+                && $idEvenementApresConnexion > 0
+            ) {
+                header(
+                    'Location: /reservation.php?id='
+                    . $idEvenementApresConnexion
+                );
             } else {
                 header('Location: /compte.php');
             }

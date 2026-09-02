@@ -249,3 +249,16 @@ if (reservationTotal) {
     // Afficher le total dès le chargement.
     updateReservationTotal();
 }
+
+// == Annulation d'une réservation ==
+
+const reservationCancelForms = document.querySelectorAll(".reservation-cancel-form");
+reservationCancelForms.forEach(function(form) {
+    form.addEventListener("submit", function(event) {
+        const isConfirmed = window.confirm("Voulez-vous vraiment annuler cette réservation ?");
+
+        if (!isConfirmed) {
+            event.preventDefault();
+        }
+    });
+});

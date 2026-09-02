@@ -21,21 +21,21 @@
 SET NAMES utf8mb4;
 
 SET @seed_now = CURRENT_TIMESTAMP;
+SET @seed_today = CURRENT_DATE;
 
-SET @event_1_start = DATE_ADD(@seed_now, INTERVAL 30 DAY);
-SET @event_1_end   = DATE_ADD(@event_1_start, INTERVAL 4 HOUR);
+SET @event_1_start = DATE_ADD(DATE_ADD(@seed_today, INTERVAL 30 DAY), INTERVAL 20 HOUR);
+SET @event_1_end = DATE_ADD(@event_1_start, INTERVAL 3 HOUR);
 
-SET @event_2_start = DATE_ADD(@seed_now, INTERVAL 60 DAY);
-SET @event_2_end   = DATE_ADD(@event_2_start, INTERVAL 4 HOUR);
+SET @event_2_start = DATE_ADD(DATE_ADD(@seed_today, INTERVAL 60 DAY), INTERVAL 20 HOUR);
+SET @event_2_end = DATE_ADD(@event_2_start, INTERVAL 3 HOUR);
 
-SET @event_3_start = DATE_SUB(@seed_now, INTERVAL 10 DAY);
-SET @event_3_end   = DATE_ADD(@event_3_start, INTERVAL 4 HOUR);
+SET @event_3_start = DATE_ADD(DATE_SUB(@seed_today, INTERVAL 10 DAY), INTERVAL 20 HOUR);
+SET @event_3_end = DATE_ADD(@event_3_start, INTERVAL 3 HOUR);
 
-SET @event_4_start = DATE_ADD(@seed_now, INTERVAL 90 DAY);
-SET @event_4_end   = DATE_ADD(@event_4_start, INTERVAL 4 HOUR);
+SET @event_4_start = DATE_ADD(DATE_ADD(@seed_today, INTERVAL 90 DAY), INTERVAL 20 HOUR);
+SET @event_4_end = DATE_ADD(@event_4_start, INTERVAL 3 HOUR);
 
 START TRANSACTION;
-
 
 -- UTILISATEUR --
 

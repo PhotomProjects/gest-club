@@ -66,3 +66,9 @@ function estMotDePasseValide(string $motDePasse): bool
 // Connexion à la base de données.
 $database = new Database($config['database']);
 $pdo = $database->getConnection();
+
+// Synchronisation du fuseau horaire de MariaDB avec celui de PHP.
+// date('P') retourne par exemple +02:00 en été et +01:00 en hiver.
+$pdo->exec(
+    'SET time_zone = ' . $pdo->quote(date('P'))
+);
