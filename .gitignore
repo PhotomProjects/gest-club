@@ -33,3 +33,7 @@ desktop.ini
 *.swp
 *.swo
 *~
+
+# Uploaded event images
+/public/assets/images/evenements/*
+!/public/assets/images/evenements/.gitkeep

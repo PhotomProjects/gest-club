@@ -10,13 +10,26 @@ function resetImagePreview() {
         return;
     }
 
+    eventImagePreview.replaceChildren();
+
     if (eventImagePreview.dataset.imageMode === "create") {
-        eventImagePreview.innerHTML = "";
         eventImagePreview.hidden = true;
+        return;
     }
 
     if (eventImagePreview.dataset.imageMode === "edit") {
-        eventImagePreview.innerHTML = "Image actuelle";
+        const originalImage = eventImagePreview.dataset.originalImage;
+
+        if (!originalImage) {
+            eventImagePreview.hidden = true;
+            return;
+        }
+
+        const image = document.createElement("img");
+        image.src = originalImage;
+        image.alt = "";
+
+        eventImagePreview.appendChild(image);
         eventImagePreview.hidden = false;
     }
 }
@@ -30,7 +43,6 @@ if (eventImage && eventImageError) {
         if (!file) {
             eventImage.classList.remove("is-invalid");
             eventImageError.hidden = true;
-            eventImage.setCustomValidity("");
             resetImagePreview();
             return;
         }
@@ -48,7 +60,6 @@ if (eventImage && eventImageError) {
             eventImage.classList.add("is-invalid");
             eventImageError.textContent = errorMessage;
             eventImageError.hidden = false;
-            eventImage.setCustomValidity(errorMessage);
             resetImagePreview();
             return;
         }
@@ -59,7 +70,6 @@ if (eventImage && eventImageError) {
             eventImage.classList.add("is-invalid");
             eventImageError.textContent = errorMessage;
             eventImageError.hidden = false;
-            eventImage.setCustomValidity(errorMessage);
             resetImagePreview();
             return;
         }
@@ -67,14 +77,13 @@ if (eventImage && eventImageError) {
         // Le fichier est valide.
         eventImage.classList.remove("is-invalid");
         eventImageError.hidden = true;
-        eventImage.setCustomValidity("");
 
         // Afficher l'aperçu.
         if (eventImagePreview) {
             const image = document.createElement("img");
             image.src = URL.createObjectURL(file);
             image.alt = "Aperçu de l'image sélectionnée";
-            eventImagePreview.innerHTML = "";
+            eventImagePreview.replaceChildren();
             eventImagePreview.appendChild(image);
             eventImagePreview.hidden = false;
         }

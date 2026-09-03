@@ -7,7 +7,14 @@
             </p>
         </div>
     </div>
-    <form action="#" enctype="multipart/form-data" method="post" novalidate>
+    <?php if (isset($erreurs['general'])): ?>
+        <div class="notice">
+            <p>
+                <?= htmlspecialchars($erreurs['general']) ?>
+            </p>
+        </div>
+    <?php endif; ?>
+    <form enctype="multipart/form-data" method="post" novalidate>
         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
         <div class="event-form-layout">
             <div class="event-form-column">
@@ -22,33 +29,68 @@
                         <div class="form">
                             <div class="field">
                                 <label class="field__label" for="ev-nom">Nom de l'évènement</label>
-                                <input class="input" id="ev-nom" name="nom" required type="text"
-                                    value="RAW is WAR: 1000th Ep.">
+                                <input class="input<?= isset($erreurs['nom']) ? ' is-invalid' : '' ?>" id="ev-nom"
+                                    name="nom" required type="text" maxlength="150"
+                                    value="<?= htmlspecialchars($nom) ?>">
+                                <?php if (isset($erreurs['nom'])): ?>
+                                    <p class="field__error">
+                                        <?= htmlspecialchars($erreurs['nom']) ?>
+                                    </p>
+                                <?php endif; ?>
                             </div>
                             <div class="field-pair">
                                 <div class="field">
                                     <label class="field__label" for="ev-date-debut">Date de début</label>
-                                    <input class="input" id="ev-date-debut" name="date_debut" required type="date"
-                                        value="2026-07-26">
+                                    <input class="input<?= isset($erreurs['date_debut']) ? ' is-invalid' : '' ?>"
+                                        id="ev-date-debut" name="date_debut" required type="date"
+                                        value="<?= htmlspecialchars($dateDebut) ?>">
+                                    <?php if (isset($erreurs['date_debut'])): ?>
+                                        <p class="field__error">
+                                            <?= htmlspecialchars($erreurs['date_debut']) ?>
+                                        </p>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="field">
                                     <label class="field__label" for="ev-heure-debut">Heure de début</label>
-                                    <input class="input" id="ev-heure-debut" name="heure_debut" required type="time"
-                                        value="20:00">
+                                    <input class="input<?= isset($erreurs['heure_debut']) ? ' is-invalid' : '' ?>"
+                                        id="ev-heure-debut" name="heure_debut" required type="time"
+                                        value="<?= htmlspecialchars($heureDebut) ?>">
+                                    <?php if (isset($erreurs['heure_debut'])): ?>
+                                        <p class="field__error">
+                                            <?= htmlspecialchars($erreurs['heure_debut']) ?>
+                                        </p>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             <div class="field-pair">
                                 <div class="field">
                                     <label class="field__label" for="ev-date-fin">Date de fin</label>
-                                    <input class="input" id="ev-date-fin" name="date_fin" required type="date"
-                                        value="2026-07-27">
+                                    <input class="input<?= isset($erreurs['date_fin']) ? ' is-invalid' : '' ?>"
+                                        id="ev-date-fin" name="date_fin" required type="date"
+                                        value="<?= htmlspecialchars($dateFin) ?>">
+                                    <?php if (isset($erreurs['date_fin'])): ?>
+                                        <p class="field__error">
+                                            <?= htmlspecialchars($erreurs['date_fin']) ?>
+                                        </p>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="field">
                                     <label class="field__label" for="ev-heure-fin">Heure de fin</label>
-                                    <input class="input" id="ev-heure-fin" name="heure_fin" required type="time"
-                                        value="00:00">
+                                    <input class="input<?= isset($erreurs['heure_fin']) ? ' is-invalid' : '' ?>"
+                                        id="ev-heure-fin" name="heure_fin" required type="time"
+                                        value="<?= htmlspecialchars($heureFin) ?>">
+                                    <?php if (isset($erreurs['heure_fin'])): ?>
+                                        <p class="field__error">
+                                            <?= htmlspecialchars($erreurs['heure_fin']) ?>
+                                        </p>
+                                    <?php endif; ?>
                                 </div>
                             </div>
+                            <?php if (isset($erreurs['dates'])): ?>
+                                <p class="field__error">
+                                    <?= htmlspecialchars($erreurs['dates']) ?>
+                                </p>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </section>
@@ -61,12 +103,27 @@
                         </h2>
                     </div>
                     <div class="panel__body">
-                        <div class="upload__preview" id="ev-image-preview" data-image-mode="edit">Image actuelle</div>
+                        <?php if ($evenement['image_evenement'] !== null): ?>
+                            <div class="upload__preview" id="ev-image-preview" data-image-mode="edit"
+                                data-original-image="/assets/images/<?= htmlspecialchars($evenement['image_evenement']) ?>">
+                                <img src="/assets/images/<?= htmlspecialchars($evenement['image_evenement']) ?>" alt="">
+                            </div>
+                        <?php else: ?>
+                            <div class="upload__preview" id="ev-image-preview" data-image-mode="edit" hidden
+                                data-original-image=""></div>
+                        <?php endif; ?>
                         <div class="field event-image-field">
                             <label class="field__label" for="ev-image">Remplacer l'image
                                 <span class="optional">(facultatif)</span>
                             </label>
-                            <input accept="image/jpeg,image/png" class="input" id="ev-image" name="image" type="file">
+                            <input accept="image/jpeg,image/png"
+                                class="input<?= isset($erreurs['image']) ? ' is-invalid' : '' ?>" id="ev-image"
+                                name="image" type="file">
+                            <?php if (isset($erreurs['image'])): ?>
+                                <p class="field__error">
+                                    <?= htmlspecialchars($erreurs['image']) ?>
+                                </p>
+                            <?php endif; ?>
                             <p class="field__hint">
                                 JPG ou PNG · 5 Mo maximum. Sans nouveau fichier, l'image actuelle est conservée.
                             </p>
@@ -87,8 +144,14 @@
                     </div>
                     <div class="panel__body">
                         <label class="visually-hidden" for="ev-desc">Description de l'évènement</label>
-                        <textarea class="textarea" id="ev-desc" name="description" maxlength="2000"
-                            required>Dans cette édition spéciale de RAW, les invités ayant marqué l'histoire du show se retrouvent pour une soirée exceptionnelle à la Lucha Pit Arena.</textarea>
+                        <textarea class="textarea<?= isset($erreurs['description']) ? ' is-invalid' : '' ?>"
+                            id="ev-desc" name="description" maxlength="2000"
+                            required><?= htmlspecialchars($description) ?></textarea>
+                        <?php if (isset($erreurs['description'])): ?>
+                            <p class="field__error">
+                                <?= htmlspecialchars($erreurs['description']) ?>
+                            </p>
+                        <?php endif; ?>
                     </div>
                 </section>
 
@@ -165,7 +228,7 @@
             </div>
         </div>
         <div class="admin-form-actions">
-            <a class="btn btn--ghost" href="/admin/evenement.php">Annuler</a>
+            <a class="btn btn--ghost" href="/admin/evenement.php?id=<?= $id ?>">Annuler</a>
             <button class="btn btn--primary" type="submit">Enregistrer les modifications</button>
         </div>
     </form>

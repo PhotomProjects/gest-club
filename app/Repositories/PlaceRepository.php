@@ -171,4 +171,22 @@ class PlaceRepository
             }
         }
     }
+
+    public function createForEvent(int $eventId): void
+    {
+        $statement = $this->pdo->prepare(
+            'INSERT INTO place_evenement (
+            id_evenement,
+            id_place
+        )
+        SELECT
+            :id_evenement,
+            id_place
+        FROM place'
+        );
+
+        $statement->execute([
+            'id_evenement' => $eventId,
+        ]);
+    }
 }

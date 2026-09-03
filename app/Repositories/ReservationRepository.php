@@ -284,4 +284,18 @@ class ReservationRepository
             );
         }
     }
+
+    public function cancelByEventId(int $eventId): void
+    {
+        $statement = $this->pdo->prepare(
+            'UPDATE reservation
+        SET statut_reservation = \'ANNULEE\'
+        WHERE id_evenement = :id_evenement
+        AND statut_reservation = \'CONFIRMEE\''
+        );
+
+        $statement->execute([
+            'id_evenement' => $eventId,
+        ]);
+    }
 }

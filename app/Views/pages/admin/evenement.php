@@ -1,3 +1,33 @@
+<?php
+
+$dateDebut = new DateTimeImmutable($evenement['date_heure_debut_evenement']);
+$dateFin = new DateTimeImmutable($evenement['date_heure_fin_evenement']);
+$maintenant = new DateTimeImmutable();
+$estTermine = $dateFin <= $maintenant;
+$estComplet = (int) $evenement['places_disponibles'] === 0;
+
+if ($evenement['statut_evenement'] === 'ANNULE') {
+    $statut = [
+        'label' => 'Annulé',
+        'class' => 'badge--danger',
+    ];
+} elseif ($estTermine) {
+    $statut = [
+        'label' => 'Terminé',
+        'class' => 'badge--muted',
+    ];
+} elseif ($estComplet) {
+    $statut = [
+        'label' => 'Complet',
+        'class' => 'badge--warning',
+    ];
+} else {
+    $statut = [
+        'label' => 'Ouvert',
+        'class' => 'badge--success',
+    ];
+}
+?>
 <main class="admin-content">
     <div class="admin-header">
         <div class="admin-header__text">
@@ -9,14 +39,28 @@
     </div>
     <div class="record-head">
         <div class="record-head__id">
-            <h2 class="record-head__title">RAW is WAR: 1000th Ep.</h2>
+            <h2 class="record-head__title">
+                <?= htmlspecialchars($evenement['nom_evenement'], ENT_QUOTES, 'UTF-8') ?>
+            </h2>
             <div class="record-meta">
-                <span class="badge badge--success">Ouvert</span>
+                <span class="badge <?= $statut['class'] ?>">
+                    <?= htmlspecialchars($statut['label'], ENT_QUOTES, 'UTF-8') ?>
+                </span>
             </div>
         </div>
         <div class="admin-header__actions">
-            <a class="btn btn--ghost" href="/admin/evenement-form-modification.php">Modifier</a>
-            <a class="btn btn--danger" href="/admin/evenement-annulation.php">Annuler l'évènement</a>
+            <a class="btn btn--ghost"
+                href="/admin/evenement-form-modification.php?id=<?= (int) $evenement['id_evenement'] ?>">
+                Modifier
+            </a>
+            <?php if (
+                $evenement['statut_evenement'] !== 'ANNULE' && !$estTermine
+            ): ?>
+                <a class="btn btn--danger"
+                    href="/admin/evenement-annulation.php?id=<?= (int) $evenement['id_evenement'] ?>">
+                    Annuler l'évènement
+                </a>
+            <?php endif; ?>
         </div>
     </div>
     <div class="event-details-layout">
@@ -30,20 +74,23 @@
                     <div class="kv__row">
                         <dt class="kv__key">Début</dt>
                         <dd class="kv__value">
-                            <time datetime="2026-07-26T20:00">26/07/2026 · 20:00</time>
+                            <time datetime="<?= $dateDebut->format('Y-m-d\TH:i') ?>">
+                                <?= $dateDebut->format('d/m/Y · H:i') ?>
+                            </time>
                         </dd>
                     </div>
                     <div class="kv__row">
                         <dt class="kv__key">Fin</dt>
                         <dd class="kv__value">
-                            <time datetime="2026-07-27T00:00">27/07/2026 · 00:00</time>
+                            <time datetime="<?= $dateFin->format('Y-m-d\TH:i') ?>">
+                                <?= $dateFin->format('d/m/Y · H:i') ?>
+                            </time>
                         </dd>
                     </div>
                 </dl>
                 <p class="event-description__label">Description</p>
                 <p class="event-description__text">
-                    Dans cette édition spéciale de RAW, les invités ayant marqué l'histoire de RAW à
-                    travers les années se retrouvent pour une soirée exceptionnelle.
+                    <?= (htmlspecialchars($evenement['description_evenement'], ENT_QUOTES, 'UTF-8')) ?>
                 </p>
             </div>
         </section>
@@ -51,32 +98,33 @@
         <section class="panel">
             <div class="panel__head">
                 <h2 class="panel__title">Programme</h2>
-                <span class="panel__meta">3 matchs</span>
+                <span class="panel__meta">
+                    <?= count($matchs) ?>
+                    <?= count($matchs) > 1 ? 'matchs' : 'match' ?>
+                </span>
             </div>
             <div class="panel__body">
-                <ol class="program">
-                    <li class="program__item">
-                        <span class="program__index" aria-hidden="true">1</span>
-                        <div class="program__body">
-                            <p class="program__name">Triple H vs. Randy Orton</p>
-                            <p class="program__type">No Holds Barred Match</p>
-                        </div>
-                    </li>
-                    <li class="program__item">
-                        <span class="program__index" aria-hidden="true">2</span>
-                        <div class="program__body">
-                            <p class="program__name">John Cena vs. The Miz vs. CM Punk</p>
-                            <p class="program__type">Steel Cage Match</p>
-                        </div>
-                    </li>
-                    <li class="program__item">
-                        <span class="program__index" aria-hidden="true">3</span>
-                        <div class="program__body">
-                            <p class="program__name">Sheamus vs. Drew McIntyre</p>
-                            <p class="program__type">Iron Man Match</p>
-                        </div>
-                    </li>
-                </ol>
+                <?php if (empty($matchs)): ?>
+                    <p>Aucun match programmé pour cet évènement.</p>
+                <?php else: ?>
+                    <ol class="program">
+                        <?php foreach ($matchs as $index => $match): ?>
+                            <li class="program__item">
+                                <span class="program__index" aria-hidden="true">
+                                    <?= $index + 1 ?>
+                                </span>
+                                <div class="program__body">
+                                    <p class="program__name">
+                                        <?= htmlspecialchars($match['nom_match'], ENT_QUOTES, 'UTF-8') ?>
+                                    </p>
+                                    <p class="program__type">
+                                        <?= htmlspecialchars($match['libelle_type_match'], ENT_QUOTES, 'UTF-8') ?>
+                                    </p>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ol>
+                <?php endif; ?>
             </div>
         </section>
 
@@ -89,7 +137,11 @@
         <div class="panel__body">
             <div class="stat-row">
                 <span class="stat-row__label">Places réservées</span>
-                <span class="stat-row__value">0 / 120</span>
+                <span class="stat-row__value">
+                    <?= (int) $evenement['places_reservees'] ?>
+                    /
+                    <?= (int) $evenement['places_total'] ?>
+                </span>
             </div>
         </div>
     </section>
