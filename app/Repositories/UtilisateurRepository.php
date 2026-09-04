@@ -15,6 +15,23 @@ class UtilisateurRepository
         $this->pdo = $pdo;
     }
 
+    public function findAll(): array
+    {
+        $statement = $this->pdo->query(
+            'SELECT
+            id_utilisateur,
+            prenom,
+            nom,
+            email,
+            role_utilisateur,
+            date_creation_compte
+        FROM utilisateur
+        ORDER BY date_creation_compte DESC'
+        );
+
+        return $statement->fetchAll();
+    }
+
     public function findByEmail(string $email): ?array
     {
         $statement = $this->pdo->prepare(
@@ -126,6 +143,33 @@ class UtilisateurRepository
 
         $statement->execute([
             'mdp_hash' => $passwordHash,
+            'id_utilisateur' => $idUtilisateur,
+        ]);
+    }
+
+    public function countAdmins(): int
+    {
+        $statement = $this->pdo->query(
+            'SELECT COUNT(*)
+        FROM utilisateur
+        WHERE role_utilisateur = \'ADMIN\''
+        );
+
+        return (int) $statement->fetchColumn();
+    }
+
+    public function updateRole(
+        int $idUtilisateur,
+        string $role
+    ): void {
+        $statement = $this->pdo->prepare(
+            'UPDATE utilisateur
+        SET role_utilisateur = :role_utilisateur
+        WHERE id_utilisateur = :id_utilisateur'
+        );
+
+        $statement->execute([
+            'role_utilisateur' => $role,
             'id_utilisateur' => $idUtilisateur,
         ]);
     }

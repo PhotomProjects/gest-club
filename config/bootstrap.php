@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Core\Auth;
 use App\Core\Csrf;
 use App\Core\Database;
+use App\Repositories\UtilisateurRepository;
 
 // Chargement de l'autoload Composer.
 require dirname(__DIR__) . '/vendor/autoload.php';
@@ -35,9 +36,44 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Connexion à la base de données.
+$database = new Database($config['database']);
+$pdo = $database->getConnection();
+
+// Synchronisation du fuseau horaire de MariaDB avec celui de PHP. date('P') retourne par exemple +02:00 en été et +01:00 en hiver.
+$pdo->exec('SET time_zone = ' . $pdo->quote(date('P')));
+
 // État de l'utilisateur connecté.
 $sessionUtilisateur = $_SESSION['utilisateur'] ?? null;
 $utilisateurConnecte = is_array($sessionUtilisateur) ? $sessionUtilisateur : null;
+
+// Synchronise le rôle de la session avec la base de données.
+if (
+    $utilisateurConnecte !== null && isset($utilisateurConnecte['id'])
+) {
+    $utilisateurRepository = new UtilisateurRepository($pdo);
+    $utilisateurActuel = $utilisateurRepository->findById((int) $utilisateurConnecte['id']);
+
+    // Le compte n'existe plus.
+    if ($utilisateurActuel === null) {
+        unset($_SESSION['utilisateur']);
+        $utilisateurConnecte = null;
+    } else {
+        $roleActuel = $utilisateurActuel['role_utilisateur'];
+
+        // Si le rôle a changé, renouvelle également l'identifiant de session.
+        if (
+            ($utilisateurConnecte['role'] ?? null) !== $roleActuel
+        ) {
+            session_regenerate_id(true);
+        }
+
+        $_SESSION['utilisateur']['role'] = $roleActuel;
+
+        $utilisateurConnecte = $_SESSION['utilisateur'];
+    }
+}
+
 $auth = new Auth($utilisateurConnecte);
 $isAuthenticated = $auth->isAuthenticated();
 
@@ -62,13 +98,3 @@ function estMotDePasseValide(string $motDePasse): bool
         && preg_match('/[^a-zA-Z0-9\s]/', $motDePasse)
         && !preg_match('/\s/', $motDePasse);
 }
-
-// Connexion à la base de données.
-$database = new Database($config['database']);
-$pdo = $database->getConnection();
-
-// Synchronisation du fuseau horaire de MariaDB avec celui de PHP.
-// date('P') retourne par exemple +02:00 en été et +01:00 en hiver.
-$pdo->exec(
-    'SET time_zone = ' . $pdo->quote(date('P'))
-);
