@@ -133,12 +133,6 @@ function updateParticipantState() {
             removeButton.disabled = participants.length <= 2;
         }
     });
-    // Le champ type de match porte le message d'erreur.
-    if (expectedCount > 0 && participants.length !== expectedCount) {
-        matchType.setCustomValidity("Ce type de match nécessite exactement " + expectedCount + " catcheurs.");
-    } else {
-        matchType.setCustomValidity("");
-    }
 }
 
 // Retirer un participant.

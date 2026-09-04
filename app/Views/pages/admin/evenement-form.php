@@ -145,22 +145,6 @@
                     </div>
                 </section>
 
-                <section class="panel">
-                    <div class="panel__head">
-                        <h2 class="step-title">
-                            <span aria-hidden="true" class="step-title__index">4</span>
-                            Programme et matchs
-                        </h2>
-                    </div>
-                    <div class="panel__body">
-                        <p class="program-help">Les matchs sont ajoutés dans l'ordre d'affichage.</p>
-                        <a class="btn btn--primary btn--sm program-add" href="/admin/evenement-match.php">
-                            <span aria-hidden="true" class="btn__plus">+</span>
-                            Ajouter un match
-                        </a>
-                    </div>
-                </section>
-
             </div>
         </div>
         <div class="admin-form-actions">

@@ -5,6 +5,7 @@ $dateFin = new DateTimeImmutable($evenement['date_heure_fin_evenement']);
 $maintenant = new DateTimeImmutable();
 $estTermine = $dateFin <= $maintenant;
 $estComplet = (int) $evenement['places_disponibles'] === 0;
+$programmeModifiable = $evenement['statut_evenement'] !== 'ANNULE' && !$estTermine;
 
 if ($evenement['statut_evenement'] === 'ANNULE') {
     $statut = [
@@ -49,10 +50,12 @@ if ($evenement['statut_evenement'] === 'ANNULE') {
             </div>
         </div>
         <div class="admin-header__actions">
-            <a class="btn btn--ghost"
-                href="/admin/evenement-form-modification.php?id=<?= (int) $evenement['id_evenement'] ?>">
-                Modifier
-            </a>
+            <?php if ($programmeModifiable): ?>
+                <a class="btn btn--ghost"
+                    href="/admin/evenement-form-modification.php?id=<?= (int) $evenement['id_evenement'] ?>">
+                    Modifier
+                </a>
+            <?php endif; ?>
             <?php if (
                 $evenement['statut_evenement'] !== 'ANNULE' && !$estTermine
             ): ?>
@@ -121,9 +124,28 @@ if ($evenement['statut_evenement'] === 'ANNULE') {
                                         <?= htmlspecialchars($match['libelle_type_match'], ENT_QUOTES, 'UTF-8') ?>
                                     </p>
                                 </div>
+                                <?php if ($programmeModifiable): ?>
+                                    <a class="btn btn--ghost btn--sm"
+                                        href="/admin/evenement-match-modification.php?id=<?= (int) $match['id_match'] ?>">
+                                        Modifier
+                                    </a>
+                                    <a class="btn btn--ghost btn--sm"
+                                        href="/admin/evenement-match-suppression.php?id=<?= (int) $match['id_match'] ?>">
+                                        Supprimer
+                                    </a>
+                                <?php endif; ?>
                             </li>
                         <?php endforeach; ?>
                     </ol>
+                <?php endif; ?>
+                <?php if ($programmeModifiable): ?>
+                    <a class="btn btn--primary btn--sm"
+                        href="/admin/evenement-match.php?id_evenement=<?= (int) $evenement['id_evenement'] ?>">
+                        <span aria-hidden="true" class="btn__plus">
+                            +
+                        </span>
+                        Ajouter un match
+                    </a>
                 <?php endif; ?>
             </div>
         </section>

@@ -1,7 +1,7 @@
 <main class="admin-content">
     <div class="admin-header">
         <div class="admin-header__text">
-            <h1>Ajouter un match</h1>
+            <h1>Modifier le match</h1>
             <p class="admin-header__description">
                 Évènement :
                 <?= htmlspecialchars($evenement['nom_evenement'], ENT_QUOTES, 'UTF-8') ?>
@@ -14,7 +14,7 @@
             <?php if (isset($erreurs['general'])): ?>
                 <div class="notice">
                     <p>
-                        <?= htmlspecialchars($erreurs['general']) ?>
+                        <?= htmlspecialchars($erreurs['general'], ENT_QUOTES, 'UTF-8') ?>
                     </p>
                 </div>
             <?php endif; ?>
@@ -201,7 +201,7 @@
                             Annuler
                         </a>
                         <button class="btn btn--primary" type="submit">
-                            Ajouter au programme
+                            Enregistrer les modifications
                         </button>
                     </div>
                 </div>
