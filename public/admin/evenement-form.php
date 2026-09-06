@@ -102,6 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($erreurs === []) {
         try {
             $evenementService = new EvenementService($pdo);
+
             $idEvenement = $evenementService->create(
                 $nom,
                 $description,
@@ -114,8 +115,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'Location: /admin/evenement.php?id=' . $idEvenement
             );
             exit;
-        } catch (\DomainException $exception) {
-            $erreurs['general'] = $exception->getMessage();
+        } catch (\Throwable $exception) {
+            // Si la création échoue après l'upload, supprime l'image devenue inutile.
+            if ($image !== null) {
+                $imageService->deleteEventImage($image);
+            }
+            if ($exception instanceof \DomainException) {
+                $erreurs['general'] = $exception->getMessage();
+            } else {
+                throw $exception;
+            }
         }
     }
 }

@@ -2,7 +2,7 @@
 $dateReservation = new DateTimeImmutable($ticketControle['date_reservation']);
 $dateDebut = new DateTimeImmutable($ticketControle['date_heure_debut_evenement']);
 $referenceBillet = sprintf(
-    'BIL-%06d',
+    'B-%06d',
     (int) $ticketControle['id_billet']
 );
 $referenceReservation = sprintf(

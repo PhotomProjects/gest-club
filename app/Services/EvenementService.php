@@ -149,14 +149,53 @@ class EvenementService
             );
         }
 
-        $this->evenementRepository->update(
-            $id,
-            $nom,
-            $description,
-            $image,
-            $debut->format('Y-m-d H:i:s'),
-            $fin->format('Y-m-d H:i:s')
-        );
+        $this->pdo->beginTransaction();
+
+        try {
+            // Verrouille l'évènement pendant la vérification et sa modification.
+            $evenement = $this->evenementRepository->findByIdForUpdate($id);
+
+            if ($evenement === null) {
+                throw new DomainException(
+                    "L'évènement est introuvable."
+                );
+            }
+
+            if ($evenement['statut_evenement'] === 'ANNULE') {
+                throw new DomainException(
+                    "Un évènement annulé ne peut pas être modifié."
+                );
+            }
+
+            $dateFinActuelle = new DateTimeImmutable(
+                $evenement['date_heure_fin_evenement']
+            );
+
+            $maintenant = new DateTimeImmutable();
+
+            if ($dateFinActuelle <= $maintenant) {
+                throw new DomainException(
+                    "Un évènement terminé ne peut pas être modifié."
+                );
+            }
+
+            $this->evenementRepository->update(
+                $id,
+                $nom,
+                $description,
+                $image,
+                $debut->format('Y-m-d H:i:s'),
+                $fin->format('Y-m-d H:i:s')
+            );
+
+            $this->pdo->commit();
+        } catch (Throwable $exception) {
+            if ($this->pdo->inTransaction()) {
+                $this->pdo->rollBack();
+            }
+
+            throw $exception;
+        }
     }
 
     public function cancel(int $id): void

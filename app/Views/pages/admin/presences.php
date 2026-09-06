@@ -55,7 +55,7 @@ $libellesNiveaux = ['BAS' => 'bas', 'MILIEU' => 'milieu', 'HAUT' => 'haut',];
                                 $dateControle = new DateTimeImmutable($presence['date_heure_controle']);
                                 $nbPlaces = (int) $presence['nb_places'];
                                 $referenceBillet = sprintf(
-                                    'BIL-%06d',
+                                    'B-%06d',
                                     (int) $presence['id_billet']
                                 );
                                 $tribune = $libellesTribunes[$presence['tribune_place']] ?? $presence['tribune_place'];

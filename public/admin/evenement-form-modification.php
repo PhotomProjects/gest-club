@@ -22,6 +22,16 @@ if ($evenement === null) {
     exit('Événement introuvable.');
 }
 
+$dateFinEvenement = new DateTimeImmutable($evenement['date_heure_fin_evenement']);
+$maintenant = new DateTimeImmutable();
+
+if (
+    $evenement['statut_evenement'] === 'ANNULE' || $dateFinEvenement <= $maintenant
+) {
+    header('Location: /403.php');
+    exit;
+}
+
 // Protection CSRF.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $csrf->verify($_POST['csrf_token'] ?? null);
