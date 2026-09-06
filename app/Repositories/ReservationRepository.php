@@ -298,4 +298,200 @@ class ReservationRepository
             'id_evenement' => $eventId,
         ]);
     }
+
+    public function findByUserForAdmin(int $userId): array
+    {
+        $statement = $this->pdo->prepare(
+            'SELECT
+            r.id_reservation,
+            r.date_reservation,
+            r.statut_reservation,
+            e.id_evenement,
+            e.nom_evenement,
+            e.date_heure_debut_evenement,
+            COUNT(rp.id_reservation_place) AS nb_places,
+            COALESCE(SUM(rp.prix_applique), 0) AS prix_total
+        FROM reservation r
+        INNER JOIN evenement e
+            ON e.id_evenement = r.id_evenement
+        LEFT JOIN reservation_place rp
+            ON rp.id_reservation = r.id_reservation
+        WHERE r.id_utilisateur = :id_utilisateur
+        GROUP BY
+            r.id_reservation,
+            r.date_reservation,
+            r.statut_reservation,
+            e.id_evenement,
+            e.nom_evenement,
+            e.date_heure_debut_evenement
+        ORDER BY r.date_reservation DESC'
+        );
+
+        $statement->execute([
+            'id_utilisateur' => $userId,
+        ]);
+
+        return $statement->fetchAll();
+    }
+
+    public function findAllForAdmin(): array
+    {
+        $sql = '
+        SELECT
+            r.id_reservation,
+            r.date_reservation,
+            r.statut_reservation,
+            u.id_utilisateur,
+            u.prenom,
+            u.nom,
+            e.id_evenement,
+            e.nom_evenement,
+            e.date_heure_debut_evenement,
+            COUNT(rp.id_reservation_place) AS nb_places,
+            COALESCE(SUM(rp.prix_applique), 0) AS prix_total
+        FROM reservation r
+        INNER JOIN utilisateur u
+            ON u.id_utilisateur = r.id_utilisateur
+        INNER JOIN evenement e
+            ON e.id_evenement = r.id_evenement
+        LEFT JOIN reservation_place rp
+            ON rp.id_reservation = r.id_reservation
+    ';
+        $sql .= '
+        GROUP BY
+            r.id_reservation,
+            r.date_reservation,
+            r.statut_reservation,
+            u.id_utilisateur,
+            u.prenom,
+            u.nom,
+            e.id_evenement,
+            e.nom_evenement,
+            e.date_heure_debut_evenement
+        ORDER BY r.date_reservation DESC
+    ';
+
+        $statement = $this->pdo->query($sql);
+
+        return $statement->fetchAll();
+    }
+
+    public function findByIdForAdmin(int $reservationId): ?array
+    {
+        $statement = $this->pdo->prepare(
+            'SELECT
+            r.id_reservation,
+            r.date_reservation,
+            r.statut_reservation,
+
+            u.id_utilisateur,
+            u.prenom,
+            u.nom,
+            u.email,
+
+            e.id_evenement,
+            e.nom_evenement,
+            e.date_heure_debut_evenement,
+            e.date_heure_fin_evenement,
+            e.statut_evenement,
+
+            b.id_billet,
+
+            pr.id_presence,
+            pr.date_heure_controle,
+
+            COUNT(rp.id_reservation_place) AS nb_places,
+            COALESCE(SUM(rp.prix_applique), 0) AS prix_total,
+
+            CASE
+                WHEN b.id_billet IS NULL
+                THEN NULL
+
+                WHEN r.statut_reservation = \'ANNULEE\'
+                    OR e.statut_evenement = \'ANNULE\'
+                THEN \'ANNULE\'
+
+                WHEN pr.id_presence IS NOT NULL
+                THEN \'UTILISE\'
+
+                ELSE \'ACTIF\'
+            END AS statut_billet
+
+        FROM reservation r
+
+        INNER JOIN utilisateur u
+            ON u.id_utilisateur = r.id_utilisateur
+
+        INNER JOIN evenement e
+            ON e.id_evenement = r.id_evenement
+
+        LEFT JOIN billet b
+            ON b.id_reservation = r.id_reservation
+
+        LEFT JOIN presence pr
+            ON pr.id_billet = b.id_billet
+
+        LEFT JOIN reservation_place rp
+            ON rp.id_reservation = r.id_reservation
+
+        WHERE r.id_reservation = :id_reservation
+
+        GROUP BY
+            r.id_reservation,
+            r.date_reservation,
+            r.statut_reservation,
+            u.id_utilisateur,
+            u.prenom,
+            u.nom,
+            u.email,
+            e.id_evenement,
+            e.nom_evenement,
+            e.date_heure_debut_evenement,
+            e.date_heure_fin_evenement,
+            e.statut_evenement,
+            b.id_billet,
+            pr.id_presence,
+            pr.date_heure_controle'
+        );
+
+        $statement->execute([
+            'id_reservation' => $reservationId,
+        ]);
+
+        $reservation = $statement->fetch();
+
+        return $reservation ?: null;
+    }
+
+    public function findPlacesByIdForAdmin(
+        int $reservationId
+    ): array {
+        $statement = $this->pdo->prepare(
+            'SELECT
+            rp.position_place,
+            rp.prix_applique,
+            p.tribune_place,
+            p.niveau_place,
+            p.rangee_place,
+            p.numero_place
+
+        FROM reservation_place rp
+
+        INNER JOIN place_evenement pe
+            ON pe.id_place_evenement = rp.id_place_evenement
+
+        INNER JOIN place p
+            ON p.id_place = pe.id_place
+
+        WHERE rp.id_reservation = :id_reservation
+
+        ORDER BY rp.position_place'
+        );
+
+        $statement->execute([
+            'id_reservation' => $reservationId,
+        ]);
+
+        return $statement->fetchAll();
+    }
 }

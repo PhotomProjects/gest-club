@@ -52,8 +52,12 @@
                                     </td>
                                     <td class="is-actions">
                                         <a class="btn btn--ghost"
+                                            href="/admin/utilisateur.php?id=<?= (int) $utilisateur['id_utilisateur'] ?>">
+                                            Voir
+                                        </a>
+                                        <a class="btn btn--ghost"
                                             href="/admin/utilisateur-form-modification.php?id=<?= (int) $utilisateur['id_utilisateur'] ?>">
-                                            Modifier
+                                            Modifier le rôle
                                         </a>
                                     </td>
                                 </tr>

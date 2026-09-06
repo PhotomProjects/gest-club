@@ -117,7 +117,8 @@ class UtilisateurRepository
             nom,
             email,
             mdp_hash,
-            role_utilisateur
+            role_utilisateur,
+            date_creation_compte
         FROM utilisateur
         WHERE id_utilisateur = :id_utilisateur'
         );

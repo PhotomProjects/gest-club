@@ -2,15 +2,28 @@
 
 declare(strict_types=1);
 
+use App\Repositories\ReservationRepository;
+use App\Repositories\UtilisateurRepository;
+
 require dirname(__DIR__, 2) . '/config/bootstrap.php';
 
 // Authentification et autorisation.
 $auth->requireRole('ADMIN');
 
-// Protection CSRF.
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $csrf->verify($_POST['csrf_token'] ?? null);
+// Récupération de l'utilisateur.
+$idUtilisateur = (int) ($_GET['id'] ?? 0);
+
+$utilisateurRepository = new UtilisateurRepository($pdo);
+$utilisateur = $utilisateurRepository->findById($idUtilisateur);
+
+if ($utilisateur === null) {
+    http_response_code(404);
+    exit('Utilisateur introuvable.');
 }
+
+// Réservations associées.
+$reservationRepository = new ReservationRepository($pdo);
+$reservations = $reservationRepository->findByUserForAdmin($idUtilisateur);
 
 $pageTitle = 'Fiche utilisateur';
 $topbarTitle = 'Utilisateurs';
