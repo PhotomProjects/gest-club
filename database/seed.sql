@@ -16,6 +16,7 @@
 --   - réservation annulée avec place réutilisée ensuite ;
 --   - billet utilisé / billet jamais utilisé ;
 --   - intervenant inactif conservé dans l'historique ;
+--   - noms WWE réels utilisés uniquement comme données de démonstration ;
 --   - matchs Simple / Triple Threat / Tag Team.
 
 SET NAMES utf8mb4;
@@ -102,10 +103,12 @@ INSERT INTO place (
 
 
 -- EVENEMENT --
+-- Les noms des shows WWE sont réels, mais les dates, cartes et statuts
+-- ci-dessous sont fictifs et servent uniquement aux scénarios de test.
 -- 1 : futur ouvert
 -- 2 : futur complet (calculé via PLACE_EVENEMENT)
 -- 3 : terminé (calculé via les dates)
--- 4 : annulé (statut stocké)
+-- 4 : annulé (statut stocké, scénario purement fictif)
 
 INSERT INTO evenement (
     id_evenement,
@@ -119,8 +122,8 @@ INSERT INTO evenement (
 ) VALUES
     (
         1,
-        'Collision Nocturne',
-        'Soirée de catch avec plusieurs affrontements et un main event.',
+        'WWE Clash in Paris',
+        'Donnée de démonstration utilisant le nom d''un show WWE. La date et la carte sont fictives.',
         NULL,
         @event_1_start,
         @event_1_end,
@@ -129,8 +132,8 @@ INSERT INTO evenement (
     ),
     (
         2,
-        'Finale d''Automne',
-        'Événement complet utilisé pour tester l''indisponibilité des places.',
+        'WWE SummerSlam',
+        'Donnée de démonstration utilisée pour tester un événement complet. La date et la carte sont fictives.',
         NULL,
         @event_2_start,
         @event_2_end,
@@ -139,8 +142,8 @@ INSERT INTO evenement (
     ),
     (
         3,
-        'Summer Slam Local',
-        'Événement passé utilisé pour tester les réservations et billets historiques.',
+        'WWE Royal Rumble',
+        'Donnée de démonstration passée utilisée pour tester les réservations, billets et présences historiques.',
         NULL,
         @event_3_start,
         @event_3_end,
@@ -149,8 +152,8 @@ INSERT INTO evenement (
     ),
     (
         4,
-        'Show Annulé',
-        'Événement annulé après ouverture des réservations.',
+        'WWE Survivor Series: WarGames',
+        'Donnée de démonstration avec statut annulé uniquement pour tester l''application. Ce statut ne décrit pas un événement WWE réel.',
         NULL,
         @event_4_start,
         @event_4_end,
@@ -160,24 +163,27 @@ INSERT INTO evenement (
 
 
 -- INTERVENANT --
--- L'intervenant 10 est désormais INACTIF mais reste dans
--- une participation historique de l'événement passé.
+-- Noms de scène WWE réels utilisés comme données de démonstration.
+-- Le statut ACTIF / INACTIF correspond uniquement au scénario GEST CLUB
+-- et ne représente pas le statut contractuel réel auprès de la WWE.
+-- Ric Flair est conservé comme intervenant historique inactif.
 
 INSERT INTO intervenant (
     id_intervenant,
     nom_scene,
     statut_intervenant
 ) VALUES
-    (1,  'Black Viper', 'ACTIF'),
-    (2,  'Iron Wolf',   'ACTIF'),
-    (3,  'Nova Kane',   'ACTIF'),
-    (4,  'Rex Steel',   'ACTIF'),
-    (5,  'Blaze Fox',   'ACTIF'),
-    (6,  'Titan Cross', 'ACTIF'),
-    (7,  'Maya Storm',  'ACTIF'),
-    (8,  'Jade Fury',   'ACTIF'),
-    (9,  'Ref Phoenix', 'ACTIF'),
-    (10, 'Old Guard',   'INACTIF');
+    (1,  'Cody Rhodes',     'ACTIF'),
+    (2,  'CM Punk',         'ACTIF'),
+    (3,  'Roman Reigns',    'ACTIF'),
+    (4,  'Seth Rollins',    'ACTIF'),
+    (5,  'Gunther',         'ACTIF'),
+    (6,  'Finn Bálor',      'ACTIF'),
+    (7,  'Rhea Ripley',     'ACTIF'),
+    (8,  'Charlotte Flair', 'ACTIF'),
+    (9,  'Jessika Carr',    'ACTIF'),
+    (10, 'Paul Heyman',     'ACTIF'),
+    (11, 'Ric Flair',       'INACTIF');
 
 
 -- TYPE_MATCH --
@@ -268,6 +274,7 @@ INSERT INTO place_evenement (
 
 
 -- MATCH_EVENEMENT --
+-- Les affiches sont fictives : seuls les noms des intervenants sont réels.
 
 INSERT INTO match_evenement (
     id_match,
@@ -276,19 +283,21 @@ INSERT INTO match_evenement (
     id_evenement,
     id_type_match
 ) VALUES
-    (1, 'Black Viper vs Iron Wolf', 1, 1, 1),
-    (2, 'Nova Kane vs Rex Steel', 2, 1, 2),
-    (3, 'Titan Cross vs Jade Fury', 1, 2, 1),
-    (4, 'Black Viper & Nova Kane vs Iron Wolf & Rex Steel', 2, 2, 4),
-    (5, 'Maya Storm vs Jade Fury', 1, 3, 1),
-    (6, 'Blaze Fox vs Titan Cross', 1, 4, 1);
+    (1, 'Cody Rhodes vs CM Punk', 1, 1, 1),
+    (2, 'Roman Reigns vs Seth Rollins', 2, 1, 2),
+    (3, 'Gunther vs Finn Bálor', 1, 2, 1),
+    (4, 'Cody Rhodes & CM Punk vs Roman Reigns & Seth Rollins', 2, 2, 4),
+    (5, 'Rhea Ripley vs Charlotte Flair', 1, 3, 1),
+    (6, 'Gunther vs Finn Bálor', 1, 4, 1);
 
 
 -- PARTICIPATION_MATCH --
 -- Règle V1 respectée dans les données :
 --   - composition conforme au TYPE_MATCH ;
 --   - exactement un arbitre par match ;
---   - managers optionnels.
+--   - managers optionnels ;
+--   - Paul Heyman est associé à Seth Rollins pour le scénario courant ;
+--   - Ric Flair est conservé comme manager historique inactif.
 
 INSERT INTO participation_match (
     id_participation_match,
@@ -306,17 +315,18 @@ INSERT INTO participation_match (
     -- Match 2 : No Holds Barred
     (4,  'CATCHEUR', 1,    1, 2, 3),
     (5,  'CATCHEUR', 2,    2, 2, 4),
-    (7,  'ARBITRE',  NULL, 3, 2, 9),
+    (6,  'ARBITRE',  NULL, 3, 2, 9),
+    (7,  'MANAGER',  2,    4, 2, 10),
 
     -- Match 3 : Simple
-    (8,  'CATCHEUR', 1,    1, 3, 6),
-    (9,  'CATCHEUR', 2,    2, 3, 8),
+    (8,  'CATCHEUR', 1,    1, 3, 5),
+    (9,  'CATCHEUR', 2,    2, 3, 6),
     (10, 'ARBITRE',  NULL, 3, 3, 9),
 
     -- Match 4 : Tag Team 2v2
     (11, 'CATCHEUR', 1,    1, 4, 1),
-    (12, 'CATCHEUR', 1,    2, 4, 3),
-    (13, 'CATCHEUR', 2,    3, 4, 2),
+    (12, 'CATCHEUR', 1,    2, 4, 2),
+    (13, 'CATCHEUR', 2,    3, 4, 3),
     (14, 'CATCHEUR', 2,    4, 4, 4),
     (15, 'ARBITRE',  NULL, 5, 4, 9),
 
@@ -324,7 +334,7 @@ INSERT INTO participation_match (
     (16, 'CATCHEUR', 1,    1, 5, 7),
     (17, 'CATCHEUR', 2,    2, 5, 8),
     (18, 'ARBITRE',  NULL, 3, 5, 9),
-    (19, 'MANAGER',  1, 4, 5, 10),
+    (19, 'MANAGER',  2,    4, 5, 11),
 
     -- Match 6 : événement annulé
     (20, 'CATCHEUR', 1,    1, 6, 5),
