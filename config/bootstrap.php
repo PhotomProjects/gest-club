@@ -13,6 +13,8 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 // Chargement de la configuration de l'application.
 $config = require __DIR__ . '/app.php';
 
+$eventLocation = $config['event_location'];
+
 // Configuration de l'affichage des erreurs.
 error_reporting(E_ALL);
 

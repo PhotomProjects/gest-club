@@ -37,3 +37,7 @@ desktop.ini
 # Uploaded event images
 /public/assets/images/evenements/*
 !/public/assets/images/evenements/.gitkeep
+
+# Demo images included in the project
+!/public/assets/images/evenements/demo/
+!/public/assets/images/evenements/demo/**

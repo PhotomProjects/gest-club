@@ -29,19 +29,27 @@ $erreurReservation = $erreurReservation ?? null;
                     <?= htmlspecialchars($evenement['nom_evenement']) ?>
                 </h3>
                 <div class="meta-list">
-                    <time datetime="<?= $dateDebut->format('Y-m-d') ?>">
+                    <time class="meta-item" datetime="<?= $dateDebut->format('Y-m-d') ?>">
+                        <img class="icon" src="/assets/images/icons/calendar-days.svg" width="20" height="20" alt=""
+                            aria-hidden="true">
                         <?= $dateDebut->format('d/m/Y') ?>
                     </time>
-                    <span>
+                    <span class="meta-item">
+                        <img class="icon" src="/assets/images/icons/clock.svg" width="20" height="20" alt=""
+                            aria-hidden="true">
                         <time datetime="<?= $dateDebut->format('Y-m-d\TH:i') ?>">
                             <?= $dateDebut->format('H:i') ?>
                         </time>
-                        -
+                        <span aria-hidden="true">-</span>
                         <time datetime="<?= $dateFin->format('Y-m-d\TH:i') ?>">
                             <?= $dateFin->format('H:i') ?>
                         </time>
                     </span>
-                    <span>Lucha Pit Arena, Paris</span>
+                    <span class="meta-item">
+                        <img class="icon" src="/assets/images/icons/map-pin.svg" width="20" height="20" alt=""
+                            aria-hidden="true">
+                        <?= htmlspecialchars($eventLocation) ?>
+                    </span>
                 </div>
                 <p class="event-summary__description">
                     <?= htmlspecialchars($evenement['description_evenement']) ?>

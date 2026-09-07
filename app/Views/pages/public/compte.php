@@ -13,7 +13,11 @@
             </div>
             <form action="/deconnexion.php" method="post">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
-                <button type="submit" class="btn btn--ghost">Se déconnecter</button>
+                <button type="submit" class="btn btn--ghost">
+                    <img class="icon" src="/assets/images/icons/log-out.svg" width="20" height="20" alt=""
+                        aria-hidden="true">
+                    <span>Se déconnecter</span>
+                </button>
             </form>
         </div>
 

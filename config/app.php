@@ -10,6 +10,7 @@ return [
     ),
     'url' => getenv('APP_URL') ?: 'http://localhost',
     'timezone' => getenv('APP_TIMEZONE') ?: 'Europe/Paris',
+    'event_location' => 'Lucha Pit Arena, Paris',
     'database' => [
         'host' => getenv('DB_HOST') ?: 'localhost',
         'port' => (int) (getenv('DB_PORT') ?: 3306),

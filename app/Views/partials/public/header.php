@@ -2,7 +2,8 @@
     <div class="container site-header__inner">
         <input class="nav-toggle" type="checkbox" id="nav-toggle">
         <label class="burger" for="nav-toggle">
-            <span class="burger__bars"></span>
+            <img class="icon icon--button" src="/assets/images/icons/menu.svg" width="24" height="24" alt=""
+                aria-hidden="true">
             <span class="visually-hidden">Ouvrir le menu</span>
         </label>
         <a class="brand" href="/">

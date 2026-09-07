@@ -45,17 +45,26 @@ $libellesBillet = ['ACTIF' => 'Actif', 'UTILISE' => 'Utilisé', 'ANNULE' => 'Ann
                     <?php endif; ?>
                     <h3 class="event-summary__title"><?= htmlspecialchars($billet['nom_evenement']) ?></h3>
                     <div class="meta-list">
-                        <time datetime="<?= $dateDebut->format('Y-m-d') ?>">
+                        <time class="meta-item" datetime="<?= $dateDebut->format('Y-m-d') ?>">
+                            <img class="icon" src="/assets/images/icons/calendar-days.svg" width="20" height="20" alt=""
+                                aria-hidden="true">
                             <?= $dateDebut->format('d/m/Y') ?>
                         </time>
-                        <span>
+                        <span class="meta-item">
+                            <img class="icon" src="/assets/images/icons/clock.svg" width="20" height="20" alt=""
+                                aria-hidden="true">
                             <time datetime="<?= $dateDebut->format('Y-m-d\TH:i') ?>">
                                 <?= $dateDebut->format('H:i') ?>
                             </time>
-                            -
+                            <span aria-hidden="true">-</span>
                             <time datetime="<?= $dateFin->format('Y-m-d\TH:i') ?>">
                                 <?= $dateFin->format('H:i') ?>
                             </time>
+                        </span>
+                        <span class="meta-item">
+                            <img class="icon" src="/assets/images/icons/map-pin.svg" width="20" height="20" alt=""
+                                aria-hidden="true">
+                            <?= htmlspecialchars($eventLocation) ?>
                         </span>
                     </div>
                     <div class="event-summary__actions">

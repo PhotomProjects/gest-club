@@ -60,9 +60,10 @@
 }
 
 .site-header__inner {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  gap: 1.5rem;
+  column-gap: 1.5rem;
   min-height: 96px;
 }
 
@@ -71,8 +72,8 @@
 .brand {
   display: flex;
   align-items: center;
+  justify-self: start;
   gap: 0.75rem;
-  flex-shrink: 0;
 }
 
 .brand__logo {
@@ -92,9 +93,8 @@
 /* Navigation */
 
 .main-nav {
-  flex: 1;
   display: flex;
-  justify-content: center;
+  justify-self: center;
   gap: 2rem;
 }
 
@@ -118,7 +118,7 @@
 /* Actions utilisateur */
 
 .header-actions {
-  flex-shrink: 0;
+  justify-self: end;
 }
 
 .header-account {
@@ -138,30 +138,6 @@
   border: 1px solid var(--c-border);
   border-radius: 6px;
   background-color: var(--c-surface);
-}
-
-.burger__bars,
-.burger__bars::before,
-.burger__bars::after {
-  display: block;
-  width: 20px;
-  height: 2px;
-  background-color: var(--c-text);
-  content: "";
-}
-
-.burger__bars {
-  position: relative;
-}
-
-.burger__bars::before {
-  position: absolute;
-  top: -6px;
-}
-
-.burger__bars::after {
-  position: absolute;
-  top: 6px;
 }
 
 /* Menu mobile */

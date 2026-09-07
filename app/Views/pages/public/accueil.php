@@ -2,9 +2,7 @@
 $maintenant = new DateTimeImmutable();
 ?>
 
-<section class="banner">
-    <span class="banner__label">Banner IMG</span>
-</section>
+<div class="banner" aria-hidden="true"></div>
 
 <main class="page">
     <div class="container">
@@ -40,9 +38,29 @@ $maintenant = new DateTimeImmutable();
                                 <h2 class="event-card__title">
                                     <?= htmlspecialchars($evenement['nom_evenement']) ?>
                                 </h2>
-                                <time datetime="<?= $dateDebut->format('Y-m-d\TH:i') ?>">
-                                    <?= $dateDebut->format('d/m/Y à H:i') ?>
-                                </time>
+                                <div class="meta-list">
+                                    <time class="meta-item" datetime="<?= $dateDebut->format('Y-m-d') ?>">
+                                        <img class="icon" src="/assets/images/icons/calendar-days.svg" width="20" height="20"
+                                            alt="" aria-hidden="true">
+                                        <?= $dateDebut->format('d/m/Y') ?>
+                                    </time>
+                                    <span class="meta-item">
+                                        <img class="icon" src="/assets/images/icons/clock.svg" width="20" height="20" alt=""
+                                            aria-hidden="true">
+                                        <time datetime="<?= $dateDebut->format('Y-m-d\TH:i') ?>">
+                                            <?= $dateDebut->format('H:i') ?>
+                                        </time>
+                                        <span aria-hidden="true">-</span>
+                                        <time datetime="<?= $dateFin->format('Y-m-d\TH:i') ?>">
+                                            <?= $dateFin->format('H:i') ?>
+                                        </time>
+                                    </span>
+                                    <span class="meta-item">
+                                        <img class="icon" src="/assets/images/icons/map-pin.svg" width="20" height="20" alt=""
+                                            aria-hidden="true">
+                                        <?= htmlspecialchars($eventLocation) ?>
+                                    </span>
+                                </div>
                                 <?php if ($estEnCours): ?>
                                     <span class="badge badge--success">En cours</span>
                                 <?php elseif ($estComplet): ?>

@@ -17,10 +17,14 @@ $isAuthenticated = $isAuthenticated ?? false;
 <div class="header-actions">
     <?php if ($isAuthenticated): ?>
         <a class="btn btn--ghost btn--sm header-account" href="/compte.php" aria-label="Mon compte">
+            <img class="icon icon--button" src="/assets/images/icons/circle-user-round.svg" width="24" height="24" alt=""
+                aria-hidden="true">
             <span class="header-account__label">Mon compte</span>
         </a>
     <?php else: ?>
         <a class="btn btn--secondary btn--sm header-account" href="/connexion.php" aria-label="Se connecter">
+            <img class="icon icon--button" src="/assets/images/icons/circle-user-round.svg" width="24" height="24" alt=""
+                aria-hidden="true">
             <span class="header-account__label">Se connecter</span>
         </a>
     <?php endif; ?>
