@@ -19,8 +19,8 @@ $evenement = $evenementRepository->findById($id);
 
 // L'événement doit exister.
 if ($evenement === null) {
-    http_response_code(404);
-    exit('Événement introuvable.');
+    require __DIR__ . '/404.php';
+    exit;
 }
 
 // Récupération du programme.

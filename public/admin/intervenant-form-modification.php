@@ -18,8 +18,8 @@ $intervenantRepository = new IntervenantRepository($pdo);
 $intervenant = $intervenantRepository->findById($idIntervenant);
 
 if ($intervenant === null) {
-    http_response_code(404);
-    exit('Intervenant introuvable.');
+    require __DIR__ . '/404.php';
+    exit;
 }
 
 // Valeurs initiales.

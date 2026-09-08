@@ -248,8 +248,8 @@ INSERT INTO place_evenement (
     (26, 'DISPONIBLE', 4, 2),
     (27, 'DISPONIBLE', 4, 3),
     (28, 'DISPONIBLE', 4, 4),
-    (29, 'RESERVEE',   4, 5),
-    (30, 'RESERVEE',   4, 6),
+    (29, 'DISPONIBLE', 4, 5),
+    (30, 'DISPONIBLE', 4, 6),
     (31, 'DISPONIBLE', 4, 7),
     (32, 'DISPONIBLE', 4, 8),
 
@@ -373,7 +373,7 @@ INSERT INTO reservation (
     (9, DATE_SUB(@event_3_start, INTERVAL 4 DAY), 'CONFIRMEE', 3, 3),
 
     -- Événement 4 : réservation conservée malgré l'annulation
-    (10, DATE_SUB(@seed_now, INTERVAL 2 DAY), 'CONFIRMEE', 4, 4);
+    (10, DATE_SUB(@seed_now, INTERVAL 2 DAY), 'ANNULEE', 4, 4);
 
 
 -- RESERVATION_PLACE --

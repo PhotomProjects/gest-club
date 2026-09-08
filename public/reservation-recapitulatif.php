@@ -39,8 +39,8 @@ $evenementRepository = new EvenementRepository($pdo);
 $evenement = $evenementRepository->findById($idEvenement);
 
 if ($evenement === null) {
-    http_response_code(404);
-    exit('Événement introuvable.');
+    require __DIR__ . '/404.php';
+    exit;
 }
 
 // Vérification que l'événement peut encore être réservé.

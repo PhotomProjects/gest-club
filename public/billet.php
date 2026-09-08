@@ -13,8 +13,8 @@ $auth->requireLogin();
 $idBillet = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1,],]);
 
 if ($idBillet === false || $idBillet === null) {
-    http_response_code(404);
-    exit('Billet introuvable.');
+    require __DIR__ . '/404.php';
+    exit;
 }
 
 $billetRepository = new BilletRepository($pdo);
@@ -25,8 +25,8 @@ $billet = $billetRepository->findByIdForUser(
 );
 
 if ($billet === null) {
-    http_response_code(404);
-    exit('Billet introuvable.');
+    require __DIR__ . '/404.php';
+    exit;
 }
 
 $places = $billetRepository->findPlacesByIdForUser(

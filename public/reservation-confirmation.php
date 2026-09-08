@@ -79,8 +79,8 @@ $reservation = $reservationRepository->findByIdForUser(
 );
 
 if ($reservation === null) {
-    http_response_code(404);
-    exit('Réservation introuvable.');
+    require __DIR__ . '/404.php';
+    exit;
 }
 
 $pageTitle = 'Réservation confirmée';

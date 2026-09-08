@@ -22,8 +22,8 @@ $idReservation = filter_input(
 );
 
 if ($idReservation === false || $idReservation === null) {
-    http_response_code(404);
-    exit('Réservation introuvable.');
+    require __DIR__ . '/404.php';
+    exit;
 }
 
 $reservationRepository = new ReservationRepository($pdo);
@@ -31,8 +31,8 @@ $reservationRepository = new ReservationRepository($pdo);
 $reservation = $reservationRepository->findByIdForAdmin($idReservation);
 
 if ($reservation === null) {
-    http_response_code(404);
-    exit('Réservation introuvable.');
+    require __DIR__ . '/404.php';
+    exit;
 }
 
 $places = $reservationRepository->findPlacesByIdForAdmin($idReservation);

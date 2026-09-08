@@ -18,8 +18,8 @@ $evenementRepository = new EvenementRepository($pdo);
 $evenement = $evenementRepository->findById($id);
 
 if ($evenement === null) {
-    http_response_code(404);
-    exit('Événement introuvable.');
+    require __DIR__ . '/404.php';
+    exit;
 }
 
 $dateFinEvenement = new DateTimeImmutable($evenement['date_heure_fin_evenement']);
@@ -28,7 +28,15 @@ $maintenant = new DateTimeImmutable();
 if (
     $evenement['statut_evenement'] === 'ANNULE' || $dateFinEvenement <= $maintenant
 ) {
-    header('Location: /403.php');
+    http_response_code(403);
+
+    $pageTitle = 'Accès refusé';
+    $topbarTitle = 'Évènements';
+    $adminSection = 'evenements';
+
+    $view = dirname(__DIR__, 2) . '/app/Views/pages/admin/403.php';
+
+    require dirname(__DIR__, 2) . '/app/Views/layouts/admin.php';
     exit;
 }
 

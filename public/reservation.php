@@ -11,8 +11,8 @@ require dirname(__DIR__) . '/config/bootstrap.php';
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
 if ($id === false || $id === null || $id < 1) {
-    http_response_code(404);
-    exit('Événement introuvable.');
+    require __DIR__ . '/404.php';
+    exit;
 }
 
 // Conservation de l'événement demandé avant la connexion.
@@ -28,8 +28,8 @@ $evenementRepository = new EvenementRepository($pdo);
 $evenement = $evenementRepository->findById($id);
 
 if ($evenement === null) {
-    http_response_code(404);
-    exit('Événement introuvable.');
+    require __DIR__ . '/404.php';
+    exit;
 }
 
 // Vérification que l'événement peut encore être réservé.

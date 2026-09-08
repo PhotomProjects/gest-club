@@ -17,8 +17,8 @@ $evenementRepository = new EvenementRepository($pdo);
 $evenement = $evenementRepository->findById($id);
 
 if ($evenement === null) {
-    http_response_code(404);
-    exit('Événement introuvable.');
+    require __DIR__ . '/404.php';
+    exit;
 }
 
 $dateDebut = new DateTimeImmutable($evenement['date_heure_debut_evenement']);

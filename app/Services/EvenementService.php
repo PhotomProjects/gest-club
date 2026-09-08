@@ -73,6 +73,12 @@ class EvenementService
             );
         }
 
+        if ($debut <= new DateTimeImmutable()) {
+            throw new DomainException(
+                "La date de début doit être postérieure à la date actuelle."
+            );
+        }
+
         $this->pdo->beginTransaction();
 
         try {
@@ -146,6 +152,12 @@ class EvenementService
         if ($fin <= $debut) {
             throw new DomainException(
                 "La date de fin doit être postérieure à la date de début."
+            );
+        }
+
+        if ($debut <= new DateTimeImmutable()) {
+            throw new DomainException(
+                "La date de début doit être postérieure à la date actuelle."
             );
         }
 
@@ -233,8 +245,13 @@ class EvenementService
                 );
             }
 
+            // Annulation des réservations confirmées.
             $this->reservationRepository->cancelByEventId($id);
 
+            // Libération de toutes les places réservées.
+            $this->placeRepository->markPlacesAsAvailableByEventId($id);
+
+            // Annulation de l'évènement.
             $this->evenementRepository->cancel($id);
 
             $this->pdo->commit();

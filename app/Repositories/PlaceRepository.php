@@ -172,6 +172,21 @@ class PlaceRepository
         }
     }
 
+    public function markPlacesAsAvailableByEventId(
+        int $eventId
+    ): void {
+        $statement = $this->pdo->prepare(
+            'UPDATE place_evenement
+        SET statut_place = \'DISPONIBLE\'
+        WHERE id_evenement = :id_evenement
+        AND statut_place = \'RESERVEE\''
+        );
+
+        $statement->execute([
+            'id_evenement' => $eventId,
+        ]);
+    }
+
     public function createForEvent(int $eventId): void
     {
         $statement = $this->pdo->prepare(

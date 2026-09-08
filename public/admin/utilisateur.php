@@ -17,8 +17,8 @@ $utilisateurRepository = new UtilisateurRepository($pdo);
 $utilisateur = $utilisateurRepository->findById($idUtilisateur);
 
 if ($utilisateur === null) {
-    http_response_code(404);
-    exit('Utilisateur introuvable.');
+    require __DIR__ . '/404.php';
+    exit;
 }
 
 // Réservations associées.

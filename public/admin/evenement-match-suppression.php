@@ -17,8 +17,8 @@ $matchRepository = new MatchRepository($pdo);
 $match = $matchRepository->findById($idMatch);
 
 if ($match === null) {
-    http_response_code(404);
-    exit('Match introuvable.');
+    require __DIR__ . '/404.php';
+    exit;
 }
 
 $idEvenement = (int) $match['id_evenement'];
