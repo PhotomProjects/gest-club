@@ -27,6 +27,7 @@
                                 <th>Évènement</th>
                                 <th>Date</th>
                                 <th>Statut</th>
+                                <th>Places</th>
                                 <th class="is-actions">Actions</th>
                             </tr>
                         </thead>
@@ -74,6 +75,18 @@
                                         <span class="badge <?= $statut['class'] ?>">
                                             <?= htmlspecialchars($statut['label'], ENT_QUOTES, 'UTF-8') ?>
                                         </span>
+                                    </td>
+                                    <td class="cell-num">
+                                        <?php if (
+                                            $evenement['statut_evenement'] === 'ANNULE' || $dateFin <= $maintenant
+                                        ): ?>
+                                            —
+                                        <?php else: ?>
+                                            <?= (int) $evenement['places_disponibles'] ?>
+                                            /
+                                            <?= (int) $evenement['places_total'] ?>
+                                            disponibles
+                                        <?php endif; ?>
                                     </td>
                                     <td class="is-actions">
                                         <a class="btn btn--ghost"

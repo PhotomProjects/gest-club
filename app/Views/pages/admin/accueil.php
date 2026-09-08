@@ -25,6 +25,7 @@
                                         <th scope="col">Évènement</th>
                                         <th scope="col">Date</th>
                                         <th scope="col">Statut</th>
+                                        <th scope="col">Places</th>
                                         <th scope="col" class="is-actions">Actions</th>
                                     </tr>
                                 </thead>
@@ -50,6 +51,12 @@
                                                 <?php else: ?>
                                                     <span class="badge badge--success">Ouvert</span>
                                                 <?php endif; ?>
+                                            </td>
+                                            <td class="cell-num">
+                                                <?= (int) $evenement['places_disponibles'] ?>
+                                                /
+                                                <?= (int) $evenement['places_total'] ?>
+                                                disponibles
                                             </td>
                                             <td class="is-actions">
                                                 <a class="btn btn--ghost"

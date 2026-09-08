@@ -23,6 +23,7 @@ class EvenementRepository
             e.date_heure_debut_evenement,
             e.date_heure_fin_evenement,
             e.statut_evenement,
+            COUNT(pe.id_place_evenement) AS places_total,
             SUM(
                 CASE
                     WHEN pe.statut_place = \'DISPONIBLE\' THEN 1
@@ -48,23 +49,32 @@ class EvenementRepository
     {
         $statement = $this->pdo->query(
             'SELECT
-            id_evenement,
-            nom_evenement,
-            image_evenement,
-            date_heure_debut_evenement,
-            date_heure_fin_evenement,
-            statut_evenement,
-            (
-                SELECT COUNT(*)
-                FROM place_evenement pe
-                WHERE pe.id_evenement = e.id_evenement
-                AND pe.statut_place = \'DISPONIBLE\'
-            ) AS places_disponibles
-        FROM evenement e
-        WHERE e.date_heure_fin_evenement >= NOW()
-        ORDER BY e.date_heure_debut_evenement ASC'
+        e.id_evenement,
+        e.nom_evenement,
+        e.image_evenement,
+        e.date_heure_debut_evenement,
+        e.date_heure_fin_evenement,
+        e.statut_evenement,
+        COUNT(pe.id_place_evenement) AS places_total,
+        SUM(
+            CASE
+                WHEN pe.statut_place = \'DISPONIBLE\' THEN 1
+                ELSE 0
+            END
+        ) AS places_disponibles
+    FROM evenement e
+    LEFT JOIN place_evenement pe
+        ON pe.id_evenement = e.id_evenement
+    WHERE e.date_heure_fin_evenement >= NOW()
+    GROUP BY
+        e.id_evenement,
+        e.nom_evenement,
+        e.image_evenement,
+        e.date_heure_debut_evenement,
+        e.date_heure_fin_evenement,
+        e.statut_evenement
+    ORDER BY e.date_heure_debut_evenement ASC'
         );
-
         return $statement->fetchAll();
     }
 
