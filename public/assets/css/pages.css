@@ -164,6 +164,11 @@
   color: var(--c-text-muted);
 }
 
+.option__status {
+  font-size: 0.75rem;
+  color: var(--c-warning);
+}
+
 .option input:hover + .option__box {
   border-color: var(--c-text-muted);
 }

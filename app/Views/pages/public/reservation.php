@@ -58,7 +58,9 @@ $erreurReservation = $erreurReservation ?? null;
             <div class="reservation-side">
                 <section class="card">
                     <h2 class="card__title">Choisissez vos options de réservation</h2>
-                    <form class="reservation-form" action="/reservation-recapitulatif.php" method="post" novalidate>
+                    <form class="reservation-form" action="/reservation-recapitulatif.php" method="post"
+                        data-availability="<?= htmlspecialchars(json_encode($disponibilitesParZone, JSON_THROW_ON_ERROR), ENT_QUOTES, 'UTF-8') ?>"
+                        novalidate>
                         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
                         <input type="hidden" name="id_evenement" value="<?= $evenement['id_evenement'] ?>">
                         <?php if ($erreurReservation !== null): ?>
@@ -92,24 +94,28 @@ $erreurReservation = $erreurReservation ?? null;
                                     <input type="radio" name="tribune" value="NORD" <?= $tribuneSelectionnee === 'NORD' ? 'checked' : '' ?>>
                                     <span class="option__box">
                                         <span class="option__label">Nord</span>
+                                        <span class="option__status" data-option-status hidden></span>
                                     </span>
                                 </label>
                                 <label class="option">
                                     <input type="radio" name="tribune" value="EST" <?= $tribuneSelectionnee === 'EST' ? 'checked' : '' ?>>
                                     <span class="option__box">
                                         <span class="option__label">Est</span>
+                                        <span class="option__status" data-option-status hidden></span>
                                     </span>
                                 </label>
                                 <label class="option">
                                     <input type="radio" name="tribune" value="SUD" <?= $tribuneSelectionnee === 'SUD' ? 'checked' : '' ?>>
                                     <span class="option__box">
                                         <span class="option__label">Sud</span>
+                                        <span class="option__status" data-option-status hidden></span>
                                     </span>
                                 </label>
                                 <label class="option">
                                     <input type="radio" name="tribune" value="OUEST" <?= $tribuneSelectionnee === 'OUEST' ? 'checked' : '' ?>>
                                     <span class="option__box">
                                         <span class="option__label">Ouest</span>
+                                        <span class="option__status" data-option-status hidden></span>
                                     </span>
                                 </label>
                             </div>
@@ -125,6 +131,7 @@ $erreurReservation = $erreurReservation ?? null;
                                         <span class="option__meta">
                                             <?= number_format($prixParNiveau['BAS'], 0, ',', ' ') ?> € / place
                                         </span>
+                                        <span class="option__status" data-option-status hidden></span>
                                     </span>
                                 </label>
                                 <label class="option">
@@ -135,6 +142,7 @@ $erreurReservation = $erreurReservation ?? null;
                                         <span class="option__meta">
                                             <?= number_format($prixParNiveau['MILIEU'], 0, ',', ' ') ?> € / place
                                         </span>
+                                        <span class="option__status" data-option-status hidden></span>
                                     </span>
                                 </label>
                                 <label class="option">
@@ -145,6 +153,7 @@ $erreurReservation = $erreurReservation ?? null;
                                         <span class="option__meta">
                                             <?= number_format($prixParNiveau['HAUT'], 0, ',', ' ') ?> € / place
                                         </span>
+                                        <span class="option__status" data-option-status hidden></span>
                                     </span>
                                 </label>
                             </div>
