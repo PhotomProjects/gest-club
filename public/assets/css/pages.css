@@ -918,6 +918,60 @@
   text-transform: uppercase;
 }
 
+/* Informations légales */
+
+.legal-page > .page-header,
+.legal-content {
+  max-width: 840px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.legal-content {
+  line-height: 1.7;
+}
+
+.legal-update {
+  color: var(--c-text-muted);
+  font-size: 0.875rem;
+}
+
+.legal-update + .legal-section {
+  margin-top: 1.5rem;
+}
+
+.legal-section + .legal-section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--c-border);
+}
+
+.legal-section h2 {
+  margin-bottom: 1rem;
+  font-family: var(--f-alt);
+  font-size: 1.5rem;
+}
+
+.legal-section p + p,
+.legal-section .legal-list + p {
+  margin-top: 1rem;
+}
+
+.legal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.form-privacy {
+  color: var(--c-text-muted);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
 /* Responsive */
 
 /* Tablette */

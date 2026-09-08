@@ -236,3 +236,29 @@
   font-size: 0.75rem;
   color: var(--c-text-muted);
 }
+
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 1rem;
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1rem;
+  font-size: 0.75rem;
+  color: var(--c-text-muted);
+}
+
+.site-footer__link {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.site-footer__link:hover {
+  color: var(--c-text);
+}

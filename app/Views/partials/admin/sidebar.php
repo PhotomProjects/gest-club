@@ -32,7 +32,11 @@
     <div class="admin-sidebar__footer">
         <form action="/deconnexion.php" method="post">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
-            <button class="admin-nav__link admin-logout" type="submit">Déconnexion</button>
+            <button type="submit" class="admin-nav__link admin-logout">
+                <img class="icon" src="/assets/images/icons/log-out.svg" width="20" height="20" alt=""
+                    aria-hidden="true">
+                <span>Déconnexion</span>
+            </button>
         </form>
     </div>
 </aside>

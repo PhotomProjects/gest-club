@@ -161,6 +161,12 @@
                             </li>
                         </ul>
                     </div>
+                    <p class="form-privacy">
+                        Les informations renseignées servent à créer le compte et à gérer les réservations.
+                        <a class="link" href="/donnees-personnelles.php">
+                            En savoir plus sur les données personnelles
+                        </a>.
+                    </p>
                     <div class="form-actions">
                         <button class="btn btn--primary btn--lg" type="submit">S'inscrire</button>
                     </div>
