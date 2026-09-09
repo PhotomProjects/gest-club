@@ -40,7 +40,7 @@ Ainsi, lorsque PHPUnit est lancé, les repositories et les services utilisent la
 
 ### 2.1 Création de la base de test
 
-La base `gest_club_test` doit être créée une première fois dans MariaDB.
+La base `gest_club_test` n’est pas créée automatiquement lors de l’initialisation de l’environnement Docker. Elle doit être préparée après une première installation ou après la suppression du volume MariaDB.
 
 Connexion à MariaDB avec le compte administrateur :
 
@@ -113,6 +113,12 @@ Explication de la commande :
 Les données de démonstration ne sont pas nécessaires. Chaque test d’intégration prépare ses propres données, puis les supprime après son exécution.
 
 La création de la base et l’attribution des droits ne sont nécessaires qu’une seule fois tant que le volume Docker de MariaDB est conservé. Si ce volume est supprimé, cette préparation doit être répétée.
+
+Cette préparation doit être répétée après chaque suppression du volume MariaDB avec :
+
+```bash
+docker compose down --volumes
+```
 
 ### 2.3 Exécution de PHPUnit
 

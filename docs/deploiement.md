@@ -263,6 +263,34 @@ docker compose up -d
 
 Le processus Apache doit pouvoir écrire dans `public/assets/images/evenements/`. Vérifier les droits du dossier sur l'hôte et dans le conteneur. Ne pas résoudre ce problème avec des droits globaux `777` sur un serveur de production.
 
+### Accès refusé après une modification de `.env`
+
+Si MariaDB affiche une erreur similaire à :
+
+```text
+ERROR 1045 (28000): Access denied for user
+```
+
+le volume MariaDB peut avoir été initialisé avec d’anciens identifiants. La modification de `DB_PASSWORD` ou de `DB_ROOT_PASSWORD` dans `.env` ne met pas automatiquement à jour les comptes enregistrés dans une base existante.
+
+Si les données locales peuvent être supprimées, réinitialiser le volume :
+
+```bash
+docker compose down --volumes --remove-orphans
+docker compose up -d
+docker compose ps
+```
+
+Attendre que le service `database` soit indiqué comme sain (`healthy`), puis réimporter la structure et les données :
+
+```bash
+docker compose exec -T database sh -c 'mariadb -u"$MARIADB_USER" -p"$MARIADB_PASSWORD" "$MARIADB_DATABASE"' < database/schema.sql
+
+docker compose exec -T database sh -c 'mariadb -u"$MARIADB_USER" -p"$MARIADB_PASSWORD" "$MARIADB_DATABASE"' < database/seed.sql
+```
+
+> **Attention :** l’option `--volumes` supprime définitivement les bases contenues dans le volume MariaDB du projet. Effectuer une sauvegarde avant cette opération si les données doivent être conservées.
+
 ## 10. Conditions avant une mise en production
 
 Une cible d'hébergement doit être choisie avant de produire une procédure exacte. La configuration actuelle doit au minimum être adaptée sur les points suivants :
