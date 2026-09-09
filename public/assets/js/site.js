@@ -222,7 +222,7 @@
 
     // == Réservation ==
 
-    const placeInputs = document.querySelectorAll('input[name="nb_places"]');
+const placeInputs = document.querySelectorAll('input[name="nb_places"]');
     const tribuneInputs = document.querySelectorAll('input[name="tribune"]');
     const levelInputs = document.querySelectorAll('input[name="niveau"]');
     const reservationTotal = document.getElementById("reservation-total");
@@ -325,7 +325,7 @@
         const selectedLevel = selectFirstAvailable(levelInputs);
 
         if (reservationSubmitButton) {
-            reservationSubmitButton.disabled = selectedTribune || !selectedLevel;
+            reservationSubmitButton.disabled = !selectedTribune || !selectedLevel;
         }
 
         updateReservationTotal();
