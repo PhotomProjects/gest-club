@@ -30,6 +30,10 @@ $adminSection = $adminSection ?? null;
 
 <body>
 
+    <a class="skip-link" href="#main-content">
+        Aller au contenu principal
+    </a>
+
     <p class="admin-small-screen">
         L'espace de gestion est conçu pour un écran d'ordinateur (1100 px minimum).
     </p>

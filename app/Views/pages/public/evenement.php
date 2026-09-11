@@ -8,7 +8,7 @@ $estEnCours = !$estAnnule && $dateDebut <= $maintenant && $dateFin > $maintenant
 $estTermine = !$estAnnule && $dateFin <= $maintenant;
 $estReservable = !$estAnnule && !$estComplet && $dateDebut > $maintenant;
 ?>
-<main class="page">
+<main id="main-content" class="page" tabindex="-1">
     <div class="container">
         <div class="event-detail">
 

@@ -8,7 +8,7 @@ $dateFin = new DateTimeImmutable(
 $libellesTribunes = ['NORD' => 'Nord', 'SUD' => 'Sud', 'EST' => 'Est', 'OUEST' => 'Ouest',];
 $libellesNiveaux = ['BAS' => 'Bas', 'MILIEU' => 'Milieu', 'HAUT' => 'Haut',];
 ?>
-<main class="page">
+<main id="main-content" class="page" tabindex="-1">
     <div class="container">
         <div class="page-header">
             <h1>Résumé de la réservation</h1>

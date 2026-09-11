@@ -8,7 +8,7 @@ $tribuneSelectionnee = $selectionReservation['tribune'] ?? 'NORD';
 $niveauSelectionne = $selectionReservation['niveau'] ?? 'BAS';
 $erreurReservation = $erreurReservation ?? null;
 ?>
-<main class="page">
+<main id="main-content" class="page" tabindex="-1">
     <div class="container">
         <div class="page-header">
             <h1>Réservation</h1>
@@ -161,6 +161,7 @@ $erreurReservation = $erreurReservation ?? null;
                         <div class="notice">
                             <p>Les places exactes seront attribuées après confirmation de la réservation.</p>
                         </div>
+                        <p id="reservation-status" class="visually-hidden" role="status" aria-atomic="true"></p>
                         <div class="reservation-total">
                             <span>Total</span>
                             <strong id="reservation-total">— €</strong>

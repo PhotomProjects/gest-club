@@ -1,4 +1,4 @@
-<main class="status-page">
+<main id="main-content" class="status-page" tabindex="-1">
     <div class="container">
         <p class="status-page__code" aria-hidden="true">404</p>
         <h1 class="status-page__title">Le Main Event ne se trouve pas ici !</h1>

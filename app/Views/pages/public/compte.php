@@ -1,4 +1,4 @@
-<main class="page">
+<main id="main-content" class="page" tabindex="-1">
     <div class="container">
         <div class="profile-header">
             <div class="profile-header__id">

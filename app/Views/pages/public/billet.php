@@ -24,7 +24,7 @@ $statutBillet = $billet['statut_billet'];
 $classesBillet = ['ACTIF' => 'badge--success', 'UTILISE' => 'badge--muted', 'ANNULE' => 'badge--danger',];
 $libellesBillet = ['ACTIF' => 'Actif', 'UTILISE' => 'Utilisé', 'ANNULE' => 'Annulé',];
 ?>
-<main class="page">
+<main id="main-content" class="page" tabindex="-1">
     <div class="container">
         <div class="page-header">
             <h1>Mon billet</h1>

@@ -1,4 +1,4 @@
-<main class="admin-content">
+<main id="main-content" class="admin-content" tabindex="-1">
     <h1 class="visually-hidden">Vue d'ensemble</h1>
     <div class="dashboard-layout">
         <div class="dashboard-panels">

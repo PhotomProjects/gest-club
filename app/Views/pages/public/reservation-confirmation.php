@@ -11,7 +11,7 @@ $referenceReservation = sprintf(
     (int) $reservation['id_reservation']
 );
 ?>
-<main class="page">
+<main id="main-content" class="page" tabindex="-1">
     <div class="container">
         <section class="card confirmation">
             <h1>Votre réservation est confirmée.</h1>

@@ -1,4 +1,4 @@
-<main class="admin-content">
+<main id="main-content" class="admin-content" tabindex="-1">
     <div class="admin-header">
         <div class="admin-header__text">
             <h1>Intervenants</h1>
@@ -24,11 +24,12 @@
             <div class="panel__body panel__body--flush">
                 <div class="table-wrap">
                     <table class="table">
+                        <caption class="visually-hidden">Liste des intervenants</caption>
                         <thead>
                             <tr>
-                                <th>Nom de scène</th>
-                                <th>Statut</th>
-                                <th class="is-actions">Actions</th>
+                                <th scope="col">Nom de scène</th>
+                                <th scope="col">Statut</th>
+                                <th scope="col" class="is-actions">Actions</th>
                             </tr>
                         </thead>
                         <tbody>

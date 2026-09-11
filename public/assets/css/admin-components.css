@@ -537,9 +537,10 @@
 @media (max-width: 1099px) {
   .admin-small-screen {
     display: block;
+    margin: 1rem auto;
   }
 
   .admin {
-    display: none;
+    min-width: 1100px;
   }
 }

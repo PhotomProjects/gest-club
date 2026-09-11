@@ -30,7 +30,7 @@ $isAuthenticated = $isAuthenticated ?? false;
     <?php endif; ?>
 </div>
 
-<nav class="mobile-menu" aria-label="Navigation mobile">
+<nav id="mobile-menu" class="mobile-menu" aria-label="Navigation mobile">
     <div class="mobile-menu__head">
         <span class="mobile-menu__title">Menu</span>
         <label class="mobile-menu__close" for="nav-toggle">X<span class="visually-hidden">Fermer le menu</span></label>

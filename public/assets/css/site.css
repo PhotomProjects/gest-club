@@ -222,6 +222,10 @@
   cursor: pointer;
 }
 
+body.menu-open {
+  overflow: hidden;
+}
+
 /* Pied de page */
 
 .site-footer {

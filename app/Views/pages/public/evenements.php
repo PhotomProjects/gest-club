@@ -1,7 +1,7 @@
 <?php
 $maintenant = new DateTimeImmutable();
 ?>
-<main class="page">
+<main id="main-content" class="page" tabindex="-1">
     <div class="container">
         <div class="page-header">
             <h1>Évènements à venir et en cours</h1>

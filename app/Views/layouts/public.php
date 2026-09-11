@@ -32,6 +32,8 @@ $robots = $robots ?? null;
 
 <body>
 
+    <a class="skip-link" href="#main-content">Aller au contenu principal</a>
+
     <?php require __DIR__ . '/../partials/public/header.php'; ?>
 
     <?php require $view; ?>

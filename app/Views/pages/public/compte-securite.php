@@ -1,9 +1,9 @@
-<main class="page">
+<main id="main-content" class="page" tabindex="-1">
     <div class="container">
         <section class="form-panel">
             <h1>Sécurité du compte</h1>
             <?php if ($modificationReussie): ?>
-                <div class="notice">
+                <div class="notice" role="status">
                     <p>Votre mot de passe a bien été mis à jour.</p>
                 </div>
             <?php endif; ?>
@@ -12,14 +12,15 @@
                 <div class="field">
                     <label class="field__label" for="actuel">Mot de passe actuel</label>
                     <div class="password-field">
-                        <input class="input" type="password" id="actuel" name="mot_de_passe_actuel"
-                            autocomplete="current-password" required>
+                        <input class="input<?= isset($erreurs['mot_de_passe_actuel']) ? ' is-invalid' : '' ?>"
+                            type="password" id="actuel" name="mot_de_passe_actuel" autocomplete="current-password"
+                            required <?= isset($erreurs['mot_de_passe_actuel']) ? 'aria-invalid="true" aria-describedby="current-password-error"' : '' ?>>
                         <button id="current-password-toggle" class="password-toggle" type="button" aria-pressed="false">
                             Afficher
                         </button>
                     </div>
                     <?php if (isset($erreurs['mot_de_passe_actuel'])): ?>
-                        <p class="field__error">
+                        <p class="field__error" id="current-password-error">
                             <?= htmlspecialchars($erreurs['mot_de_passe_actuel']) ?>
                         </p>
                     <?php endif; ?>
@@ -27,14 +28,17 @@
                 <div class="field">
                     <label class="field__label" for="nouveau">Nouveau mot de passe</label>
                     <div class="password-field">
-                        <input class="input" type="password" id="nouveau" name="nouveau_mot_de_passe"
-                            autocomplete="new-password" minlength="8" aria-describedby="new-password-rules" required>
+                        <input class="input<?= isset($erreurs['nouveau_mot_de_passe']) ? ' is-invalid' : '' ?>"
+                            type="password" id="nouveau" name="nouveau_mot_de_passe" autocomplete="new-password"
+                            minlength="8"
+                            aria-describedby="new-password-rules<?= isset($erreurs['nouveau_mot_de_passe']) ? ' new-password-error' : '' ?>"
+                            required <?= isset($erreurs['nouveau_mot_de_passe']) ? 'aria-invalid="true"' : '' ?>>
                         <button id="new-password-toggle" class="password-toggle" type="button" aria-pressed="false">
                             Afficher
                         </button>
                     </div>
                     <?php if (isset($erreurs['nouveau_mot_de_passe'])): ?>
-                        <p class="field__error">
+                        <p class="field__error" id="new-password-error">
                             <?= htmlspecialchars($erreurs['nouveau_mot_de_passe']) ?>
                         </p>
                     <?php endif; ?>
@@ -42,16 +46,18 @@
                 <div class="field">
                     <label class="field__label" for="nouveau2">Confirmer le nouveau mot de passe</label>
                     <div class="password-field">
-                        <input class="input" type="password" id="nouveau2" name="nouveau_mot_de_passe_confirmation"
-                            autocomplete="new-password" minlength="8" aria-describedby="new-password-confirmation-error"
-                            required>
+                        <input
+                            class="input<?= isset($erreurs['nouveau_mot_de_passe_confirmation']) ? ' is-invalid' : '' ?>"
+                            type="password" id="nouveau2" name="nouveau_mot_de_passe_confirmation"
+                            autocomplete="new-password" minlength="8" required
+                            <?= isset($erreurs['nouveau_mot_de_passe_confirmation']) ? 'aria-invalid="true" aria-describedby="new-password-confirmation-error"' : '' ?>>
                         <button id="new-password2-toggle" class="password-toggle" type="button" aria-pressed="false">
                             Afficher
                         </button>
                     </div>
-                    <p class="field__error" id="new-password-confirmation-error"
+                    <p class="field__error" id="new-password-confirmation-error" aria-live="polite"
                         <?= isset($erreurs['nouveau_mot_de_passe_confirmation']) ? '' : 'hidden' ?>>
-                        <?= htmlspecialchars($erreurs['nouveau_mot_de_passe_confirmation'] ?? 'Les mots de passe ne correspondent pas.') ?>
+                        <?= htmlspecialchars($erreurs['nouveau_mot_de_passe_confirmation'] ?? '') ?>
                     </p>
                 </div>
                 <div class="rules" id="new-password-rules">

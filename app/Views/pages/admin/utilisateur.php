@@ -1,7 +1,7 @@
 <?php
 $dateCreation = new DateTimeImmutable($utilisateur['date_creation_compte']);
 ?>
-<main class="admin-content">
+<main id="main-content" class="admin-content" tabindex="-1">
     <div class="admin-header">
         <div class="admin-header__text">
             <h1>

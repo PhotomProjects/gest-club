@@ -303,6 +303,16 @@
   border-color: var(--c-accent);
 }
 
+.rules li.is-valid::before {
+  content: "✓";
+  font-weight: 700;
+}
+
+.rules li.is-invalid::before {
+  content: "×";
+  font-weight: 700;
+}
+
 /* Icons */
 
 .icon {

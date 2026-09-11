@@ -1,3 +1,61 @@
+    // Menu mobile
+
+    const navToggle = document.getElementById("nav-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    if (navToggle && mobileMenu) {
+        const backgroundElements = document.querySelectorAll(".skip-link, .brand, .main-nav, .header-actions, .banner, main, .site-footer");
+        const firstMenuControl = mobileMenu.querySelector("a, button");
+
+        function updateMobileMenu(isOpen, moveFocus = true) {
+            backgroundElements.forEach(function(element) {
+                element.inert = isOpen;
+            });
+
+            document.body.classList.toggle("menu-open", isOpen);
+
+            if (!moveFocus) {
+                return;
+            }
+
+            if (isOpen) {
+                firstMenuControl?.focus();
+            } else {
+                navToggle.focus();
+            }
+        }
+
+        navToggle.addEventListener("change", function() {
+            updateMobileMenu(navToggle.checked);
+        });
+
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Escape" && navToggle.checked) {
+                navToggle.checked = false;
+                updateMobileMenu(false);
+            }
+        });
+
+        const mobileMedia = window.matchMedia("(max-width: 860px)");
+
+        mobileMedia.addEventListener("change", function(event) {
+            if (!event.matches && navToggle.checked) {
+                navToggle.checked = false;
+                updateMobileMenu(false, false);
+            }
+        });
+
+        navToggle.addEventListener("keydown", function(event) {
+        if (event.key !== "Enter") {
+            return;
+        }
+
+            event.preventDefault();
+            navToggle.checked = !navToggle.checked;
+            updateMobileMenu(navToggle.checked);
+        });
+    }
+
     // == Fonctions ==
 
     // Afficher / Masquer un MDP
@@ -89,6 +147,7 @@
             if (confirmationInput.value === "") {
                 confirmationInput.classList.remove("is-valid", "is-invalid");
                 confirmationInput.removeAttribute("aria-invalid");
+                confirmationInput.removeAttribute("aria-describedby");
                 errorElement.hidden = true;
                 return;
             }
@@ -98,12 +157,14 @@
                 confirmationInput.classList.add("is-valid");
                 confirmationInput.classList.remove("is-invalid");
                 confirmationInput.removeAttribute("aria-invalid");
+                confirmationInput.removeAttribute("aria-describedby");
                 errorElement.hidden = true;
             } else {
                 // Les deux valeurs sont différentes.
                 confirmationInput.classList.add("is-invalid");
                 confirmationInput.classList.remove("is-valid");
                 confirmationInput.setAttribute("aria-invalid", "true");
+                confirmationInput.setAttribute("aria-describedby", errorElement.id);
                 errorElement.textContent = mismatchMessage;
                 errorElement.hidden = false;
             }
@@ -226,6 +287,7 @@ const placeInputs = document.querySelectorAll('input[name="nb_places"]');
     const tribuneInputs = document.querySelectorAll('input[name="tribune"]');
     const levelInputs = document.querySelectorAll('input[name="niveau"]');
     const reservationTotal = document.getElementById("reservation-total");
+    const reservationStatus = document.getElementById("reservation-status");
     const reservationForm = document.querySelector(".reservation-form");
     const reservationSubmitButton = reservationForm?.querySelector('button[type="submit"]');
 
@@ -295,6 +357,33 @@ const placeInputs = document.querySelectorAll('input[name="nb_places"]');
         
         reservationTotal.textContent = numberOfPlaces * price + " €";
     }
+    
+    function updateReservationStatus() {
+        if (!reservationStatus) {
+            return;
+        }
+
+        const selectedPlace = document.querySelector('input[name="nb_places"]:checked');
+        const selectedTribune = document.querySelector('input[name="tribune"]:checked:not(:disabled)');
+        const selectedLevel = document.querySelector('input[name="niveau"]:checked:not(:disabled)');
+
+        if (!selectedPlace || !selectedTribune || !selectedLevel) {
+            reservationStatus.textContent = "Aucune combinaison disponible pour cette sélection.";
+            return;
+        }
+
+        const numberOfPlaces = Number(selectedPlace.value);
+        const availablePlaces = getZoneAvailability(selectedTribune.value, selectedLevel.value);
+        const total = numberOfPlaces * Number(selectedLevel.dataset.price);
+        const selectedPlaceLabel = numberOfPlaces > 1 ? "places" : "place";
+        const availablePlaceLabel = availablePlaces > 1 ? "places disponibles" : "place disponible";
+        
+        reservationStatus.textContent = numberOfPlaces + " " + selectedPlaceLabel
+        + ", tribune " + selectedTribune.value.toLowerCase()
+        + ", niveau " + selectedLevel.value.toLowerCase()
+        + ". " + availablePlaces + " " + availablePlaceLabel
+        + ". Total : " + total + " euros.";
+    }
 
     function updateReservationAvailability() {
         const selectedPlace = document.querySelector('input[name="nb_places"]:checked');
@@ -329,6 +418,7 @@ const placeInputs = document.querySelectorAll('input[name="nb_places"]');
         }
 
         updateReservationTotal();
+        updateReservationStatus();
     }
 
     if (reservationTotal) {
@@ -341,7 +431,10 @@ const placeInputs = document.querySelectorAll('input[name="nb_places"]');
         });
 
         levelInputs.forEach(function (input) {
-            input.addEventListener("change", updateReservationTotal);
+            input.addEventListener("change", function () {
+                updateReservationTotal();
+                updateReservationStatus();
+            });
         });
 
         updateReservationAvailability();

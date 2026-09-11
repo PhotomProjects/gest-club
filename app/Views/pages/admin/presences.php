@@ -6,7 +6,7 @@ $placesAdmises = (int) ($statistiquesPresence['places_admises'] ?? 0);
 $libellesTribunes = ['NORD' => 'Nord', 'SUD' => 'Sud', 'EST' => 'Est', 'OUEST' => 'Ouest',];
 $libellesNiveaux = ['BAS' => 'bas', 'MILIEU' => 'milieu', 'HAUT' => 'haut',];
 ?>
-<main class="admin-content">
+<main id="main-content" class="admin-content" tabindex="-1">
     <div class="admin-header">
         <div class="admin-header__text">
             <h1>Contrôle des billets</h1>

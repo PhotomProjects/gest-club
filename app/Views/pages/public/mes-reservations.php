@@ -30,7 +30,7 @@ $classeStatut = match ($filtre) {
     'annulees' => 'badge--danger',
 };
 ?>
-<main class="page">
+<main id="main-content" class="page" tabindex="-1">
     <div class="container">
         <div class="page-header">
             <h1>Mes réservations</h1>

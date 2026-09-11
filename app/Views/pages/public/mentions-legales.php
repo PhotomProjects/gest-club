@@ -1,4 +1,4 @@
-<main class="page">
+<main id="main-content" class="page" tabindex="-1">
     <div class="container legal-page">
         <header class="page-header">
             <h1>Mentions légales</h1>

@@ -29,7 +29,7 @@ if ($evenement['statut_evenement'] === 'ANNULE') {
     ];
 }
 ?>
-<main class="admin-content">
+<main id="main-content" class="admin-content" tabindex="-1">
     <div class="admin-header">
         <div class="admin-header__text">
             <h1>Gérer l'évènement</h1>

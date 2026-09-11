@@ -1,4 +1,4 @@
-<main class="page">
+<main id="main-content" class="page" tabindex="-1">
     <div class="container">
         <?php if ($inscriptionReussie): ?>
             <div class="notice auth-notice" role="status">
@@ -18,11 +18,12 @@
                     <input type="hidden" name="formulaire" value="connexion">
                     <div class="field">
                         <label class="field__label" for="login-email">Adresse e-mail</label>
-                        <input class="input" type="email" id="login-email" name="email"
-                            placeholder="prenom.nom@exemple.fr" autocomplete="email"
-                            value="<?= htmlspecialchars($emailConnexion) ?>" maxlength="255" required>
+                        <input class="input<?= isset($erreursConnexion['email']) ? ' is-invalid' : '' ?>" type="email"
+                            id="login-email" name="email" placeholder="prenom.nom@exemple.fr" autocomplete="email"
+                            value="<?= htmlspecialchars($emailConnexion) ?>" maxlength="255" required
+                            <?= isset($erreursConnexion['email']) ? 'aria-invalid="true" aria-describedby="login-email-error"' : '' ?>>
                         <?php if (isset($erreursConnexion['email'])): ?>
-                            <p class="field__error">
+                            <p class="field__error" id="login-email-error">
                                 <?= htmlspecialchars($erreursConnexion['email']) ?>
                             </p>
                         <?php endif; ?>
@@ -30,21 +31,22 @@
                     <div class="field">
                         <label class="field__label" for="login-password">Mot de passe</label>
                         <div class="password-field">
-                            <input class="input" type="password" id="login-password" name="mot_de_passe"
-                                placeholder="Votre mot de passe" autocomplete="current-password" required>
+                            <input class="input<?= isset($erreursConnexion['mot_de_passe']) ? ' is-invalid' : '' ?>"
+                                type="password" id="login-password" name="mot_de_passe" placeholder="Votre mot de passe"
+                                autocomplete="current-password" required <?= isset($erreursConnexion['mot_de_passe']) ? 'aria-invalid="true" aria-describedby="login-password-error"' : '' ?>>
                             <button id="login-password-toggle" class="password-toggle" type="button"
                                 aria-pressed="false">
                                 Afficher
                             </button>
                         </div>
                         <?php if (isset($erreursConnexion['mot_de_passe'])): ?>
-                            <p class="field__error">
+                            <p class="field__error" id="login-password-error">
                                 <?= htmlspecialchars($erreursConnexion['mot_de_passe']) ?>
                             </p>
                         <?php endif; ?>
                     </div>
                     <?php if (isset($erreursConnexion['identifiants'])): ?>
-                        <p class="field__error">
+                        <p class="field__error" id="login-credentials-error" role="alert">
                             <?= htmlspecialchars($erreursConnexion['identifiants']) ?>
                         </p>
                     <?php endif; ?>
@@ -65,62 +67,67 @@
                     <input type="hidden" name="formulaire" value="inscription">
                     <div class="field">
                         <label class="field__label" for="signup-nom">Nom</label>
-                        <input class="input" type="text" id="signup-nom" name="nom" placeholder="DUPONT"
-                            autocomplete="family-name" value="<?= htmlspecialchars($nom) ?>" maxlength="100" required>
+                        <input class="input<?= isset($erreursInscription['nom']) ? ' is-invalid' : '' ?>" type="text"
+                            id="signup-nom" name="nom" placeholder="DUPONT" autocomplete="family-name"
+                            value="<?= htmlspecialchars($nom) ?>" maxlength="100" required
+                            <?= isset($erreursInscription['nom']) ? 'aria-invalid="true" aria-describedby="signup-nom-error"' : '' ?>>
                         <?php if (isset($erreursInscription['nom'])): ?>
-                            <p class="field__error">
+                            <p class="field__error" id="signup-nom-error">
                                 <?= htmlspecialchars($erreursInscription['nom']) ?>
                             </p>
                         <?php endif; ?>
                     </div>
                     <div class="field">
                         <label class="field__label" for="signup-prenom">Prénom</label>
-                        <input class="input" type="text" id="signup-prenom" name="prenom" placeholder="Camille"
-                            autocomplete="given-name" value="<?= htmlspecialchars($prenom) ?>" maxlength="100" required>
+                        <input class="input<?= isset($erreursInscription['prenom']) ? ' is-invalid' : '' ?>" type="text"
+                            id="signup-prenom" name="prenom" placeholder="Camille" autocomplete="given-name"
+                            value="<?= htmlspecialchars($prenom) ?>" maxlength="100" required
+                            <?= isset($erreursInscription['prenom']) ? 'aria-invalid="true" aria-describedby="signup-prenom-error"' : '' ?>>
                         <?php if (isset($erreursInscription['prenom'])): ?>
-                            <p class="field__error">
+                            <p class="field__error" id="signup-prenom-error">
                                 <?= htmlspecialchars($erreursInscription['prenom']) ?>
                             </p>
                         <?php endif; ?>
                     </div>
                     <div class="field">
                         <label class="field__label" for="signup-email">Adresse e-mail</label>
-                        <input class="input" type="email" id="signup-email" name="email"
-                            placeholder="prenom.nom@exemple.fr" autocomplete="email"
-                            value="<?= htmlspecialchars($email) ?>" maxlength="255" required>
+                        <input class="input<?= isset($erreursInscription['email']) ? ' is-invalid' : '' ?>" type="email"
+                            id="signup-email" name="email" placeholder="prenom.nom@exemple.fr" autocomplete="email"
+                            value="<?= htmlspecialchars($email) ?>" maxlength="255" required
+                            <?= isset($erreursInscription['email']) ? 'aria-invalid="true" aria-describedby="signup-email-error"' : '' ?>>
                         <?php if (isset($erreursInscription['email'])): ?>
-                            <p class="field__error">
+                            <p class="field__error" id="signup-email-error">
                                 <?= htmlspecialchars($erreursInscription['email']) ?>
                             </p>
                         <?php endif; ?>
                     </div>
                     <div class="field">
                         <label class="field__label" for="signup-email2">Confirmer l'adresse e-mail</label>
-                        <input class="input" type="email" id="signup-email2" name="email_confirmation"
+                        <input class="input<?= isset($erreursInscription['email_confirmation']) ? ' is-invalid' : '' ?>"
+                            type="email" id="signup-email2" name="email_confirmation"
                             placeholder="prenom.nom@exemple.fr" autocomplete="email"
                             value="<?= htmlspecialchars($emailConfirmation) ?>"
-                            aria-describedby="signup-email-confirmation-error" maxlength="255" required>
-                        <p class="field__error" id="signup-email-confirmation-error"
+                            <?= isset($erreursInscription['email_confirmation']) ? 'aria-invalid="true" aria-describedby="signup-email-confirmation-error"' : '' ?> maxlength="255" required>
+                        <p class="field__error" id="signup-email-confirmation-error" aria-live="polite"
                             <?= isset($erreursInscription['email_confirmation']) ? '' : 'hidden' ?>>
-                            <?= htmlspecialchars(
-                                $erreursInscription['email_confirmation']
-                                ?? 'Les adresses e-mail ne correspondent pas.'
-                            ) ?>
+                            <?= htmlspecialchars($erreursInscription['email_confirmation'] ?? 'Les adresses e-mail ne correspondent pas.') ?>
                         </p>
                     </div>
                     <div class="field">
                         <label class="field__label" for="signup-password">Mot de passe</label>
                         <div class="password-field">
-                            <input class="input" type="password" id="signup-password" name="mot_de_passe"
+                            <input class="input<?= isset($erreursInscription['mot_de_passe']) ? ' is-invalid' : '' ?>"
+                                type="password" id="signup-password" name="mot_de_passe"
                                 placeholder="Votre mot de passe" autocomplete="new-password" minlength="8"
-                                aria-describedby="password-rules" required>
+                                aria-describedby="password-rules<?= isset($erreursInscription['mot_de_passe']) ? ' signup-password-error' : '' ?>"
+                                required <?= isset($erreursInscription['mot_de_passe']) ? 'aria-invalid="true"' : '' ?>>
                             <button id="signup-password-toggle" class="password-toggle" type="button"
                                 aria-pressed="false">
                                 Afficher
                             </button>
                         </div>
                         <?php if (isset($erreursInscription['mot_de_passe'])): ?>
-                            <p class="field__error">
+                            <p class="field__error" id="signup-password-error">
                                 <?= htmlspecialchars($erreursInscription['mot_de_passe']) ?>
                             </p>
                         <?php endif; ?>
@@ -128,20 +135,19 @@
                     <div class="field">
                         <label class="field__label" for="signup-password2">Confirmer le mot de passe</label>
                         <div class="password-field">
-                            <input class="input" type="password" id="signup-password2" name="mot_de_passe_confirmation"
+                            <input
+                                class="input<?= isset($erreursInscription['mot_de_passe_confirmation']) ? ' is-invalid' : '' ?>"
+                                type="password" id="signup-password2" name="mot_de_passe_confirmation"
                                 placeholder="Confirmer le mot de passe" autocomplete="new-password" minlength="8"
-                                aria-describedby="signup-password-confirmation-error" required>
+                                <?= isset($erreursInscription['mot_de_passe_confirmation']) ? 'aria-invalid="true" aria-describedby="signup-password-confirmation-error"' : '' ?> required>
                             <button id="signup-password2-toggle" class="password-toggle" type="button"
                                 aria-pressed="false">
                                 Afficher
                             </button>
                         </div>
-                        <p class="field__error" id="signup-password-confirmation-error"
+                        <p class="field__error" id="signup-password-confirmation-error" aria-live="polite"
                             <?= isset($erreursInscription['mot_de_passe_confirmation']) ? '' : 'hidden' ?>>
-                            <?= htmlspecialchars(
-                                $erreursInscription['mot_de_passe_confirmation']
-                                ?? 'Les mots de passe ne correspondent pas.'
-                            ) ?>
+                            <?= htmlspecialchars($erreursInscription['mot_de_passe_confirmation'] ?? '') ?>
                         </p>
                     </div>
                     <div class="rules" id="password-rules">

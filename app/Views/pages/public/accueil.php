@@ -4,7 +4,7 @@ $maintenant = new DateTimeImmutable();
 
 <div class="banner" aria-hidden="true"></div>
 
-<main class="page">
+<main id="main-content" class="page" tabindex="-1">
     <div class="container">
         <div class="page-header">
             <h1>Réservez vos places</h1>

@@ -1,4 +1,4 @@
-<main class="admin-content">
+<main id="main-content" class="admin-content" tabindex="-1">
     <div class="admin-header">
         <div class="admin-header__text">
             <h1>Utilisateurs</h1>
@@ -15,13 +15,14 @@
             <div class="panel__body panel__body--flush">
                 <div class="table-wrap">
                     <table class="table">
+                        <caption class="visually-hidden">Liste des utilisateurs</caption>
                         <thead>
                             <tr>
-                                <th>Utilisateur</th>
-                                <th>Email</th>
-                                <th>Inscription</th>
-                                <th>Rôle</th>
-                                <th class="is-actions">Actions</th>
+                                <th scope="col">Utilisateur</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Inscription</th>
+                                <th scope="col">Rôle</th>
+                                <th scope="col" class="is-actions">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
